@@ -10,7 +10,13 @@ import type { NextPageWithLayout } from './_app';
 const Page: NextPageWithLayout = () => <p>hello world</p>;
 Page.getLayout = function getLayout(page: ReactElement) {
   return (
-    <Layout>{page}</Layout>
+    <Layout>
+      <PrivateRoute>
+        {page}
+        {' '}
+      </PrivateRoute>
+    </Layout>
+
   );
 };
 
