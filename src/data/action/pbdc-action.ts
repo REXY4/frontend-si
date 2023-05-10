@@ -1,10 +1,10 @@
-import { PbdcRepository } from "@/src/domain/repository/pbdc-repository";
-import { PbdcActionType } from "../action-type/pbdc-action-type";
-import { SettingActionType } from "../action-type/settting-action-type";
+import { PbdcRepository } from '@/src/domain/repository/pbdc-repository';
 import {
   PbdcEntity,
   RequestPbdcDetailEntity,
-} from "@/src/domain/entity/pbdc-entity";
+} from '@/src/domain/entity/pbdc-entity';
+import { PbdcActionType } from '../action-type/pbdc-action-type';
+import { SettingActionType } from '../action-type/settting-action-type';
 
 const getPerStoreAction = (store_code: string) => async (dispatch: any) => {
   dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });
@@ -25,27 +25,26 @@ const saveAction = (request: PbdcEntity) => async (dispatch: any) => {
   dispatch({ type: SettingActionType.SET_OPEN_ALERT, isOpenAlert: true });
   dispatch({
     type: SettingActionType.SET_ALERT_MESSAGE,
-    alertMessage: "Data berhasil disimpan",
+    alertMessage: 'Data berhasil disimpan',
   });
   return response;
 };
 
-const saveDraftDetailAction =
-  (request: RequestPbdcDetailEntity) => async (dispatch: any) => {
-    const actionType = PbdcActionType.SAVE_DRAFT_DETAIL;
+const saveDraftDetailAction = (request: RequestPbdcDetailEntity) => async (dispatch: any) => {
+  const actionType = PbdcActionType.SAVE_DRAFT_DETAIL;
 
-    dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });
-    dispatch({
-      type: actionType,
-      payload: request,
-    });
-    dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
+  dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });
+  dispatch({
+    type: actionType,
+    payload: request,
+  });
+  dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
 
-    const response = {
-      ...request,
-    };
-    return response;
+  const response = {
+    ...request,
   };
+  return response;
+};
 
 const deleteDraftDetailAction = (id: number) => async (dispatch: any) => {
   dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });

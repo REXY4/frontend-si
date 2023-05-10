@@ -3,19 +3,19 @@ import { SettingActionType } from "../data/action-type/settting-action-type";
 import Router from "next/router";
 
 const getIdFromApiUrl = (url: string) => {
-  const result = url.slice(0 - 1);
-  const parts = result.split("/");
-  return parts[parts.length - 1];
+    const result = url.slice(0 - 1);
+    const parts = result.split("/");
+    return parts[parts.length - 1];
 };
 
 const isLoggedIn = () => {
-  const authState = appStoreImplementation.getState().auth;
-  return authState.auth?.access ?? false;
+    const authState = appStoreImplementation.getState().auth;
+    return authState.auth?.access ?? false;
 };
 
 const getAuthState = () => {
-  const authState = appStoreImplementation.getState().auth;
-  return authState;
+    const authState = appStoreImplementation.getState().auth;
+    return authState;
 };
 
 // const authorizePage = async (currentUrl: string) => {
@@ -28,7 +28,7 @@ const getAuthState = () => {
 // };
 
 export const Utils = {
-  getIdFromApiUrl,
-  isLoggedIn,
-  getAuthState,
+    getIdFromApiUrl,
+    isLoggedIn,
+    getAuthState,
 };

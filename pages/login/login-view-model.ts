@@ -1,8 +1,8 @@
-import { authStoreImplementation } from "@/src/data/store-implementation/auth-store-implementation";
-import { settingStoreImplementation } from "@/src/data/store-implementation/setting-store-implementation";
-import { getDomainUseCase } from "@/src/use-case/get-domain-use-case";
-import { loginUseCase } from "@/src/use-case/login-use-case";
-import { useCallback, useEffect } from "react";
+import { authStoreImplementation } from '@/src/data/store-implementation/auth-store-implementation';
+import { settingStoreImplementation } from '@/src/data/store-implementation/setting-store-implementation';
+import { getDomainUseCase } from '@/src/use-case/get-domain-use-case';
+import { loginUseCase } from '@/src/use-case/login-use-case';
+import { useCallback, useEffect } from 'react';
 
 const LoginViewModel = () => {
   const authStore = authStoreImplementation();
@@ -12,26 +12,30 @@ const LoginViewModel = () => {
     async (username: string) => {
       await getDomainUseCase(authStore, username);
     },
-    [authStore?.auth]
+    [authStore?.auth],
   );
 
   const onLoginClicked = useCallback(
     async (username: string, password: string) => {
       await loginUseCase(authStore, username, password);
     },
-    [authStore?.auth]
+    [authStore?.auth],
   );
 
   useEffect(() => {
-    console.log("authStore di view model", authStore);
-    if (authStore?.auth?.token !== null && authStore?.auth?.token?.length > 0) {
-      window.location.href = window.location.origin + "/home";
+    if (
+      authStore?.auth?.token !== null
+            && authStore?.auth?.token?.length > 0
+    ) {
+      window.location.href = `${window.location.origin}/home`;
     }
   }, [authStore]);
 
   return {
     auth: authStore?.auth,
     isLoading: settingStore?.isLoading,
+    alertMessage: settingStore.alertMessage,
+    isOpenAlert: settingStore.isOpenAlert,
     onGetDomainClicked,
     onLoginClicked,
   };

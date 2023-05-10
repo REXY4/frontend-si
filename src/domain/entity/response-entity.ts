@@ -17,15 +17,15 @@
 // }
 
 export interface ResponseEntity<T> {
-  returnType: string;
-  returnMessage: string;
-  returnData: T;
-  returnObject: T;
+    returnType: string;
+    returnMessage: string;
+    returnData: T;
+    returnObject: T;
 }
 
 export interface ResponseEntityList<T> {
-  returnType: string;
-  returnMessage: string;
-  returnData: [T];
-  returnObject: T;
+    returnType: string;
+    returnMessage: string;
+    returnData: [T];
+    returnObject: T;
 }

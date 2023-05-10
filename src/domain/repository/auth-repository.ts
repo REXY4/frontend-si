@@ -5,25 +5,25 @@ import { LoginEntity } from "../entity/login-entity";
 import { ResponseEntity } from "../entity/response-entity";
 
 const login = async (
-  loginEntity: LoginEntity
+    loginEntity: LoginEntity
 ): Promise<ResponseEntity<AuthEntity>> => {
-  return mapResponse(await AuthService.login(loginEntity));
+    return mapResponse(await AuthService.login(loginEntity));
 };
 
 const refreshLogin = async (
-  refreshToken: string
+    refreshToken: string
 ): Promise<ResponseEntity<AuthEntity>> => {
-  return mapResponse(await AuthService.refreshLogin(refreshToken));
+    return mapResponse(await AuthService.refreshLogin(refreshToken));
 };
 
 const getDomain = async (
-  username: string
+    username: string
 ): Promise<ResponseEntity<AuthEntity>> => {
-  return mapResponse(await AuthService.getDomain(username));
+    return mapResponse(await AuthService.getDomain(username));
 };
 
 export const AuthRepository = {
-  login,
-  refreshLogin,
-  getDomain,
+    login,
+    refreshLogin,
+    getDomain,
 };

@@ -1,7 +1,7 @@
 export const ResponseStatus = {
-    Success : 200,
-    SuccessPosted : 201,
+    Success: 200,
+    SuccessPosted: 201,
     SuccessNoContent: 204,
     Unauthorized: 401,
-    BadRequest: 400
-}
+    BadRequest: 400,
+};

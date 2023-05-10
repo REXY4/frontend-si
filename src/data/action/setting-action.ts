@@ -1,4 +1,4 @@
-import { SettingActionType } from "../action-type/settting-action-type";
+import { SettingActionType } from '../action-type/settting-action-type';
 
 const setApplicationName = (applicationName: string) => (dispatch: any) => {
   dispatch({ type: SettingActionType.SET_APPLICATION_NAME, applicationName });

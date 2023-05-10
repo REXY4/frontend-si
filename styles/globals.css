@@ -16,12 +16,28 @@
   }
 }
 
+@font-face {
+  font-family: reguler;
+  src: url(../assets//fonts/Roboto-Regular.ttf);
+}
+
+@font-face {
+  font-family: medium;
+  src: url(../assets//fonts/Roboto-Medium.ttf);
+}
+
+@font-face {
+  font-family: bold;
+  src: url(../assets//fonts/Roboto-Bold.ttf);
+}
+
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
+  /* color: rgb(var(--foreground-rgb)); */
+  /* background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--background-start-rgb)) !important;  */
+    font-family: reguler !important;
 }

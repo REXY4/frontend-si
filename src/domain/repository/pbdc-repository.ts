@@ -4,18 +4,18 @@ import { PbdcEntity } from "../entity/pbdc-entity";
 import { PbdcService } from "@/src/data/service/pbdc-service";
 
 const getPerStore = async (
-  store_code: string
+    store_code: string
 ): Promise<ResponseEntity<[PbdcEntity]>> => {
-  return mapResponse(await PbdcService.getPerStore(store_code));
+    return mapResponse(await PbdcService.getPerStore(store_code));
 };
 
 const save = async (
-  request: PbdcEntity
+    request: PbdcEntity
 ): Promise<ResponseEntity<PbdcEntity>> => {
-  return mapResponse(await PbdcService.save(request));
+    return mapResponse(await PbdcService.save(request));
 };
 
 export const PbdcRepository = {
-  getPerStore,
-  save,
+    getPerStore,
+    save,
 };

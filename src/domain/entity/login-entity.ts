@@ -1,4 +1,4 @@
 export interface LoginEntity {
-  username: string;
-  password: string;
+    username: string;
+    password: string;
 }

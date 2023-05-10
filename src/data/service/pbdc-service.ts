@@ -11,31 +11,35 @@ const authStore = appStoreImplementation.getState().auth;
 const pToken = authStore?.auth?.token;
 
 const getPerStore = async (store_code: string) => {
-  const response = fetchWrapper.get(
-    PbdcActionType.GET_PER_STORE,
-    `${baseUrl}all?store_code=${store_code}&pToken=${pToken}&fromCache=true`
-  );
-  return response;
+    try {
+        const response = fetchWrapper.get(
+            PbdcActionType.GET_PER_STORE,
+            `${baseUrl}all?store_code=${store_code}&pToken=${pToken}&fromCache=true`
+        );
+        return response;
+    } catch (err) {
+        window.location.href = "/login";
+    }
 };
 
 const save = async (request: PbdcEntity) => {
-  return fetchWrapper.post(
-    PbdcActionType.SAVE,
-    `${baseUrl}post?pToken=${pToken}`,
-    {
-      id: request?.id,
-      dc: request?.dc,
-      cab: request?.cab,
-      details: request?.details,
-      nopb: request?.nopb,
-      pToken: pToken,
-      status: request?.status,
-      tipe: request?.tipe,
-    }
-  );
+    return fetchWrapper.post(
+        PbdcActionType.SAVE,
+        `${baseUrl}post?pToken=${pToken}`,
+        {
+            id: request?.id,
+            dc: request?.dc,
+            cab: request?.cab,
+            details: request?.details,
+            nopb: request?.nopb,
+            pToken: pToken,
+            status: request?.status,
+            tipe: request?.tipe,
+        }
+    );
 };
 
 export const PbdcService = {
-  getPerStore,
-  save,
+    getPerStore,
+    save,
 };

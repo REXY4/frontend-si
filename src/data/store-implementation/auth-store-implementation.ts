@@ -10,41 +10,42 @@ import type { AppRootState } from "./app-store-implementation";
 const authSelector = (state: AppRootState) => state.auth;
 
 const authStoreImplementation = (): AuthStore => {
-  const { auth, validation, status } = useSelector<
-    AppRootState,
-    AuthStoreState
-  >(authSelector);
-  const dispatch = useDispatch();
+    const { auth, validation, status } = useSelector<
+        AppRootState,
+        AuthStoreState
+    >(authSelector);
+    const dispatch = useDispatch();
 
-  //overidde from store
-  const authLogin = useCallback(
-    (loginEntity: LoginEntity) => AuthAction.loginAction(loginEntity)(dispatch),
-    [dispatch]
-  );
-  const logout = useCallback(
-    () => AuthAction.logoutAction()(dispatch),
-    [dispatch]
-  );
-  const authRefreshToken = useCallback(
-    (refreshToken: string) =>
-      AuthAction.refreshLoginAction(refreshToken)(dispatch),
-    [dispatch]
-  );
+    //overidde from store
+    const authLogin = useCallback(
+        (loginEntity: LoginEntity) =>
+            AuthAction.loginAction(loginEntity)(dispatch),
+        [dispatch]
+    );
+    const logout = useCallback(
+        () => AuthAction.logoutAction()(dispatch),
+        [dispatch]
+    );
+    const authRefreshToken = useCallback(
+        (refreshToken: string) =>
+            AuthAction.refreshLoginAction(refreshToken)(dispatch),
+        [dispatch]
+    );
 
-  const getDomain = useCallback(
-    (username: string) => AuthAction.getDomainAction(username)(dispatch),
-    [dispatch]
-  );
+    const getDomain = useCallback(
+        (username: string) => AuthAction.getDomainAction(username)(dispatch),
+        [dispatch]
+    );
 
-  return {
-    auth,
-    validation,
-    status,
-    authLogin,
-    logout,
-    authRefreshToken,
-    getDomain,
-  };
+    return {
+        auth,
+        validation,
+        status,
+        authLogin,
+        logout,
+        authRefreshToken,
+        getDomain,
+    };
 };
 
 export { authStoreImplementation, authSelector };
