@@ -39,5 +39,11 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb)) !important;  */
+    background-color: white !important;
     font-family: reguler !important;
+}
+
+.title-content {
+  font-size: 18px !important;
+  font-family: bold;
 }

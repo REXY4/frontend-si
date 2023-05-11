@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable max-len */
 import { AuthActionType } from "@/src/data/action-type/auth-action-type";
 import { SettingActionType } from "../data/action-type/settting-action-type";
 import { appStoreImplementation } from "@/src/data/store-implementation/app-store-implementation";
@@ -14,7 +16,7 @@ const auth = async (url: string, body: any) => {
         },
         body: JSON.stringify(body),
     };
-    return fetch(url, requestOptions).then(data => handleResponse(data));
+    return fetch(url, requestOptions).then((data) => handleResponse(data));
 };
 
 const refreshToken = async () => {
@@ -39,19 +41,17 @@ const get = async (
         method: "GET",
         headers: authHeader(),
     };
-    const response = await fetch(url, requestOptions).then(value =>
-        handleResponse(value, isDownload)
-    );
-    if (callDispatch)
-        appStoreImplementation.dispatch({
+    const response = await fetch(url, requestOptions).then((value) => handleResponse(value, isDownload));
+    if (callDispatch) {
+ appStoreImplementation.dispatch({
             type: actionType,
             payload: response,
         });
+}
     if (response != ResponseStatus.Unauthorized) return response;
 
     const result = await refreshToken();
-    if (result?.status?.code == ResponseStatus.Success)
-        get(actionType, url, true);
+    if (result?.status?.code == ResponseStatus.Success) { get(actionType, url, true); }
 };
 
 const download = async (actionType: string, url: string, filename: string) => {
@@ -60,15 +60,15 @@ const download = async (actionType: string, url: string, filename: string) => {
         headers: authHeader(),
     };
     await fetch(url, requestOptions)
-        .then(response => response.blob())
-        .then(blob => {
-            var url = window.URL.createObjectURL(blob);
-            var a = document.createElement("a");
+        .then((response) => response.blob())
+        .then((blob) => {
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement("a");
             a.href = url;
-            a.download = filename + ".csv";
+            a.download = `${filename}.csv`;
             document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
             a.click();
-            a.remove(); //afterwards we remove the element again
+            a.remove(); // afterwards we remove the element again
         });
 };
 
@@ -87,11 +87,12 @@ const post = async (
     try {
         const response = await fetch(url, requestOptions).then(handleResponse);
 
-        if (callDispatch)
-            appStoreImplementation.dispatch({
+        if (callDispatch) {
+ appStoreImplementation.dispatch({
                 type: actionType,
                 payload: response,
             });
+}
         if (response != ResponseStatus.Unauthorized) return response;
 
         // const result = await refreshToken();
@@ -123,16 +124,16 @@ const postWithAttachFile = async (
     try {
         const response = await fetch(url, requestOptions).then(handleResponse);
 
-        if (callDispatch)
-            appStoreImplementation.dispatch({
+        if (callDispatch) {
+ appStoreImplementation.dispatch({
                 type: actionType,
                 payload: response,
             });
+}
         if (response != ResponseStatus.Unauthorized) return response;
 
         const result = await refreshToken();
-        if (result?.status?.code == ResponseStatus.Success)
-            postWithAttachFile(actionType, url, formData, true);
+        if (result?.status?.code == ResponseStatus.Success) { postWithAttachFile(actionType, url, formData, true); }
     } catch (e) {
         appStoreImplementation.dispatch({
             type: SettingActionType.SET_LOADING,
@@ -159,19 +160,19 @@ const put = async (
     };
     const response = await fetch(url, requestOptions).then(handleResponse);
 
-    if (callDispatch)
-        appStoreImplementation.dispatch({
+    if (callDispatch) {
+ appStoreImplementation.dispatch({
             type: actionType,
             payload: response,
         });
+}
     if (response != ResponseStatus.Unauthorized) return response;
 
     const result = await refreshToken();
     if (
-        result?.status?.code == ResponseStatus.Success ||
-        result?.status?.code == ResponseStatus.SuccessNoContent
-    )
-        put(actionType, url, body, true);
+        result?.status?.code == ResponseStatus.Success
+        || result?.status?.code == ResponseStatus.SuccessNoContent
+    ) { put(actionType, url, body, true); }
 };
 
 // prefixed with underscored because delete is a reserved word in javascript
@@ -186,17 +187,17 @@ const _delete = async (
     };
     const response = await fetch(url, requestOptions).then(handleResponse);
 
-    if (callDispatch)
-        appStoreImplementation.dispatch({
+    if (callDispatch) {
+ appStoreImplementation.dispatch({
             type: actionType,
             payload: Utils.getIdFromApiUrl(url),
         });
+}
 
     if (response != ResponseStatus.Unauthorized) return response;
 
     const result = await refreshToken();
-    if (result?.status?.code == ResponseStatus.Success)
-        put(actionType, url, true);
+    if (result?.status?.code == ResponseStatus.Success) { put(actionType, url, true); }
 };
 
 const authHeader = (isMultipartForm?: boolean) => {
@@ -236,7 +237,7 @@ const handleResponse = (response: any, isDownload?: boolean) => {
             return ResponseStatus.Unauthorized;
         }
         if (!response.ok) {
-            alert("error disini: " + appendData?.returnMessage);
+            alert(`error disini: ${appendData?.returnMessage}`);
             console.log("errornya", appendData?.returnMessage);
             const errorData = {
                 ...appendData,

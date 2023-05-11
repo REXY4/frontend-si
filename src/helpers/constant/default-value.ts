@@ -1,15 +1,15 @@
+/* eslint-disable import/named */
 import {
     ResponseEntity,
-    ResponseStatusEntity,
 } from "@/src/domain/entity/response-entity";
 
-const EmptyResponseStatus: ResponseStatusEntity = {
+const EmptyResponseStatus: any = {
     isError: false,
     code: 0,
     message: "",
 };
 
-const EmptyResponse: ResponseEntity<any> = {
+const EmptyResponse: any = {
     validation: [],
     status: EmptyResponseStatus,
     data: undefined,

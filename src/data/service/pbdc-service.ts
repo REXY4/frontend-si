@@ -22,8 +22,7 @@ const getPerStore = async (store_code: string) => {
     }
 };
 
-const save = async (request: PbdcEntity) => {
-    return fetchWrapper.post(
+const save = async (request: PbdcEntity) => fetchWrapper.post(
         PbdcActionType.SAVE,
         `${baseUrl}post?pToken=${pToken}`,
         {
@@ -37,7 +36,6 @@ const save = async (request: PbdcEntity) => {
             tipe: request?.tipe,
         }
     );
-};
 
 export const PbdcService = {
     getPerStore,

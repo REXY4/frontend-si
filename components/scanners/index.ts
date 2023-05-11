@@ -1,5 +1,5 @@
-import ScannerBasic from './ScannerBasic';
+import { BarcodeScanner } from './BarcodeScanner';
 
 export {
-  ScannerBasic,
+  BarcodeScanner,
 };

@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-multi-spaces */
 import React, { useState, useEffect } from 'react';
 import { Logo } from '@/assets/img';
 import { themeBasic } from '@/styles/theme';
@@ -10,20 +9,19 @@ import { BasicInput } from '@/components/inputs';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { ButtonBasic } from '@/components/buttons';
-import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
-// import { useFrom,  } from '@/src/helpers/
 import { validationText } from '@/src/helpers/validation';
-import { ScannerBasic } from '@/components/scanners';
+import ModalScanner from '@/components/scanners/ModalScanner';
 import styles from '../../styles/pages/login.module.css';
-// import { validateEmail } from '../../src/helpers/validation';
+import { useRouter } from 'next/router';
 
 function LoginPage() {
   const [visiblePassword, setVisiblePassword] = useState(true);
+  let router = useRouter();
   const [form, setForm] = useState({
     username: {
       name: 'username',
       label: 'Username',
-      value: null,
+      value: '',
       require: false,
       error: false,
       message: '',
@@ -33,7 +31,7 @@ function LoginPage() {
     password: {
       name: 'password',
       label: 'Password',
-      value: null,
+      value: '',
       require: false,
       error: false,
       message: '',
@@ -43,10 +41,11 @@ function LoginPage() {
   });
 
   const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const name: 'username' | 'password' = e.target.name as 'username' | 'password';
     setForm({
       ...form,
-      [e.target.name]: {
-        ...form[e.target.name],
+      [name]: {
+        ...form[name],
         value: validationText(e.target.value),
       },
     });
@@ -57,6 +56,16 @@ function LoginPage() {
       return setVisiblePassword(false);
     }
     setVisiblePassword(true);
+  };
+
+  const handleDetected = (result:any) => {
+    setForm({
+      ...form,
+      username: {
+        ...form.username,
+        value: result,
+      },
+    });
   };
 
   return (
@@ -72,14 +81,19 @@ function LoginPage() {
             </Box>
             <Box marginBottom={3}>
               <BasicInput
+                startIcon={undefined}
+                defaultValue={undefined}
                 {...form.username}
                 onChange={onChange}
                 type="text"
-                endIcon={<ScannerBasic />}
+                endIcon={(
+                  <ModalScanner onDetected={handleDetected} />)}
               />
             </Box>
             <Box>
               <BasicInput
+                startIcon={undefined}
+                defaultValue={undefined}
                 {...form.password}
                 onChange={onChange}
                 type={visiblePassword ? 'password' : 'text'}
@@ -95,12 +109,11 @@ function LoginPage() {
                     <VisibilityIcon />
                     {' '}
                   </IconButton>
-                )}
-                endIconAction={undefined}
+                )} // endIconAction={undefined}
               />
             </Box>
             <Box marginTop={5}>
-              <ButtonBasic label="Login" />
+              <ButtonBasic label="Login" onClick={() => router.push("/home")} />
             </Box>
             <Box marginTop={5} display="flex" justifyContent="center">
               <Typography className={styles.copyright}>PT Lion Super Indo © 2023</Typography>

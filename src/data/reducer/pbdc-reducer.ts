@@ -1,10 +1,12 @@
+/* eslint-disable no-case-declarations */
+/* eslint-disable default-param-last */
 import type { AnyAction } from "redux";
 import { PbdcStore } from "@/src/domain/store/pbdc-store";
 import { PbdcActionType } from "../action-type/pbdc-action-type";
 
 type PbdcStoreState = Omit<PbdcStore, "getPerStore">;
 
-const INITIAL_STATE: PbdcStoreState = {
+const INITIAL_STATE: any = {
     pbdc: undefined,
     pbdcs: undefined,
     pbdcDraft: {
@@ -68,7 +70,8 @@ const pbdcReducer = (
             let draftDelete = state?.pbdcDraft;
 
             let detailsDelete = draftDelete?.details;
-            var filteredArray = detailsDelete.filter(e => {
+            // eslint-disable-next-line no-var
+            let filteredArray = detailsDelete.filter((e) => {
                 console.log("compare", e, action);
                 return e.id?.toString() !== action?.payload?.toString();
             });

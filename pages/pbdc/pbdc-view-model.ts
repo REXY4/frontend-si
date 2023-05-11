@@ -25,11 +25,8 @@ const PbdcViewModel = () => {
 
     const onFilter = (keyword: string) => {
         setIsLoading(true);
-        let filtered =
-            pbdcStore.pbdcs &&
-            pbdcStore.pbdcs.filter((data: PbdcEntity) => {
-                return data.nopb.includes(keyword);
-            });
+        let filtered = pbdcStore.pbdcs
+            && pbdcStore.pbdcs.filter((data: PbdcEntity) => data.nopb.includes(keyword));
 
         setPbdcsFiltered(filtered);
 

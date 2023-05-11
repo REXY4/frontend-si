@@ -1,6 +1,7 @@
-import { ResponseStatusEntity } from "../entity/response-entity";
+import { ResponseEntity } from "../entity/response-entity";
 
 export interface BaseStore {
-    validation: [];
-    status: ResponseStatusEntity;
+    auth : any | undefined,
+    validation: any | undefined;
+    status: any | undefined
 }

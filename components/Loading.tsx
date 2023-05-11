@@ -6,19 +6,17 @@ type LoadingProps = {
     isLoading: boolean;
 };
 
-const Loading: FC<LoadingProps> = ({ isLoading }) => {
-    return (
-        <Backdrop
-            sx={{
+const Loading: FC<LoadingProps> = ({ isLoading }) => (
+  <Backdrop
+    sx={{
                 color: "#fff",
-                zIndex: theme => theme.zIndex.drawer + 10000,
+                zIndex: (theme) => theme.zIndex.drawer + 10000,
                 background: "#00000080",
             }}
-            open={isLoading}
-        >
-            <CircularProgressWithContent />
-        </Backdrop>
+    open={isLoading}
+  >
+    <CircularProgressWithContent />
+  </Backdrop>
     );
-};
 
 export { Loading };

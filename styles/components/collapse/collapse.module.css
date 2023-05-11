@@ -1,0 +1,21 @@
+.title{
+font-family: bold;
+font-style: normal;
+font-weight: 600;
+font-size: 18px;
+line-height: 22px;
+color: #26116C;
+}
+
+.titleActive {
+    color :white;
+}
+
+.card{
+    /* cursor: pointer; */
+}
+
+.cardHeaderActive{
+     background-color:#26116c9f;
+     cursor: pointer;
+}

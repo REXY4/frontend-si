@@ -5,7 +5,7 @@ import { MapStateReducers } from "@/src/helpers/map-state-reducers";
 
 type UserStoreState = Omit<UserStore, "getUsers" | "submit" | "remove">;
 
-const INITIAL_STATE: UserStoreState = {
+const INITIAL_STATE: any = {
     users: undefined,
     userById: undefined,
     validation: undefined,

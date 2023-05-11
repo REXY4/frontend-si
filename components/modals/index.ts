@@ -1,5 +1,5 @@
-import BasicModal from './ModalBasic';
+import ModalBasic from './ModalBasic';
 
 export {
-  BasicModal,
+  ModalBasic,
 };

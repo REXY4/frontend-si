@@ -20,11 +20,9 @@ import { FieldEntity } from "@/src/domain/entity/field-entity";
 import LoginViewModel from "./lsif-login-view-model";
 import { Loading } from "@/components/Loading";
 
-export const getStaticProps = async () => {
-    return {
+export const getStaticProps = async () => ({
         props: { noLayout: true },
-    };
-};
+    });
 
 const LsifLoginPage = () => {
     const router = useRouter();
@@ -37,8 +35,9 @@ const LsifLoginPage = () => {
     const [submit, setSubmit] = useState<boolean>(false);
     const [usernameValidation, setUsernameValidation] = useState<FieldEntity>();
     const usernameRef = useRef<HTMLDivElement>(null as any);
-    const { auth, isLoading, onGetDomainClicked, onLoginClicked } =
-        LoginViewModel();
+    const {
+ auth, isLoading, onGetDomainClicked, onLoginClicked
+} = LoginViewModel();
 
     const theme = createTheme({
         palette: {
@@ -151,150 +150,150 @@ const LsifLoginPage = () => {
     }, [submit]);
 
     return (
-        <ThemeProvider theme={theme}>
-            {/* {isSuccess && initFunction()} */}
-            {/* {isSuccessInit && navigateToHome()} */}
-            <Head>
-                <title>{applicationName}</title>
-                <meta
-                    name="viewport"
-                    content="initial-scale=1.0, width=device-width"
-                />
-                <link rel="icon" href={appLogo} />
-            </Head>
-            <Grid
-                container
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-            >
-                <Box
-                    component="form"
-                    sx={{
+      <ThemeProvider theme={theme}>
+        {/* {isSuccess && initFunction()} */}
+        {/* {isSuccessInit && navigateToHome()} */}
+        <Head>
+          <title>{applicationName}</title>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+          <link rel="icon" href={appLogo} />
+        </Head>
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Box
+            component="form"
+            sx={{
                         "& .MuiTextField-root": { m: 1.5, width: "30ch" },
                         alignContent: "center",
                         marginBottom: "100px",
                     }}
-                    noValidate
-                    onSubmit={e => {
+            noValidate
+            onSubmit={(e) => {
                         e.preventDefault();
                     }}
-                    autoComplete="off"
-                >
-                    <Card
-                        sx={{
+            autoComplete="off"
+          >
+            <Card
+              sx={{
                             margin: "20px",
                             padding: "20px",
                             borderBottom: "10px",
                             borderBottomColor: "red",
                         }}
-                    >
-                        <Grid
-                            item
-                            xs={12}
-                            md={12}
-                            marginTop={5}
-                            marginBottom={1}
-                        >
-                            <img src={appLogo} width={350} />
-                        </Grid>
-                        <Grid item xs={12} md={12}>
-                            <TextField
-                                label="Please enter your User ID"
-                                placeholder="Username"
-                                color="primary"
-                                id="username"
-                                disabled={step1}
-                                onChange={handleChange}
-                                onKeyDown={handleKeyDown}
-                                InputProps={{
+            >
+              <Grid
+                item
+                xs={12}
+                md={12}
+                marginTop={5}
+                marginBottom={1}
+              >
+                <img src={appLogo} width={350} />
+              </Grid>
+              <Grid item xs={12} md={12}>
+                <TextField
+                  label="Please enter your User ID"
+                  placeholder="Username"
+                  color="primary"
+                  id="username"
+                  disabled={step1}
+                  onChange={handleChange}
+                  onKeyDown={handleKeyDown}
+                  InputProps={{
                                     startAdornment: (
-                                        <InputAdornment position="start">
-                                            <AccountCircle />
-                                        </InputAdornment>
+                                      <InputAdornment position="start">
+                                        <AccountCircle />
+                                      </InputAdornment>
                                     ),
                                 }}
-                                style={{ width: "100%", marginLeft: 0 }}
-                                error={usernameValidation?.error}
-                                helperText={usernameValidation?.errorMessage}
-                                inputRef={usernameRef}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={12}>
-                            {step1 ? (
-                                <TextField
-                                    label="Password"
-                                    type={"password"}
-                                    placeholder="Password"
-                                    color="primary"
-                                    id="password"
-                                    onChange={handleChange}
-                                    onKeyDown={handleKeyDownPassword}
-                                    InputProps={{
+                  style={{ width: "100%", marginLeft: 0 }}
+                  error={usernameValidation?.error}
+                  helperText={usernameValidation?.errorMessage}
+                  inputRef={usernameRef}
+                />
+              </Grid>
+              <Grid item xs={12} md={12}>
+                {step1 ? (
+                  <TextField
+                    label="Password"
+                    type="password"
+                    placeholder="Password"
+                    color="primary"
+                    id="password"
+                    onChange={handleChange}
+                    onKeyDown={handleKeyDownPassword}
+                    InputProps={{
                                         startAdornment: (
-                                            <InputAdornment position="start">
-                                                <Key />
-                                            </InputAdornment>
+                                          <InputAdornment position="start">
+                                            <Key />
+                                          </InputAdornment>
                                         ),
                                     }}
-                                    style={{ width: "100%", marginLeft: 0 }}
-                                />
+                    style={{ width: "100%", marginLeft: 0 }}
+                  />
                             ) : null}
-                        </Grid>
-                        <Grid item xs={12} md={12} marginBottom={2}>
-                            {!step1 ? (
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    style={{ width: "100%", margin: 0 }}
-                                    onClick={() => onUsernameEntered(username)}
-                                >
-                                    Next
-                                </Button>
+              </Grid>
+              <Grid item xs={12} md={12} marginBottom={2}>
+                {!step1 ? (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    style={{ width: "100%", margin: 0 }}
+                    onClick={() => onUsernameEntered(username)}
+                  >
+                    Next
+                  </Button>
                             ) : null}
-                        </Grid>
-                        <Grid item xs={12} md={12} marginBottom={2}>
-                            {step1 ? (
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    style={{ width: "100%", margin: 0 }}
-                                >
-                                    Login
-                                </Button>
+              </Grid>
+              <Grid item xs={12} md={12} marginBottom={2}>
+                {step1 ? (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    style={{ width: "100%", margin: 0 }}
+                  >
+                    Login
+                  </Button>
                             ) : null}
-                        </Grid>
-                        <Grid item xs={12} md={12} marginBottom={2}>
-                            {step1 ? (
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    style={{ width: "100%", margin: 0 }}
-                                    onClick={() => {
+              </Grid>
+              <Grid item xs={12} md={12} marginBottom={2}>
+                {step1 ? (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    style={{ width: "100%", margin: 0 }}
+                    onClick={() => {
                                         onChangeUserId();
                                     }}
-                                >
-                                    Change User ID
-                                </Button>
+                  >
+                    Change User ID
+                  </Button>
                             ) : null}
-                        </Grid>
-                    </Card>
-                    <Grid item xs={12} md={12}>
-                        <div
-                            style={{
+              </Grid>
+            </Card>
+            <Grid item xs={12} md={12}>
+              <div
+                style={{
                                 textAlign: "center",
                                 fontFamily: "system-ui",
                             }}
-                        >
-                            PT Lion Super Indo &copy; 2023
-                        </div>
-                    </Grid>
-                </Box>
-                <Grid item xs={12} md={12}>
-                    <Loading isLoading={isLoading} />
-                </Grid>
+              >
+                PT Lion Super Indo &copy; 2023
+              </div>
             </Grid>
-        </ThemeProvider>
+          </Box>
+          <Grid item xs={12} md={12}>
+            <Loading isLoading={isLoading} />
+          </Grid>
+        </Grid>
+      </ThemeProvider>
     );
 };
 

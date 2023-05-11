@@ -25,10 +25,10 @@ const LsifLoginViewModel = () => {
     useEffect(() => {
         console.log("authStore di view model", authStore);
         if (
-            authStore?.auth?.token !== null &&
-            authStore?.auth?.token?.length > 0
+            authStore?.auth?.token !== null
+            && authStore?.auth?.token?.length > 0
         ) {
-            window.location.href = window.location.origin + "/home";
+            window.location.href = `${window.location.origin}/home`;
         }
     }, [authStore]);
 

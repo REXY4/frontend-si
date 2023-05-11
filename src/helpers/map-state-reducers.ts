@@ -2,15 +2,14 @@ import { appStoreImplementation } from "@/src/data/store-implementation/app-stor
 import { DefaultValue } from "./constant/default-value";
 
 const updateStateList = (stateDataList: any[], newDataList: any[]) => {
-    const result =
-        stateDataList?.map(
-            obj => newDataList.find(o => o.id == obj.id) || obj
+    const result = stateDataList?.map(
+            (obj) => newDataList.find((o) => o.id == obj.id) || obj
         ) ?? [];
     return result;
 };
 
 const removeItemStateList = (stateDataList: any[], id: any) => {
-    const result = stateDataList?.filter(x => x.id != id);
+    const result = stateDataList?.filter((x) => x.id != id);
     return result;
 };
 
@@ -22,7 +21,7 @@ const addItemStateList = (stateDataList: [any], newData: any) => {
 };
 
 const setStateFromStateList = (stateDataList: [any], id: string) => {
-    const idx = stateDataList?.findIndex(item => item.id == id);
+    const idx = stateDataList?.findIndex((item) => item.id == id);
     const result = stateDataList?.[idx] ?? {};
     return result;
 };

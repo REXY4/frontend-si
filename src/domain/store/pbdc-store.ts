@@ -8,11 +8,11 @@ import { UserEntity } from "../entity/user-entity";
 import { BaseStore } from "./base-store";
 
 interface PbdcStore {
-    pbdc: PbdcEntity;
-    pbdcs: [PbdcEntity];
+    pbdc: any;
+    pbdcs: any;
     pbdcDraft: PbdcEntity;
 
-    //Action
+    // Action
     getPerStore(store_code: string): Promise<ResponseEntity<[PbdcEntity]>>;
 
     save(request: PbdcEntity): Promise<ResponseEntity<PbdcEntity>>;

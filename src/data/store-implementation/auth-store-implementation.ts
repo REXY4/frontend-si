@@ -16,10 +16,9 @@ const authStoreImplementation = (): AuthStore => {
     >(authSelector);
     const dispatch = useDispatch();
 
-    //overidde from store
+    // overidde from store
     const authLogin = useCallback(
-        (loginEntity: LoginEntity) =>
-            AuthAction.loginAction(loginEntity)(dispatch),
+        (loginEntity: LoginEntity) => AuthAction.loginAction(loginEntity)(dispatch),
         [dispatch]
     );
     const logout = useCallback(
@@ -27,8 +26,7 @@ const authStoreImplementation = (): AuthStore => {
         [dispatch]
     );
     const authRefreshToken = useCallback(
-        (refreshToken: string) =>
-            AuthAction.refreshLoginAction(refreshToken)(dispatch),
+        (refreshToken: string) => AuthAction.refreshLoginAction(refreshToken)(dispatch),
         [dispatch]
     );
 

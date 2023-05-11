@@ -1,10 +1,11 @@
+/* eslint-disable default-param-last */
 import type { AnyAction } from "redux";
 import { InitStore } from "@/src/domain/store/init-store";
 import { InitActionType } from "../action-type/init-action-type";
 
 type InitStoreState = Omit<InitStore, "initUser">;
 
-const INITIAL_STATE: InitStoreState = {
+const INITIAL_STATE: any = {
     user: undefined,
     validation: undefined,
     status: undefined,

@@ -160,8 +160,9 @@ export default function Layout({ children }: PropsLayout) {
       <Box
         sx={{
           display: 'flex',
-          backgroundColor: '#F1F6F9',
+          backgroundColor: '#ffffff',
           color: '#242564',
+          height: "100%"
         }}
       >
         <CssBaseline />

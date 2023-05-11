@@ -14,35 +14,33 @@ type LsiModalProps = {
     onClose: () => void;
 };
 
-const LsiModal: FC<LsiModalProps> = ({ isOpen, onClose }) => {
-    return (
-        <div>
-            <Dialog open={isOpen} fullWidth>
-                <DialogTitle>Penerimaan Barang DC</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>Lorem ipsum</DialogContentText>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Email Address"
-                        type="email"
-                        fullWidth
-                        variant="standard"
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button
-                        onClick={() => {
+const LsiModal: FC<LsiModalProps> = ({ isOpen, onClose }) => (
+  <div>
+    <Dialog open={isOpen} fullWidth>
+      <DialogTitle>Penerimaan Barang DC</DialogTitle>
+      <DialogContent>
+        <DialogContentText>Lorem ipsum</DialogContentText>
+        <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Email Address"
+          type="email"
+          fullWidth
+          variant="standard"
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button
+          onClick={() => {
                             onClose();
                         }}
-                    >
-                        Close
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </div>
+        >
+          Close
+        </Button>
+      </DialogActions>
+    </Dialog>
+  </div>
     );
-};
 
 export { LsiModal };

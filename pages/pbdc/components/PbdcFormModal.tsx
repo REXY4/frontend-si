@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Loading } from "@/components/Loading";
 import { PbdcDetailEntity } from "@/src/domain/entity/pbdc-entity";
 import {
@@ -12,23 +13,22 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import { FC, useState } from "react";
 
 type ModalProps = {
     isLoading: boolean;
     isOpen: boolean;
-    pbdcDetail?: PbdcDetailEntity;
+    pbdcDetail: any;
     onSaveDraftDetail: (plu: string, eq: number) => void;
     onClose: () => void;
 };
 
-const PdbcFormModal: FC<ModalProps> = ({
+const PdbcFormModal = ({
     isLoading,
     isOpen,
     pbdcDetail,
     onSaveDraftDetail,
     onClose,
-}) => {
+}:ModalProps) => {
     const [plu, setPlu] = useState<string>("");
     const [eq, setEq] = useState<string>("");
 
@@ -54,74 +54,74 @@ const PdbcFormModal: FC<ModalProps> = ({
     };
 
     return (
-        <div>
-            <Loading isLoading={isLoading} />
-            <Dialog open={isOpen} fullWidth>
-                <DialogTitle
-                    sx={{
+      <div>
+        <Loading isLoading={isLoading} />
+        <Dialog open={isOpen} fullWidth>
+          <DialogTitle
+            sx={{
                         paddingBottom: "0px",
                     }}
-                >
-                    <Typography gutterBottom>Tambah/Edit Barang</Typography>
-                </DialogTitle>
-                <DialogContent>
-                    <Box
-                        sx={{
+          >
+            <Typography gutterBottom>Tambah/Edit Barang</Typography>
+          </DialogTitle>
+          <DialogContent>
+            <Box
+              sx={{
                             height: "40%",
                         }}
-                    >
-                        <Grid
-                            xs={12}
-                            sx={{
+            >
+              <Grid
+                xs={12}
+                sx={{
                                 paddingTop: "10px",
                             }}
-                        >
-                            <TextField
-                                autoFocus
-                                margin="dense"
-                                size="small"
-                                id="plu"
-                                label="PLU"
-                                type="text"
-                                onChange={handleChange}
-                                fullWidth
-                                variant="outlined"
-                                value={pbdcDetail?.plu}
-                            />
-                            <TextField
-                                autoFocus
-                                margin="dense"
-                                size="small"
-                                id="eq"
-                                label="Eq"
-                                type="text"
-                                onChange={handleChange}
-                                fullWidth
-                                variant="outlined"
-                                value={pbdcDetail?.eq}
-                            />
-                        </Grid>
-                    </Box>
-                </DialogContent>
-                <DialogActions>
-                    <Button
-                        onClick={() => {
+              >
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  size="small"
+                  id="plu"
+                  label="PLU"
+                  type="text"
+                  onChange={handleChange}
+                  fullWidth
+                  variant="outlined"
+                  value={pbdcDetail?.plu}
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  size="small"
+                  id="eq"
+                  label="Eq"
+                  type="text"
+                  onChange={handleChange}
+                  fullWidth
+                  variant="outlined"
+                  value={pbdcDetail?.eq}
+                />
+              </Grid>
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => {
                             onClose();
                         }}
-                    >
-                        Close
-                    </Button>
-                    <Button
-                        onClick={() => {
+            >
+              Close
+            </Button>
+            <Button
+              onClick={() => {
                             handleSaveDraftDetail();
                         }}
-                    >
-                        Save
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </div>
+            >
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     );
 };
 
-export { PdbcFormModal };
+export default PdbcFormModal;

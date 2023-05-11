@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { PbdcStore } from "@/src/domain/store/pbdc-store";
 import { AppRootState } from "./app-store-implementation";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,10 +19,9 @@ const pbdcStoreImplementation = (): PbdcStore => {
     >(pbdcSelector);
     const dispatch = useDispatch();
 
-    //override from store
+    // override from store
     const getPerStore = useCallback(
-        (store_code: string) =>
-            PbdcAction.getPerStoreAction(store_code)(dispatch),
+        (store_code: string) => PbdcAction.getPerStoreAction(store_code)(dispatch),
         [dispatch]
     );
 
@@ -31,8 +31,7 @@ const pbdcStoreImplementation = (): PbdcStore => {
     );
 
     const saveDraftDetail = useCallback(
-        (request: RequestPbdcDetailEntity) =>
-            PbdcAction.saveDraftDetailAction(request)(dispatch),
+        (request: RequestPbdcDetailEntity) => PbdcAction.saveDraftDetailAction(request)(dispatch),
         [dispatch]
     );
 

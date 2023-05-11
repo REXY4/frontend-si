@@ -8,7 +8,7 @@ type AuthStoreState = Omit<
     "authLogin" | "logout" | "authRefreshToken" | "getDomain"
 >;
 
-const INITIAL_STATE: AuthStoreState = {
+const INITIAL_STATE: any = {
     auth: undefined,
     validation: undefined,
     status: undefined,

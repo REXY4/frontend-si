@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { LsiListItem } from "@/components/LsiListItem";
 import { PbdcDetailEntity, PbdcEntity } from "@/src/domain/entity/pbdc-entity";
 import {
@@ -14,14 +15,14 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import { FC, useEffect, useState } from "react";
-import { PdbcFormModal } from "./PbdcFormModal";
+
+import PdbcFormModal from "./PbdcFormModal";
 import { Loading } from "@/components/Loading";
 
 type ModalProps = {
     isLoading: boolean;
     isOpen: boolean;
-    pbdc: PbdcEntity;
+    pbdc: any;
     onSave: (
         id: number,
         nopb: string,
@@ -34,11 +35,11 @@ type ModalProps = {
         details: PbdcDetailEntity[]
     ) => void;
     onSaveDraftDetail: (plu: string, eq: number) => void;
-    onDeleteDraftDetail: (id: number | undefined) => void;
+    onDeleteDraftDetail: any;
     onClose: () => void;
 };
 
-const PdbcDetailModal: FC<ModalProps> = ({
+ const PdbcDetailModal = ({
     isLoading,
     isOpen,
     pbdc,
@@ -46,7 +47,7 @@ const PdbcDetailModal: FC<ModalProps> = ({
     onSaveDraftDetail,
     onDeleteDraftDetail,
     onClose,
-}) => {
+}:ModalProps) => {
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [listDetails, setListDetails] = useState<PbdcDetailEntity[]>([]);
     const [nopb, setNopb] = useState<string>("");
@@ -81,7 +82,7 @@ const PdbcDetailModal: FC<ModalProps> = ({
         onSaveDraftDetail(plu, eq);
     };
 
-    const handleDeleteDraftDetail = (id: number | undefined) => {
+    const handleDeleteDraftDetail = (id: number|undefined) => {
         onDeleteDraftDetail(id);
     };
 
@@ -90,160 +91,156 @@ const PdbcDetailModal: FC<ModalProps> = ({
     }, [pbdc?.details]);
 
     return (
-        <div>
-            <Loading isLoading={isLoading} />
-            <Dialog open={isOpen} fullWidth>
-                <DialogTitle
-                    sx={{
+      <div>
+        <Loading isLoading={isLoading} />
+        <Dialog open={isOpen} fullWidth>
+          <DialogTitle
+            sx={{
                         paddingBottom: "0px",
                     }}
-                >
-                    <Typography gutterBottom>
-                        Detail Penerimaan Barang DC
-                    </Typography>
-                </DialogTitle>
-                <DialogContent>
-                    <Box
-                        sx={{
+          >
+            <Typography gutterBottom>
+              Detail Penerimaan Barang DC
+            </Typography>
+          </DialogTitle>
+          <DialogContent>
+            <Box
+              sx={{
                             height: "40%",
                         }}
-                    >
-                        <Grid
-                            xs={12}
-                            sx={{
+            >
+              <Grid
+                xs={12}
+                sx={{
                                 paddingTop: "10px",
                             }}
-                        >
-                            <TextField
-                                autoFocus
-                                margin="dense"
-                                size="small"
-                                id="no-order"
-                                label="Nomor Order"
-                                type="text"
-                                fullWidth
-                                variant="outlined"
-                                value={pbdc?.nopb}
-                            />
-                            <TextField
-                                autoFocus
-                                margin="dense"
-                                size="small"
-                                id="dc"
-                                label="DC"
-                                type="text"
-                                fullWidth
-                                variant="outlined"
-                                value={pbdc?.dc}
-                            />
-                            <TextField
-                                autoFocus
-                                margin="dense"
-                                size="small"
-                                id="type"
-                                label="Tipe"
-                                type="text"
-                                fullWidth
-                                variant="outlined"
-                                value={pbdc?.tipe}
-                            />
-                            <TextField
-                                autoFocus
-                                margin="dense"
-                                size="small"
-                                id="order-date"
-                                label="Tanggal"
-                                type="text"
-                                fullWidth
-                                variant="outlined"
-                                value={pbdc?.tgl}
-                            />
-                        </Grid>
-                        <Grid container>
-                            <Grid
-                                xs={6}
-                                sx={{
+              >
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  size="small"
+                  id="no-order"
+                  label="Nomor Order"
+                  type="text"
+                  fullWidth
+                  variant="outlined"
+                  value={pbdc?.nopb}
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  size="small"
+                  id="dc"
+                  label="DC"
+                  type="text"
+                  fullWidth
+                  variant="outlined"
+                  value={pbdc?.dc}
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  size="small"
+                  id="type"
+                  label="Tipe"
+                  type="text"
+                  fullWidth
+                  variant="outlined"
+                  value={pbdc?.tipe}
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  size="small"
+                  id="order-date"
+                  label="Tanggal"
+                  type="text"
+                  fullWidth
+                  variant="outlined"
+                  value={pbdc?.tgl}
+                />
+              </Grid>
+              <Grid container>
+                <Grid
+                  xs={6}
+                  sx={{
                                     paddingTop: "10px",
                                 }}
-                            >
-                                <Typography variant="subtitle1" gutterBottom>
-                                    List Barang
-                                </Typography>
-                            </Grid>
-                            <Grid
-                                xs={6}
-                                sx={{
+                >
+                  <Typography variant="subtitle1" gutterBottom>
+                    List Barang
+                  </Typography>
+                </Grid>
+                <Grid
+                  xs={6}
+                  sx={{
                                     paddingTop: "10px",
                                     display: "grid",
                                 }}
-                            >
-                                <Button
-                                    variant="outlined"
-                                    size="small"
-                                    sx={{ alignItems: "end" }}
-                                    color="success"
-                                    onClick={handleOpenModal}
-                                >
-                                    Tambah
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                    <Box
-                        sx={{
+                >
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    sx={{ alignItems: "end" }}
+                    color="success"
+                    onClick={handleOpenModal}
+                  >
+                    Tambah
+                  </Button>
+                </Grid>
+              </Grid>
+            </Box>
+            <Box
+              sx={{
                             maxHeight: "60%",
                             height: "60%",
                         }}
-                    >
-                        <Grid
-                            xs={12}
-                            sx={{
+            >
+              <Grid
+                xs={12}
+                sx={{
                                 paddingTop: "10px",
                             }}
-                        >
-                            <List
-                                sx={{
+              >
+                <List
+                  sx={{
                                     width: "100%",
                                     height: "400px",
                                     bgcolor: "background.paper",
                                     overflow: "scroll",
                                 }}
-                            >
-                                {listDetails?.map(value => {
-                                    return (
-                                        <>
-                                            <LsiListItem
-                                                key={value.id}
-                                                id={value.id}
-                                                title={`PLU: ${value.plu} - ${value.description}`}
-                                                subtitle={`Conv: ${value.convertion} | Eq: ${value.eq} | Order: ${value.qty_order}`}
-                                                onDelete={() =>
-                                                    handleDeleteDraftDetail(
+                >
+                  {listDetails?.map((value) => (
+                    <>
+                      <LsiListItem
+                        key={value.id}
+                        id={value.id ?? ""}
+                        title={`PLU: ${value.plu} - ${value.description}`}
+                        subtitle={`Conv: ${value.convertion} | Eq: ${value.eq} | Order: ${value.qty_order}`}
+                        onDelete={() => handleDeleteDraftDetail(
                                                         value.id
-                                                    )
-                                                }
-                                            />
-                                            <Divider
-                                                variant="inset"
-                                                component="li"
-                                            />
-                                        </>
-                                    );
-                                })}
-                            </List>
-                        </Grid>
-                    </Box>
-                </DialogContent>
-                <DialogActions>
-                    <Button
-                        onClick={() => {
+                                                    )}
+                      />
+                      <Divider
+                        variant="inset"
+                        component="li"
+                      />
+                    </>
+                                    ))}
+                </List>
+              </Grid>
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => {
                             onClose();
                         }}
-                    >
-                        Close
-                    </Button>
-                    <Button
-                        onClick={() => {
+            >
+              Close
+            </Button>
+            <Button
+              onClick={() => {
                             handleSave(
                                 Math.random() * 1000000,
                                 nopb,
@@ -257,19 +254,20 @@ const PdbcDetailModal: FC<ModalProps> = ({
                             );
                             onClose();
                         }}
-                    >
-                        Save
-                    </Button>
-                </DialogActions>
-            </Dialog>
-            <PdbcFormModal
-                isLoading={isLoading}
-                onClose={handleCloseModal}
-                isOpen={openModal}
-                onSaveDraftDetail={handleSaveDraftDetail}
-            />
-        </div>
+            >
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <PdbcFormModal
+          isLoading={isLoading}
+          onClose={handleCloseModal}
+          isOpen={openModal}
+          onSaveDraftDetail={handleSaveDraftDetail}
+          pbdcDetail={undefined}
+        />
+      </div>
     );
 };
 
-export { PdbcDetailModal };
+export default PdbcDetailModal;

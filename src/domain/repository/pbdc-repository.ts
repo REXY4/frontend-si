@@ -5,15 +5,11 @@ import { PbdcService } from "@/src/data/service/pbdc-service";
 
 const getPerStore = async (
     store_code: string
-): Promise<ResponseEntity<[PbdcEntity]>> => {
-    return mapResponse(await PbdcService.getPerStore(store_code));
-};
+): Promise<ResponseEntity<[PbdcEntity]>> => mapResponse(await PbdcService.getPerStore(store_code));
 
 const save = async (
     request: PbdcEntity
-): Promise<ResponseEntity<PbdcEntity>> => {
-    return mapResponse(await PbdcService.save(request));
-};
+): Promise<ResponseEntity<PbdcEntity>> => mapResponse(await PbdcService.save(request));
 
 export const PbdcRepository = {
     getPerStore,

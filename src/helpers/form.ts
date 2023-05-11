@@ -1,7 +1,6 @@
 /* eslint-disable dot-notation */
 /* eslint-disable quotes */
 import React, { useState } from 'react';
-import { validateEmail } from './validation';
 
 enum Type {
   text = 'text',

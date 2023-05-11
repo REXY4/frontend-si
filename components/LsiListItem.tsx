@@ -7,12 +7,12 @@ import {
     MenuItem,
     Typography,
 } from "@mui/material";
-import { FC } from "react";
-import React from "react";
+import React, { FC } from "react";
+
 import { MoreVert } from "@mui/icons-material";
 
 type LsiListItemProps = {
-    id: string;
+    id: string|number;
     title: string;
     subtitle: string;
     onDelete: (id: number) => void;
@@ -34,62 +34,60 @@ const LsiListItem: FC<LsiListItemProps> = ({
         setAnchorEl(null);
     };
 
-    const handleDelete = (id: string) => {
+    const handleDelete = (id: string | number) => {
         console.log("id dari list item", id);
         onDelete(Number(id));
     };
 
     return (
-        <ListItem
-            key={id}
-            secondaryAction={
-                <IconButton
-                    edge="end"
-                    aria-label="comments"
-                    onClick={handleClick}
-                >
-                    <MoreVert />
-                </IconButton>
-            }
-            disablePadding
-        >
-            <ListItemButton>
-                <ListItemText
-                    id={labelId}
-                    primary={title}
-                    secondary={
-                        <>
-                            <Typography
-                                sx={{ display: "inline" }}
-                                component="span"
-                                variant="body2"
-                                color="text.primary"
-                            >
-                                {subtitle}
-                            </Typography>
-                        </>
-                    }
-                />
-            </ListItemButton>
-            <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
+      <ListItem
+        key={id}
+        secondaryAction={(
+          <IconButton
+            edge="end"
+            aria-label="comments"
+            onClick={handleClick}
+          >
+            <MoreVert />
+          </IconButton>
+              )}
+        disablePadding
+      >
+        <ListItemButton>
+          <ListItemText
+            id={labelId}
+            primary={title}
+            secondary={(
+              <Typography
+                sx={{ display: "inline" }}
+                component="span"
+                variant="body2"
+                color="text.primary"
+              >
+                {subtitle}
+              </Typography>
+                      )}
+          />
+        </ListItemButton>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
                     "aria-labelledby": "basic-button",
                 }}
-            >
-                <MenuItem onClick={handleClose}>Edit 1</MenuItem>
-                <MenuItem
-                    onClick={() => {
+        >
+          <MenuItem onClick={handleClose}>Edit 1</MenuItem>
+          <MenuItem
+            onClick={() => {
                         handleDelete(id);
                     }}
-                >
-                    Delete
-                </MenuItem>
-            </Menu>
-        </ListItem>
+          >
+            Delete
+          </MenuItem>
+        </Menu>
+      </ListItem>
     );
 };
 

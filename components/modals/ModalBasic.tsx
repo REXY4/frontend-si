@@ -3,10 +3,12 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { IconButton } from '@mui/material';
 
 interface Props {
     children : React.ReactNode
     open : boolean
+    onClose : () => void;
 }
 
 const style = {
@@ -21,13 +23,15 @@ const style = {
   p: 4,
 };
 
-export default function BasicModal({ children, open }:Props) {
+export default function ModalBasic({ children, open, onClose }:Props) {
   return (
     <div>
       <Modal
+        onClose={onClose}
         open={open}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        closeAfterTransition
       >
         <Box sx={style}>
           {children}

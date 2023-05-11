@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
     Alert,
     Box,
@@ -16,8 +17,7 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import { LsiListItem } from "@/components/LsiListItem";
 import { LsiModal } from "@/components/LsiModal";
-import { PdbcDetailModal } from "./components/PbdcDetailModal";
-import { useEffect, useState } from "react";
+import PdbcDetailModal from "./components/PbdcDetailModal";
 import PbdcViewModel from "./pbdc-view-model";
 import { Loading } from "@/components/Loading";
 import SearchIcon from "@mui/icons-material/Search";
@@ -122,120 +122,118 @@ const Pbdc = () => {
     // console.log("ini view vh",vh);
     const vh = (547 / window.innerHeight) * 100;
     return (
-        <>
-            <Box
-                sx={{
+      <>
+        <Box
+          sx={{
                     height: "20%",
                 }}
-            >
-                <Grid
-                    xs={12}
-                    sx={{
+        >
+          <Grid
+            xs={12}
+            sx={{
                         paddingTop: "10px",
                     }}
-                >
-                    {/* <Loading isLoading={isLoading} /> */}
-                    <Typography fontWeight={"bold"}>
-                        List Penerimaan Barang DC
-                    </Typography>
-                </Grid>
-                <Grid
-                    xs={12}
-                    sx={{
+          >
+            {/* <Loading isLoading={isLoading} /> */}
+            <Typography fontWeight="bold">
+              List Penerimaan Barang DC
+            </Typography>
+          </Grid>
+          <Grid
+            xs={12}
+            sx={{
                         paddingTop: "10px",
                         alignContent: "center",
                         marginBottom: "10px",
                     }}
-                >
-                    <TextField
-                        label="Pencarian"
-                        id="search-filter"
-                        onChange={handleChange}
-                        sx={{ m: 0 }}
-                        InputProps={{
+          >
+            <TextField
+              label="Pencarian"
+              id="search-filter"
+              onChange={handleChange}
+              sx={{ m: 0 }}
+              InputProps={{
                             startAdornment: (
-                                <InputAdornment position="start">
-                                    <IconButton>
-                                        <SearchIcon />
-                                    </IconButton>
-                                </InputAdornment>
+                              <InputAdornment position="start">
+                                <IconButton>
+                                  <SearchIcon />
+                                </IconButton>
+                              </InputAdornment>
                             ),
                         }}
-                        disabled={isLoading}
-                        fullWidth
-                    />
-                </Grid>
-            </Box>
-            <Box
-                sx={{
+              disabled={isLoading}
+              fullWidth
+            />
+          </Grid>
+        </Box>
+        <Box
+          sx={{
                     maxHeight: "80%",
                     height: "80%",
                 }}
-            >
-                <Grid
-                    xs={12}
-                    sx={{
+        >
+          <Grid
+            xs={12}
+            sx={{
                         paddingTop: "10px",
                     }}
-                >
-                    <List
-                        sx={{
+          >
+            <List
+              sx={{
                             width: "100%",
                             height: `${vh}vh`,
                             bgcolor: "background.paper",
                             overflow: "scroll",
                             borderRadius: "10px",
                         }}
-                    >
-                        {pbdcs?.map(value => {
-                            return (
-                                <>
-                                    <LsiListItem
-                                        key={value.nopb}
-                                        id={value.nopb}
-                                        title={`No PB: ${value.nopb} - ${value.tgl}`}
-                                        subtitle={`Tipe: ${value.tipe} | DC: ${value.dc} | Nilai: ${value.nilai}`}
-                                        onDelete={(id: number): void => {
+            >
+              {pbdcs?.map((value) => (
+                <>
+                  <LsiListItem
+                    key={value.nopb}
+                    id={value.nopb}
+                    title={`No PB: ${value.nopb} - ${value.tgl}`}
+                    subtitle={`Tipe: ${value.tipe} | DC: ${value.dc} | Nilai: ${value.nilai}`}
+                    onDelete={(id: number): void => {
                                             alert("deleting");
                                         }}
-                                    />
-                                    <Divider variant="inset" component="li" />
-                                </>
-                            );
-                        })}
-                    </List>
-                </Grid>
-            </Box>
-            <PdbcDetailModal
-                isLoading={false}
-                pbdc={pbdcDraft}
-                onClose={handleCloseModal}
-                isOpen={openModal}
-                onSave={handleSave}
-                onSaveDraftDetail={handleSaveDraftDetail}
-                onDeleteDraftDetail={handleDeleteDraftDetail}
-            />
-            <Fab
-                color="success"
-                aria-label="add"
-                onClick={handleCreateNew}
-                sx={{
+                  />
+                  <Divider variant="inset" component="li" />
+                </>
+                            ))}
+            </List>
+          </Grid>
+        </Box>
+        <PdbcDetailModal
+          isLoading={false}
+          pbdc={pbdcDraft}
+          onClose={handleCloseModal}
+          isOpen={openModal}
+          onSave={handleSave}
+          onSaveDraftDetail={handleSaveDraftDetail}
+          onDeleteDraftDetail={handleDeleteDraftDetail}
+        />
+        <Fab
+          color="success"
+          aria-label="add"
+          onClick={handleCreateNew}
+          sx={{
                     position: "fixed",
                     bottom: 24,
                     right: 16,
                     zIndex: 100,
                 }}
-            >
-                <AddIcon />
-            </Fab>
-            {/* <Snackbar open={isOpenAlert} autoHideDuration={6000} onClose={() => {
+        >
+          <AddIcon />
+        </Fab>
+        {/* <Snackbar open={isOpenAlert} autoHideDuration={6000} onClose={() => {
                 setOpenMessage(false);
             }}>
                 <Alert onClose={hideAlert} severity="success" sx={{ width: '100%' }}>
                     {alertMessage}
                 </Alert>
             </Snackbar> */}
-        </>
+      </>
     );
 };
 

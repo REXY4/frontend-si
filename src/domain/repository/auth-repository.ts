@@ -6,21 +6,15 @@ import { ResponseEntity } from "../entity/response-entity";
 
 const login = async (
     loginEntity: LoginEntity
-): Promise<ResponseEntity<AuthEntity>> => {
-    return mapResponse(await AuthService.login(loginEntity));
-};
+): Promise<ResponseEntity<AuthEntity>> => mapResponse(await AuthService.login(loginEntity));
 
 const refreshLogin = async (
     refreshToken: string
-): Promise<ResponseEntity<AuthEntity>> => {
-    return mapResponse(await AuthService.refreshLogin(refreshToken));
-};
+): Promise<ResponseEntity<AuthEntity>> => mapResponse(await AuthService.refreshLogin(refreshToken));
 
 const getDomain = async (
     username: string
-): Promise<ResponseEntity<AuthEntity>> => {
-    return mapResponse(await AuthService.getDomain(username));
-};
+): Promise<ResponseEntity<AuthEntity>> => mapResponse(await AuthService.getDomain(username));
 
 export const AuthRepository = {
     login,
