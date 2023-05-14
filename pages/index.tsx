@@ -1,23 +1,20 @@
 // pages/index.tsx
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import type { ReactElement } from 'react';
 import { useRouter } from 'next/router';
-import PrivateRoute from '@/components/PrivateRoute';
-import Layout from '../components/layout';
+import { withAuth } from '@/src/helpers/PrivateRoute';
+import Layout from '../components/layouts/layout';
 import type { NextPageWithLayout } from './_app';
-import { Loading } from '@/components/Loading';
+import LoginPage from './login';
 
 // eslint-disable-next-line react/function-component-definition
-const Page: NextPageWithLayout = () => <Loading isLoading />;
+const Page: NextPageWithLayout = () => <LoginPage />;
 Page.getLayout = function getLayout(page: ReactElement) {
   return (
     <Layout>
-      <PrivateRoute>
-        {page}
-      </PrivateRoute>
+      {page}
     </Layout>
-
   );
 };
 
-export default Page;
+export default withAuth(Page);

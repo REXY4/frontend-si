@@ -10,9 +10,9 @@ import {
   appPersistor,
   appStoreImplementation,
 } from '@/src/data/store-implementation/app-store-implementation';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import Layout from '@/components/layout';
+import Layout from '@/components/layouts/layout';
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
     getLayout?: (page: ReactElement) => ReactNode;
@@ -25,9 +25,7 @@ type AppPropsWithLayout = AppProps & {
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page) => page);
-
   const tempComponent = <Component {...pageProps} />;
-
   let templateLayout = <>{tempComponent}</>;
   if (!pageProps.noLayout) {
     templateLayout = <Layout>{tempComponent}</Layout>;

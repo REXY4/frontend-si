@@ -6,20 +6,13 @@ import {
 } from '@mui/material';
 import styles from "@/styles/pages/home.module.css";
 import CollapsePrimary from '@/components/colapse/CollapsePrimary';
-import SummarizeIcon from '@mui/icons-material/Summarize';
+import { StoreOrder } from './Submenu';
+import { BoxCardButton } from '@/components/cards';
+import { useRouter } from 'next/router';
+import { withAuth } from '@/src/helpers/PrivateRoute';
 
 function Home() {
-  const data = [
-    {
-      title: "PB DC"
-    },
-    {
-      title: "PB Supplier"
-    },
-    {
-      title: "PO Canvas"
-    }
-  ];
+  let router = useRouter();
   return (
     <Container>
       <Grid
@@ -33,20 +26,19 @@ function Home() {
       <Grid xs={12} mt={5}>
         <Box mt={3}>
           <CollapsePrimary title="Store Order">
-            <Grid container flexDirection="row" justifyContent="center">
-              {data.map((item:any) => (
-                <Grid xs={5} marginRight={1} marginTop={2} marginBottom={1}>
-                  <Card className={styles.cardContent}>
-                    <CardContent>
-                      <Box display="flex" justifyContent="center" mb={1}>
-                        <SummarizeIcon sx={{
-                          color: '#26116C'
-                        }}
-                        />
-                      </Box>
-                      <p className={styles.subTitleCard}>{item.title}</p>
-                    </CardContent>
-                  </Card>
+            <Grid container>
+              {StoreOrder.map((item:any) => (
+                <Grid
+                  padding={1}
+                  xs={5}
+                  marginRight={2}
+                  sx={{
+                  marginLeft: "7px"
+                }}
+                  marginTop={2}
+                  // marginBottom={1}
+                >
+                  <BoxCardButton onClick={() => router.push("/pbdc")} icon={item.icon} title={item.title} />
                 </Grid>
                 ))}
             </Grid>
@@ -67,4 +59,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default withAuth(Home);

@@ -4,26 +4,11 @@ import { AuthActionType } from '../action-type/auth-action-type';
 import { SettingActionType } from '../action-type/settting-action-type';
 
 const loginAction = (loginEntity: LoginEntity) => async (dispatch: any) => {
-  try {
     dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });
     const response = await AuthRepository.login(loginEntity);
     dispatch({ type: AuthActionType.AUTH_LOGIN, payload: response });
     dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
     return response;
-  } catch (err) {
-    dispatch({
-      type: SettingActionType.SET_LOADING,
-      isLoading: false,
-    });
-    // dispatch({
-    //   type: SettingActionType.SET_OPEN_ALERT,
-    //   isOpenAlert : true
-    // });
-    // dispatch({
-    //   type: SettingActionType.SET_ALERT_MESSAGE,
-    //   alertMessage : "Login Failed, please try againt!"
-    // });
-  }
 };
 
 const logoutAction = () => (dispatch: any) => {

@@ -1,4 +1,4 @@
-import { getCookie, removeCookies } from "cookies-next";
+import { removeCookies } from "cookies-next";
 import {
     AnyAction,
     applyMiddleware,
@@ -14,6 +14,7 @@ import { initReducer } from "../reducer/init-reducer";
 import { settingReducer } from "../reducer/setting-reducer";
 import { userReducer } from "../reducer/user-reducer";
 import { pbdcReducer } from "../reducer/pbdc-reducer";
+import { alertReducer } from "../reducer/alert-reducer";
 
 const rootReducer = combineReducers({
     setting: settingReducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
     auth: authReducer,
     init: initReducer,
     pbdc: pbdcReducer,
+    alert: alertReducer,
 });
 
 const rootActionReducers = (state: any, action: AnyAction) => {
@@ -36,6 +38,7 @@ const persistConfig = {
     key: "root",
     storage: storage,
     whitelist: ["setting", "auth", "init", "user", "pbdc"],
+    blacklist: ["alert"]
 };
 
 const persistedReducer = persistReducer(persistConfig, rootActionReducers);

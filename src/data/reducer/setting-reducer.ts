@@ -38,6 +38,7 @@ const settingReducer = (
             return {
                 ...state,
                 isOpenAlert: action.isOpenAlert,
+                alertMessage: action.alertMessage
             };
         default:
             return state;

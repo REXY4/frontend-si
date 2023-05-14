@@ -22,6 +22,7 @@ import PbdcViewModel from "./pbdc-view-model";
 import { Loading } from "@/components/Loading";
 import SearchIcon from "@mui/icons-material/Search";
 import { PbdcEntity } from "@/src/domain/entity/pbdc-entity";
+import { withAuth } from "@/src/helpers/PrivateRoute";
 
 const Pbdc = () => {
     const [openModal, setOpenModal] = useState<boolean>(false);
@@ -237,4 +238,4 @@ const Pbdc = () => {
     );
 };
 
-export default Pbdc;
+export default withAuth(Pbdc);

@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import { IconButton } from '@mui/material';
-import TextField, { TextFieldProps } from '@mui/material/TextField';
+import TextField from '@mui/material/TextField';
 
 const CssTextField = styled(TextField)({
   width: '100%',
@@ -35,6 +35,8 @@ interface Props {
   value : any
   defaultValue :any
   onChange : any
+  error : boolean
+  errorMessage : string
 }
 
 export default function BasicInput({
@@ -46,9 +48,12 @@ export default function BasicInput({
   value,
   defaultValue,
   onChange,
+  error,
+  errorMessage
 } : Props) {
   return (
     <CssTextField
+      error={error}
       name={name}
       label={label}
       type={type}
@@ -58,6 +63,7 @@ export default function BasicInput({
       autoComplete="false"
       id="custom-css-outlined-input"
       placeholder="Insert your username"
+      helperText={errorMessage}
       InputProps={{
         startAdornment: (
           startIcon !== undefined

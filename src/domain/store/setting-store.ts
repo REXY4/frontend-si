@@ -1,5 +1,3 @@
-import { ResponseEntity } from "../entity/response-entity";
-
 interface SettingStore {
     applicationName: string;
     alertMessage: string;

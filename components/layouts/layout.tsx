@@ -18,12 +18,9 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import Footer from './Footer';
-import Navbar from './Navbar';
+import LayoutModel from './layout-model';
+import HomeIcon from '@mui/icons-material/Home';
 
 const drawerWidth = 240;
 
@@ -36,12 +33,12 @@ interface AppBarProps extends Omit<MuiAppBarProps, 'open'> {
 }
 
 export default function Layout({ children }: PropsLayout) {
+  const { logout } = LayoutModel();
   const router = useRouter();
   const currentUrl = router.asPath;
   const { publicRuntimeConfig } = getConfig();
   const applicationName = `${publicRuntimeConfig.applicationName}`;
   const [open, setOpen] = useState(false);
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -147,6 +144,11 @@ export default function Layout({ children }: PropsLayout) {
     justifyContent: 'flex-end',
   }));
 
+  const handleRoute = (url:string) => {
+    console.log("url", url);
+    router.push(`/${url.toLowerCase()}`);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Head>
@@ -206,17 +208,11 @@ export default function Layout({ children }: PropsLayout) {
           </DrawerHeader>
           <Divider />
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map(
+            {['Home', 'Logout'].map(
               (text, index) => (
                 <ListItem key={text} disablePadding>
-                  <ListItemButton>
-                    <ListItemIcon>
-                      {index % 2 === 0 ? (
-                        <InboxIcon />
-                      ) : (
-                        <MailIcon />
-                      )}
-                    </ListItemIcon>
+                  <ListItemButton onClick={() => (text === "Logout" ? logout() : handleRoute(text))}>
+                    {text === 'Home' && <HomeIcon />}
                     <ListItemText primary={text} />
                   </ListItemButton>
                 </ListItem>
@@ -224,7 +220,7 @@ export default function Layout({ children }: PropsLayout) {
             )}
           </List>
           <Divider />
-          <List>
+          {/* <List>
             {['All mail', 'Trash', 'Spam'].map((text, index) => (
               <ListItem key={text} disablePadding>
                 <ListItemButton>
@@ -239,7 +235,7 @@ export default function Layout({ children }: PropsLayout) {
                 </ListItemButton>
               </ListItem>
             ))}
-          </List>
+          </List> */}
         </Drawer>
         <Main open={open}>
           <DrawerHeader />

@@ -11,9 +11,9 @@ const loginUseCase = async (
     );
 };
 
-const createParams = (username: string, password: string): LoginEntity => {
+const createParams = (userId: string, password: string): LoginEntity => {
     let result: LoginEntity = {
-        username: username,
+        userId: userId,
         password: password,
     };
     return result;

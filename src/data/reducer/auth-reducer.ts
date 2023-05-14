@@ -1,4 +1,4 @@
-import { setCookies } from "cookies-next";
+import { setCookies, deleteCookie } from "cookies-next";
 import type { AnyAction } from "redux";
 import { AuthStore } from "@/src/domain/store/auth-store";
 import { AuthActionType } from "../action-type/auth-action-type";
@@ -8,7 +8,7 @@ type AuthStoreState = Omit<
     "authLogin" | "logout" | "authRefreshToken" | "getDomain"
 >;
 
-const INITIAL_STATE: any = {
+const INITIAL_STATE:any = {
     auth: undefined,
     validation: undefined,
     status: undefined,
@@ -21,12 +21,16 @@ const authReducer = (
     switch (action.type) {
         case AuthActionType.AUTH_LOGIN:
             if (action.payload.returnType === "S") {
-                setCookies("token", action.payload.returnData.token);
+                setCookies("token", action.payload.returnObject.token);
             }
-
             return {
                 ...state,
-                auth: action.payload.returnData,
+                auth: action.payload.returnObject,
+            };
+        case AuthActionType.LOGOUT:
+            deleteCookie("token");
+            return {
+                ...INITIAL_STATE
             };
         case AuthActionType.REFRESH_LOGIN:
             return {

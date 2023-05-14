@@ -15,7 +15,7 @@ export const config = {
     target: '#video-container',
   },
   decoder: {
-    readers: ['ean_reader'],
+    readers: ['code_128_reader'],
   },
 };
 
@@ -47,6 +47,7 @@ export const BarcodeScanner: React.FC<ScannerProps> = ({ onDetected, onClose }) 
     );
 
     Quagga.onDetected((result:any) => {
+      console.log("ini model result", result);
       onDetected(result.codeResult.code);
       Quagga.stop();
       onClose(false);

@@ -86,18 +86,13 @@ const post = async (
     };
     try {
         const response = await fetch(url, requestOptions).then(handleResponse);
-
         if (callDispatch) {
- appStoreImplementation.dispatch({
+             appStoreImplementation.dispatch({
                 type: actionType,
                 payload: response,
             });
-}
+        }
         if (response != ResponseStatus.Unauthorized) return response;
-
-        // const result = await refreshToken();
-        // if (result?.status?.code == ResponseStatus.Success)
-        //   post(actionType, url, body, true);
     } catch (e) {
         appStoreImplementation.dispatch({
             type: SettingActionType.SET_LOADING,
@@ -217,9 +212,7 @@ const authHeader = (isMultipartForm?: boolean) => {
           };
 };
 
-const handleResponse = (response: any, isDownload?: boolean) => {
-    console.log("respon nya apa", response);
-    return response.text().then((text: any) => {
+const handleResponse = (response: any, isDownload?: boolean) => response.text().then((text: any) => {
         const data = isDownload ? text : text && JSON.parse(text);
         const appendData = {
             ...data,
@@ -229,16 +222,13 @@ const handleResponse = (response: any, isDownload?: boolean) => {
                 isError: false,
             },
         };
-
-        console.log("appendData", appendData);
-
         if ([ResponseStatus.Unauthorized].includes(response.status)) {
             // Promise.reject(ResponseStatus.Unauthorized);
             return ResponseStatus.Unauthorized;
         }
         if (!response.ok) {
-            alert(`error disini: ${appendData?.returnMessage}`);
-            console.log("errornya", appendData?.returnMessage);
+            // alert(`error disini: ${appendData?.returnMessage}`);
+            // console.log("errornya", appendData?.returnMessage);
             const errorData = {
                 ...appendData,
                 status: {
@@ -251,7 +241,6 @@ const handleResponse = (response: any, isDownload?: boolean) => {
         }
         return appendData;
     });
-};
 
 export const fetchWrapper = {
     auth,

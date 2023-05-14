@@ -1,3 +1,3 @@
-import BasicAlerts from "./BasicAlert";
+import { BasicAlerts, SeverityType } from "./BasicAlert";
 
-export { BasicAlerts };
+export { BasicAlerts, SeverityType };
