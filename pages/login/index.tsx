@@ -17,7 +17,6 @@ import { Loading } from '@/components/Loading';
 enum ErrorMessage {
   NULL = "Tidak boleh kosong!"
 }
-
 interface FromInput {
    [key : string] : {
      name: string,
@@ -167,7 +166,7 @@ function LoginPage() {
             </Box>
             <Loading isLoading={isLoading} />
           </Box>
-          <BasicAlerts severity="error" message={alertMessage} isOpen={isOpenAlert} onClose={undefined} />
+          <BasicAlerts severity="error" message={alertMessage} isOpen={isOpenAlert} onClose={() => onOpenAlertClicked(false, "")} />
         </Grid>
       </Container>
     </ThemeProvider>

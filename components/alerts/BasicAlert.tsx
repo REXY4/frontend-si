@@ -13,7 +13,7 @@ export enum SeverityType {
 
 interface Props {
     severity: AlertColor;
-    message: string;
+    message: string | null;
     isOpen: boolean;
     onClose: any;
 }
