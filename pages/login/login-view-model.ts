@@ -20,19 +20,7 @@ const LoginViewModel = () => {
   );
 
   const onLoginClicked = async (username: string, password: string) => {
-      try {
-        const response:any = await loginUseCase(authStore, username, password);
-        await settingStore.setLoading(true);
-        if (response.data.returnType === "S") {
-          await settingStore.setLoading(false);
-          await alertUseCase(alertStore, true, "login failed!, Please Check your Staff Id and Password");
-        } else {
-            await settingStore.setLoading(false);
-        }
-      } catch (err) {
-        await alertUseCase(alertStore, true, "login failed!, internal server error");
-        await settingStore.setLoading(false);
-      }
+        await loginUseCase(authStore, username, password);
     };
 
   const onOpenAlertClicked = useCallback(async (isOpen:boolean, message:string) => {

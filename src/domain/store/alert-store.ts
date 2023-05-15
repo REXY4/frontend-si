@@ -1,6 +1,6 @@
 interface AlertStore {
     isOpen : boolean | false,
-    message : string,
+    message : string | null,
     setAlert(isOpen:boolean, message:string):void
 }
 

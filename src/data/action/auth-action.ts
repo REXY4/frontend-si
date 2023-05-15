@@ -1,14 +1,32 @@
 import { LoginEntity } from '@/src/domain/entity/login-entity';
 import { AuthRepository } from '@/src/domain/repository/auth-repository';
 import { AuthActionType } from '../action-type/auth-action-type';
+import { AlertActionType } from '../action-type/alert-action-type';
 import { SettingActionType } from '../action-type/settting-action-type';
 
 const loginAction = (loginEntity: LoginEntity) => async (dispatch: any) => {
-    dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });
+  try {
+ dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });
     const response = await AuthRepository.login(loginEntity);
-    dispatch({ type: AuthActionType.AUTH_LOGIN, payload: response });
-    dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
-    return response;
+    if (response.returnType === "E") {
+       dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
+       dispatch({
+          type: AlertActionType.SET_ALERTS,
+          isOpen: true,
+          message: response.returnMessage
+      });
+    } else {
+      dispatch({ type: AuthActionType.AUTH_LOGIN, payload: response });
+      return response;
+    }
+  } catch (err) {
+      dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
+      dispatch({
+          type: AlertActionType.SET_ALERTS,
+          isOpen: true,
+          message: "Login Failed!"
+      });
+  }
 };
 
 const logoutAction = () => (dispatch: any) => {

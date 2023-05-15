@@ -1,3 +1,3 @@
 export enum AlertActionType {
-    ALERT = "SET_ALERT",
+    SET_ALERTS = "SET_ALERTS",
 }

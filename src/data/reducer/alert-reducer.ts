@@ -14,7 +14,7 @@ const INITIAL_STATE:AlertStoreState = {
 
 const alertReducer = (state:AlertStoreState = INITIAL_STATE, action : AnyAction) => {
     switch (action.type) {
-        case AlertActionType.ALERT:
+        case AlertActionType.SET_ALERTS:
             return {
                 ...state,
                 isOpen: action.isOpen,
