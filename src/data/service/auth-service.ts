@@ -8,7 +8,7 @@ const baseUrl = `${publicRuntimeConfig.apiUrl}${Endpoint.login}`;
 const lsifBaseUrl = `${publicRuntimeConfig.lsifApiUrl}`;
 
 const login = async (loginEntity: LoginEntity) => {
-    const response = fetchWrapper.auth(`${lsifBaseUrl}login/post`, loginEntity);
+    const response = fetchWrapper.auth(`${lsifBaseUrl}/login/post`, loginEntity);
     return response;
 };
 

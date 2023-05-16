@@ -1,0 +1,25 @@
+.paragraf{
+    color : "black";
+    font-size: 12px;
+}
+
+.title{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #26116C;
+    margin-bottom: 5px;
+}
+
+.buttonTitle{
+    cursor: pointer;
+}
+
+.buttonTitle:hover{
+    opacity: 0.3;
+}
+
+.buttonTitle:active{
+    opacity: 1;
+}

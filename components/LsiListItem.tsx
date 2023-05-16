@@ -53,7 +53,7 @@ const LsiListItem: FC<LsiListItemProps> = ({
               )}
         disablePadding
       >
-        <ListItemButton>
+        {/* <ListItemButton>
           <ListItemText
             id={labelId}
             primary={title}
@@ -68,7 +68,7 @@ const LsiListItem: FC<LsiListItemProps> = ({
               </Typography>
                       )}
           />
-        </ListItemButton>
+        </ListItemButton> */}
         <Menu
           id="basic-menu"
           anchorEl={anchorEl}

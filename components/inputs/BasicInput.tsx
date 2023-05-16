@@ -36,6 +36,7 @@ interface Props {
   defaultValue :any
   onChange : any
   error : boolean
+  placeholder : string
   errorMessage : string
 }
 
@@ -49,7 +50,8 @@ export default function BasicInput({
   defaultValue,
   onChange,
   error,
-  errorMessage
+  errorMessage,
+  placeholder
 } : Props) {
   return (
     <CssTextField
@@ -62,7 +64,7 @@ export default function BasicInput({
       defaultValue={defaultValue}
       autoComplete="false"
       id="custom-css-outlined-input"
-      placeholder="Insert your username"
+      placeholder={placeholder}
       helperText={errorMessage}
       InputProps={{
         startAdornment: (

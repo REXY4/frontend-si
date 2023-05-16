@@ -48,6 +48,8 @@
     "import/no-cycle" : 0,
     "no-case-declarations" : 0,
     "default-param-last" : 0,
-    "react-hooks/rules-of-hook" : 0
+    "react-hooks/rules-of-hook" : 0,
+    "arrow-body-style" : 0,
+    "keyword-spacing" : 0
   }
 }

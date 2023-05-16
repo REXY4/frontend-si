@@ -6,9 +6,11 @@ import { PbdcDetailEntity, PbdcEntity } from "@/src/domain/entity/pbdc-entity";
 import { saveDraftDetailUseCase } from "@/src/use-case/pbdc/save-draft-detail-use-case";
 import { deleteDraftDetailUseCase } from "@/src/use-case/pbdc/delete-draft-detail-use-case";
 import { saveUseCase } from "@/src/use-case/pbdc/save-use-case";
+import { authStoreImplementation } from '@/src/data/store-implementation/auth-store-implementation';
 
 const PbdcViewModel = () => {
     const pbdcStore = pbdcStoreImplementation();
+    const authStore = authStoreImplementation();
     const settingStore = settingStoreImplementation();
     const [pbdcsFiltered, setPbdcsFiltered] = useState<PbdcEntity[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -16,9 +18,10 @@ const PbdcViewModel = () => {
     const [alertMessage, setAlertMessage] = useState<string>("");
 
     const onLoad = useCallback(
-        async (store_code: string) => {
-            await getPbdcPerStoreUseCase(pbdcStore, store_code);
-            setPbdcsFiltered(pbdcStore.pbdcs && pbdcStore.pbdcs);
+        async () => {
+            const { store }:any = authStore.auth;
+            await getPbdcPerStoreUseCase(pbdcStore, store);
+            setPbdcsFiltered(pbdcStore.pbdcs);
         },
         [pbdcStore]
     );
@@ -106,8 +109,64 @@ const PbdcViewModel = () => {
         console.log("perubahan open alert", settingStore);
     }, [settingStore]);
 
+    const dataPbdc = [
+        {
+              nopb: "PB1239211239",
+              tipe: "T-REGULER",
+              dc: "34012",
+              nilai: "12939129"
+        },
+        {
+              nopb: "PB123934459",
+              tipe: "T-REGULER",
+              dc: "34012",
+              nilai: "12939129"
+        },
+        {
+              nopb: "PB13343925669",
+              tipe: "T-REGULER",
+              dc: "34012",
+              nilai: "12939129"
+        },
+        {
+              nopb: "PB123921939",
+              tipe: "T-REGULER",
+              dc: "34012",
+              nilai: "12939129"
+        },
+                {
+              nopb: "PB123921939",
+              tipe: "T-REGULER",
+              dc: "34123",
+              nilai: "12939129"
+        },
+        {
+              nopb: "PB123921939",
+              tipe: "T-REGULER",
+              dc: "34012",
+              nilai: "12939129"
+        },
+                {
+              nopb: "PB123921939",
+              tipe: "T-REGULER",
+              dc: "34012",
+              nilai: "12939129"
+        },
+        {
+              nopb: "PB123921939",
+              tipe: "T-REGULER",
+              dc: "34012",
+              nilai: "12939129"
+        }, {
+              nopb: "PB123921939",
+              tipe: "T-REGULER",
+              dc: "34012",
+              nilai: "12939129"
+        }
+    ];
+
     return {
-        pbdcs: pbdcsFiltered,
+        pbdcs: dataPbdc,
         pbdcDraft: pbdcStore?.pbdcDraft,
         onLoad,
         onFilter,

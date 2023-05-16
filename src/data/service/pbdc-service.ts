@@ -6,7 +6,7 @@ import { appStoreImplementation } from "../store-implementation/app-store-implem
 import { PbdcEntity } from "@/src/domain/entity/pbdc-entity";
 
 const { publicRuntimeConfig } = getConfig();
-const baseUrl = `${publicRuntimeConfig.apiUrl}${Endpoint.pbdc}`;
+const baseUrl = `${publicRuntimeConfig.apiUrl}/${Endpoint.pbdc}`;
 const authStore = appStoreImplementation.getState().auth;
 const pToken = authStore?.auth?.token;
 
@@ -14,7 +14,7 @@ const getPerStore = async (store_code: string) => {
     try {
         const response = fetchWrapper.get(
             PbdcActionType.GET_PER_STORE,
-            `${baseUrl}all?store_code=${store_code}&pToken=${pToken}&fromCache=true`
+            `${baseUrl}/all?store_code=${store_code}&pToken=${pToken}&fromCache=true`
         );
         return response;
     } catch (err) {
