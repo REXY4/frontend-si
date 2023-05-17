@@ -17,14 +17,11 @@ const PbdcViewModel = () => {
     const [isOpenAlert, setIsOpenAlert] = useState<boolean>(false);
     const [alertMessage, setAlertMessage] = useState<string>("");
 
-    const onLoad = useCallback(
-        async () => {
+    const onLoad = async () => {
             const { store }:any = authStore.auth;
             await getPbdcPerStoreUseCase(pbdcStore, store);
             setPbdcsFiltered(pbdcStore.pbdcs);
-        },
-        [pbdcStore]
-    );
+        };
 
     const onFilter = (keyword: string) => {
         setIsLoading(true);
@@ -109,64 +106,8 @@ const PbdcViewModel = () => {
         console.log("perubahan open alert", settingStore);
     }, [settingStore]);
 
-    const dataPbdc = [
-        {
-              nopb: "PB1239211239",
-              tipe: "T-REGULER",
-              dc: "34012",
-              nilai: "12939129"
-        },
-        {
-              nopb: "PB123934459",
-              tipe: "T-REGULER",
-              dc: "34012",
-              nilai: "12939129"
-        },
-        {
-              nopb: "PB13343925669",
-              tipe: "T-REGULER",
-              dc: "34012",
-              nilai: "12939129"
-        },
-        {
-              nopb: "PB123921939",
-              tipe: "T-REGULER",
-              dc: "34012",
-              nilai: "12939129"
-        },
-                {
-              nopb: "PB123921939",
-              tipe: "T-REGULER",
-              dc: "34123",
-              nilai: "12939129"
-        },
-        {
-              nopb: "PB123921939",
-              tipe: "T-REGULER",
-              dc: "34012",
-              nilai: "12939129"
-        },
-                {
-              nopb: "PB123921939",
-              tipe: "T-REGULER",
-              dc: "34012",
-              nilai: "12939129"
-        },
-        {
-              nopb: "PB123921939",
-              tipe: "T-REGULER",
-              dc: "34012",
-              nilai: "12939129"
-        }, {
-              nopb: "PB123921939",
-              tipe: "T-REGULER",
-              dc: "34012",
-              nilai: "12939129"
-        }
-    ];
-
     return {
-        pbdcs: dataPbdc,
+        pbdcs: pbdcsFiltered,
         pbdcDraft: pbdcStore?.pbdcDraft,
         onLoad,
         onFilter,

@@ -9,6 +9,7 @@ type PbdcStoreState = Omit<PbdcStore, "getPerStore">;
 const INITIAL_STATE: any = {
     pbdc: undefined,
     pbdcs: undefined,
+    detailPbdc: undefined,
     pbdcDraft: {
         id: Math.floor(Math.random() * 100000 + 1),
         nopb: "XXXXXXXX",
@@ -32,6 +33,11 @@ const pbdcReducer = (
                 ...state,
                 pbdcs: action.payload.returnData ?? [],
             };
+        case PbdcActionType.GET_DETAIL:
+            return {
+                ...state,
+                detailPbdc: action.detailPbdc
+            };
         case PbdcActionType.SAVE:
             return {
                 ...state,
@@ -39,7 +45,6 @@ const pbdcReducer = (
             };
         case PbdcActionType.SAVE_DRAFT_DETAIL:
             let draft = state?.pbdcDraft;
-
             if (draft === undefined) {
                 draft = {
                     id: Math.floor(Math.random() * 10 + 1),

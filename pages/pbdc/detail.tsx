@@ -29,7 +29,7 @@ const ListOrder = ({ label, value }:PropsList) => {
     );
 };
 
-const AddPbdc = () => {
+const DetailPbdc = () => {
 const vh = (547 / window.innerHeight) * 100;
 
     return(
@@ -64,4 +64,4 @@ const vh = (547 / window.innerHeight) * 100;
     );
 };
 
-export default AddPbdc;
+export default DetailPbdc;

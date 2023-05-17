@@ -7,11 +7,23 @@ import { PbdcActionType } from '../action-type/pbdc-action-type';
 import { SettingActionType } from '../action-type/settting-action-type';
 
 const getPerStoreAction = (store_code: string) => async (dispatch: any) => {
-  dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });
+  try{
+    dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });
   const response = await PbdcRepository.getPerStore(store_code);
+  if(response.returnType === "E") {
+      dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
+      dispatch({ type: PbdcActionType.GET_PER_STORE, payload: response });
+  }
   dispatch({ type: PbdcActionType.GET_PER_STORE, payload: response });
   dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
   return response;
+  }catch(err) {
+      dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
+  }
+};
+
+const getDetailPbdcAction = (data:any) => async (dispatch:any) => {
+    dispatch({ type: PbdcActionType.GET_DETAIL, detailPbdc: data });
 };
 
 const saveAction = (request: PbdcEntity) => async (dispatch: any) => {
@@ -58,6 +70,7 @@ const deleteDraftDetailAction = (id: number) => async (dispatch: any) => {
 
 export const PbdcAction = {
   getPerStoreAction,
+  getDetailPbdcAction,
   saveAction,
   saveDraftDetailAction,
   deleteDraftDetailAction,

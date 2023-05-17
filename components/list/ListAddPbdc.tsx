@@ -14,7 +14,7 @@ interface Props {
     tanggal : string
 }
 
-const ListPrimary = ({
+const ListAddPbdc = ({
  title, type, dc, nilai, tanggal
 }:Props) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -23,7 +23,6 @@ const ListPrimary = ({
     const date = d.getDate() < 10 ? `0${d.getDate()}` : d.getDate();
     const month = d.getMonth() < 10 ? `0${d.getMonth()}` : d.getMonth();
     const dateNow = `${date}/${month}/${d.getFullYear()}`;
-
 return (
   <>
     <Box display="flex" justifyContent="space-between" marginBottom={2}>
@@ -63,4 +62,4 @@ return (
   </>
     );
 };
-export default ListPrimary;
+export default ListAddPbdc;

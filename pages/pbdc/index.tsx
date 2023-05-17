@@ -13,16 +13,17 @@ import { ListPrimary } from "@/components/list";
 import PbdcViewModel from "./pbdc-view-model";
 import { ButtonAdd, ButtonFilter } from "@/components/buttons";
 import { useRouter } from "next/router";
+import { withAuth } from "@/src/helpers/PrivateRoute";
 
 const PbdcPages = () => {
 const { onLoad, pbdcs } = PbdcViewModel();
 const [search, setSearch] = useState<string>("");
 const [valueFilter, setValueFilter] = useState<string>("All");
 let navigate = useRouter();
-
-// useEffect(() => {
-//     onLoad();
-// }, []);
+  console.log("ini pbdc", pbdcs);
+useEffect(() => {
+    onLoad();
+}, []);
 
 const vh = (547 / window.innerHeight) * 100;
 const filterMenu = ["All", "No Pb", "Tipe", "Dc", "Nilai", ""];
@@ -77,15 +78,15 @@ return (
                 }if(valueFilter === "Dc") {
                   return fil.dc.toLowerCase().includes(search.toLowerCase());
                 }if(valueFilter === "Nilai") {
-                  return fil.nilai.toLowerCase().includes(search.toLowerCase());
+                  return String(fil.nilai).toLowerCase().includes(search.toLowerCase());
                 }
                  return fil.nopb.toLowerCase().includes(search.toLowerCase())
                 || fil.tipe.toLowerCase().includes(search.toLowerCase())
                 || fil.dc.toLowerCase().includes(search.toLowerCase())
-                || fil.nilai.toLowerCase().includes(search.toLowerCase());
+                || String(fil.nilai).includes(search.toLowerCase());
           }).map((item:any) => (
-            <Box marginTop={2}>
-              <ListPrimary title={item.nopb} type={item.tipe} dc={item.dc} nilai={item.nilai} />
+            <Box marginTop={2} key={item.tgl}>
+              <ListPrimary title={item.nopb} tanggal={item.tgl} type={item.tipe} dc={item.dc} nilai={item.nilai} />
             </Box>
             ))}
         </CardContainer>
@@ -103,6 +104,6 @@ return (
     </Container>
   </ThemeProvider>
     );
-    };
+ };
 
-export default PbdcPages;
+export default withAuth(PbdcPages);
