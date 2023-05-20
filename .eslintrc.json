@@ -1,0 +1,56 @@
+{
+  "extends": [
+    "airbnb",
+    "next/core-web-vitals"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "parserOptions": {
+        "project": ["./tsconfig.json"]
+      }
+    }
+  ],
+  "rules": {
+    "jsx-a11y/media-has-caption" : 0,
+    "import/no-extraneous-dependencies" : 0,
+     "no-console": 0,
+    "prettier/prettier": 0,
+    "prefer-const": 0,
+    "react/jsx-key": 0,
+    "react/no-unescaped-entities": 0,
+    "@typescript-eslint/no-inferrable-types": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-unused-vars": 0,
+    "react-hooks/exhaustive-deps": 0,
+    "import/extensions" : 0,
+    "camelcase": 0,
+    "import/prefer-default-export" : 0,
+    "linebreak-style" : 0,
+    "consistent-return" : 0,
+    "react/jsx-filename-extension" : 0,
+    "no-unused-vars" : 0,
+    "no-shadow" : 0,
+    "prefer-destructuring" : 0,
+    "react/jsx-props-no-spreading" : 0,
+    "quotes" : 0,
+    "indent" : 0,
+    "import/order" : 0,
+    "react/function-component-definition" : 0,
+    "comma-dangle" : 0,
+    "no-use-before-define" : 0,
+    "import/no-duplicates" : 1,
+    "no-param-reassign" : 0,
+    "no-self-assign" : 0,
+    "object-shorthand" : 0,
+    "eqeqeq" : 0,
+    "import/no-cycle" : 0,
+    "no-case-declarations" : 0,
+    "default-param-last" : 0,
+    "react-hooks/rules-of-hook" : 0,
+    "arrow-body-style" : 0,
+    "keyword-spacing" : 0,
+    "react-hooks/rules-of-hooks" : 0
+  }
+}
