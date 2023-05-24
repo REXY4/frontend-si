@@ -6,7 +6,7 @@ import { SettingActionType } from '../action-type/settting-action-type';
 
 const loginAction = (loginEntity: LoginEntity) => async (dispatch: any) => {
   try {
- dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });
+  dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });
     const response = await AuthRepository.login(loginEntity);
     if (response.returnType === "E") {
        dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
@@ -16,6 +16,7 @@ const loginAction = (loginEntity: LoginEntity) => async (dispatch: any) => {
           message: response.returnMessage
       });
     } else {
+       dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
       dispatch({ type: AuthActionType.AUTH_LOGIN, payload: response });
       return response;
     }

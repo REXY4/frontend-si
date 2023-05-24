@@ -5,21 +5,30 @@ import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 
 interface Props {
-    data :any
+    data :any,
+    detail : boolean
+    setValue : any
 }
 
-export default function SelectInputNative({ data = [{ title: "asd", value: "as" }] }:Props) {
+export default function SelectInputNative({ setValue, detail, data = [{ title: "asd", value: "asd" }] }:Props) {
+  const handleChange = (event: any) => {
+    // setValue(event.target.value as string);
+    setValue(event.target.value as string);
+  };
+
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
         <NativeSelect
-          defaultValue={30}
+          onChange={handleChange}
+          value={data && data.value}
           inputProps={{
             name: 'age',
             id: 'uncontrolled-native',
           }}
         >
-          {data.map((item:any) => <option value={item.value}>{item.title}</option>)}
+          <option value="">Pilih Dc</option>
+          {data.map((item:any) => <option value={item.fmkcab}>{`${item.fmkcab}-${item.store_name}`}</option>)}
         </NativeSelect>
       </FormControl>
     </Box>

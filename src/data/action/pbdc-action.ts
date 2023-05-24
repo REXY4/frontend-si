@@ -1,24 +1,212 @@
 import { PbdcRepository } from '@/src/domain/repository/pbdc-repository';
 import {
+  FormDetailItemPbdc,
   PbdcEntity,
   RequestPbdcDetailEntity,
 } from '@/src/domain/entity/pbdc-entity';
 import { PbdcActionType } from '../action-type/pbdc-action-type';
 import { SettingActionType } from '../action-type/settting-action-type';
+import { Dispatch } from 'redux';
+import { AlertActionType } from '../action-type/alert-action-type';
 
-const getPerStoreAction = (store_code: string) => async (dispatch: any) => {
+const getPerStoreAction = (store_code: string) => async (dispatch: Dispatch) => {
+  dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });
   try{
-    dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });
   const response = await PbdcRepository.getPerStore(store_code);
-  if(response.returnType === "E") {
-      dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
-      dispatch({ type: PbdcActionType.GET_PER_STORE, payload: response });
+  if(response.returnType === "S") {
+    dispatch({ type: PbdcActionType.GET_PER_STORE, payload: response });
+    dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
+    return response;
   }
-  dispatch({ type: PbdcActionType.GET_PER_STORE, payload: response });
-  dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
-  return response;
   }catch(err) {
       dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
+  }
+};
+
+const setSelectDc = (dc : string) => (dispatch:Dispatch) => {
+  dispatch({
+    type: PbdcActionType.SELECT_DC,
+    selectDc: dc
+  });
+};
+
+const getPbdcOverview = (
+  data: any,
+  store_code:string,
+  dc :string,
+  noPb : string
+) => async (dispatch:Dispatch) => {
+  dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });
+  try{
+    const response = await PbdcRepository.getPbdcOverview(store_code, dc, noPb);
+    if(response.returnType === "S") {
+        dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
+        dispatch({
+          type: PbdcActionType.GET_DETAIL,
+          detailPbdc: data,
+          overviewPbdc: response.returnData
+        });
+     }else{
+        dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });
+     }
+  }catch(err) {
+  dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
+  }
+};
+
+const postPbdcCheckRosso = (store_code:string) => async (dispatch: Dispatch) => {
+  try{
+      dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });
+      const response = await PbdcRepository.checkPbdcRosso(store_code);
+      if(response.returnType == "S") {
+         dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
+         dispatch({ type: PbdcActionType.CHECK_ROSSO, checkRosso: response.returnData });
+      }else{
+          dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
+          dispatch({ type: PbdcActionType.CHECK_ROSSO, checkRosso: response.returnData });
+      }
+  }catch(err) {
+      dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
+  }
+};
+
+const getDetailItemPbdc = (data:FormDetailItemPbdc) => async (dispatch:Dispatch) => {
+   dispatch({
+    type: PbdcActionType.SET_FIELD_ITEM,
+     fieldEditItem: data
+   });
+};
+
+const editDetailItemPbdc = (data:FormDetailItemPbdc) => async (dispatch:Dispatch) => {
+   dispatch({
+    type: PbdcActionType.SET_EDIT_ITEM,
+    detailItemPbdc: data
+   });
+};
+
+const deleteDetailItemPbdc = (plu:string) => async (dispatch:Dispatch) => {
+  console.log("delete action");
+   dispatch({
+    type: PbdcActionType.SET_DELETE_ITEM,
+    detailItemPbdc: plu
+   });
+};
+
+const postPluValidation = (
+      store:string,
+       barcode:string,
+      dc:string
+) => async (dispatch:Dispatch) => {
+   dispatch({ type: PbdcActionType.PLU_VALIDATION, isLoadingBtnPluValidation: true });
+  try{
+    const response = await PbdcRepository.postPluValidation(store, barcode, dc);
+    console.log(response.returnType);
+    if(response.returnType === "S") {
+      console.log("tes check");
+      dispatch({ type: AlertActionType.SET_ALERTS, isOpen: true, message: `Validasi PLU ${response.returnData.plu} Berhasil!` });
+      dispatch({
+        type: PbdcActionType.PLU_VALIDATION,
+        isLoadingBtnPluValidation: false,
+        statusPluValidation: true,
+        pluValidation: response.returnData
+      });
+    }else{
+      console.log("tes check failed");
+      dispatch({
+        type: PbdcActionType.PLU_VALIDATION,
+        isLoadingBtnPluValidation: false,
+        statusPluValidation: false,
+        pluValidation: response.returnData
+      });
+        dispatch({
+          type: AlertActionType.SET_ALERTS,
+          isOpen: true,
+          message: String(response.returnMessage)
+      });
+    }
+  }catch(err) {
+        dispatch({ type: AlertActionType.SET_ALERTS, isOpen: true, message: "Plu tidak Di temukan !" });
+      dispatch({
+        type: PbdcActionType.PLU_VALIDATION,
+        statusPluValidation: false,
+        isLoadingBtnPluValidation: false,
+        pluValidation: undefined
+      });
+  }
+};
+
+const addDetailItemPbdc = (data:FormDetailItemPbdc) => async (dispatch:Dispatch) => {
+  dispatch({
+    type: PbdcActionType.SET_DETAIL_ITEM,
+    detailItemPbdc: data
+  });
+};
+
+const postPbdcVerify = (
+  store_code : string,
+  noPb : string,
+  dc : string
+) => async (dispatch:Dispatch) => {
+  try{
+    dispatch({ type: PbdcActionType.PBDC_VERIFY, isLoadingBtnPbdcVerify: true, });
+    const response = await PbdcRepository.postPbdcVerify(store_code, noPb, dc);
+    if(response.returnType === "S") {
+    dispatch({
+      type: PbdcActionType.PBDC_VERIFY,
+       isLoadingBtnPbdcVerify: false,
+      pbdcStatusVerify: response.returnData
+    });
+    }else{
+        dispatch({
+      type: PbdcActionType.PBDC_VERIFY,
+       isLoadingBtnPbdcVerify: false,
+      pbdcStatusVerify: response.returnData
+    });
+    }
+  }catch(err) {
+  dispatch({
+      type: PbdcActionType.PBDC_VERIFY,
+       isLoadingBtnPbdcVerify: false,
+      pbdcStatusVerify: false
+    });
+  }
+};
+
+const postPbdcSaveData = (
+  store_code : string,
+  noPb : string,
+  dc : string,
+  detailItemPbdc : FormDetailItemPbdc
+) => async (dispatch:Dispatch) => {
+  try{
+    const response = await PbdcRepository.postPbdcSaveData(store_code, noPb, dc, detailItemPbdc);
+    if(response.returnType === "S") {
+      dispatch({
+      type: PbdcActionType.PBDC_SAVE_DATA,
+      isLoadingBtnPbdcSave: true,
+      pbdcs: {
+          id: 0,
+          cab: store_code,
+          nopb: String(response.returnData.noPb),
+          tipe: "1",
+          dc: dc,
+          tgl: "2023-05-24T10:48:00",
+          nilai: 0,
+          status: "SBOS",
+          detailItemPbdc: detailItemPbdc
+       }
+    });
+    //  dispatch({
+    //     type: AlertActionType.SET_ALERTS,
+    //     isOpen: true,
+    //     message: response.returnData.messages
+    //   });
+    }
+  }catch(err) {
+    dispatch({
+      type: PbdcActionType.PBDC_SAVE_DATA,
+      isLoadingBtnPbdcSave: false,
+    });
   }
 };
 
@@ -70,8 +258,18 @@ const deleteDraftDetailAction = (id: number) => async (dispatch: any) => {
 
 export const PbdcAction = {
   getPerStoreAction,
+  getPbdcOverview,
+  postPbdcCheckRosso,
   getDetailPbdcAction,
+  setSelectDc,
+  postPluValidation,
+  editDetailItemPbdc,
+  addDetailItemPbdc,
+  getDetailItemPbdc,
+  postPbdcVerify,
+  postPbdcSaveData,
   saveAction,
   saveDraftDetailAction,
   deleteDraftDetailAction,
+  deleteDetailItemPbdc,
 };

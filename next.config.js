@@ -3,6 +3,10 @@ const nextConfig = {
   //  eslint: {
   //   ignoreDuringBuilds: true,
   // },
+  devIndicators: {
+        buildActivity: false
+  },
+  swcMinify: true,
   reactStrictMode: true,
   publicRuntimeConfig: {
     applicationName: 'LSI PDT',

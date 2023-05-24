@@ -1,4 +1,6 @@
-/* eslint-disable radix */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+
 import React from "react";
 import {
  Box, Divider
@@ -7,6 +9,7 @@ import styles from "@/styles/components/list/list.module.css";
 import { ButtonList } from "../buttons";
 
 interface Props {
+    onClickMain:any
     title : string
     type : string
     dc : string
@@ -15,6 +18,7 @@ interface Props {
 }
 
 const ListPrimary = ({
+  onClickMain,
  title, type, dc, nilai, tanggal
 }:Props) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -28,7 +32,12 @@ return (
   <>
     <Box display="flex" justifyContent="space-between" marginBottom={2}>
       <Box>
-        <h3 className={`${styles.title} ${styles.buttonTitle}`}>
+
+        <h3
+          className={`${styles.title} 
+          ${styles.buttonTitle}`}
+          onClick={onClickMain}
+        >
           No Pb :
           {' '}
           {title}
@@ -54,6 +63,7 @@ return (
         </p>
       </Box>
       <ButtonList
+        onView={onClickMain}
         color={undefined}
         onDelete={undefined}
         onUpdate={undefined}

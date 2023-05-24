@@ -14,10 +14,12 @@ const alertStoreImplementation = (): AlertStore => {
     AlertStoreState
     >(alertSelector);
     const dispatch = useDispatch();
+
     const setAlert = useCallback(
         (isOpen:boolean, message:string) => alertAction.setOpenAlert(isOpen, message)(dispatch),
         [dispatch]
     );
+
     return {
         isOpen,
         message,

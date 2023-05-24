@@ -7,60 +7,62 @@ import styles from "@/styles/components/list/list.module.css";
 import { ButtonList } from "../buttons";
 
 interface Props {
-    title : string
-    type : string
-    dc : string
-    nilai : string
-    tanggal : string
+     plu : string,
+     desc : string,
+     conv : string,
+     eq : string,
+     order : string,
+     vol : string
 }
 
-const ListAddPbdc = ({
- title, type, dc, nilai, tanggal
+const ListOverViewPbdc = ({
+ plu, desc, conv, eq, order, vol
 }:Props) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const d = new Date(tanggal);
-    const date = d.getDate() < 10 ? `0${d.getDate()}` : d.getDate();
-    const month = d.getMonth() < 10 ? `0${d.getMonth()}` : d.getMonth();
-    const dateNow = `${date}/${month}/${d.getFullYear()}`;
+
 return (
   <>
     <Box display="flex" justifyContent="space-between" marginBottom={2}>
       <Box>
         <h3 className={`${styles.title} ${styles.buttonTitle}`}>
-          No Pb :
+          PLU :
           {' '}
-          {title}
+          {plu}
         </h3>
         <p className={styles.paragraf}>
-          Tipe :
+          Desc :
           {' '}
-          {type}
+          {desc}
           {' '}
-          | DC :
-          {' '}
-          {dc}
         </p>
         <p className={styles.paragraf} style={{ marginTop: "5px" }}>
-          Tanggal :
+          Conv :
           {' '}
-          {dateNow}
+          {conv}
+          {' '}
+          | Eq :
+          {' '}
+          {eq}
+          {' '}
+          | Order :
+          {' '}
+          {order}
         </p>
         <p className={styles.paragraf} style={{ marginTop: "5px" }}>
-          Nilai :
+          Vol :
           {' '}
-          {parseInt(nilai).toLocaleString()}
+          {vol}
         </p>
       </Box>
-      <ButtonList
-        onView={undefined}
+      {/* <ButtonList
         color={undefined}
         onDelete={undefined}
         onUpdate={undefined}
-      />
+      /> */}
     </Box>
     <Divider />
   </>
     );
 };
-export default ListAddPbdc;
+export default ListOverViewPbdc;

@@ -15,6 +15,7 @@ import { settingReducer } from "../reducer/setting-reducer";
 import { userReducer } from "../reducer/user-reducer";
 import { pbdcReducer } from "../reducer/pbdc-reducer";
 import { alertReducer } from "../reducer/alert-reducer";
+import { dcReducer } from "../reducer/dc-reducer";
 
 const rootReducer = combineReducers({
     setting: settingReducer,
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
     auth: authReducer,
     init: initReducer,
     pbdc: pbdcReducer,
+    dc: dcReducer,
     alert: alertReducer,
 });
 
@@ -37,7 +39,7 @@ const rootActionReducers = (state: any, action: AnyAction) => {
 const persistConfig = {
     key: "root",
     storage: storage,
-    whitelist: ["setting", "auth", "init", "user", "pbdc"],
+    whitelist: ["setting", "auth", "init", "user", "pbdc", "dc"],
     blacklist: ["alert"]
 };
 

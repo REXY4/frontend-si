@@ -10,12 +10,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 interface Props {
+  onView:any
     color : any
     onDelete : any
     onUpdate : any
 }
 
 const ButtonList = ({
+  onView,
 onDelete,
 onUpdate,
 color = "primary",
@@ -35,8 +37,10 @@ color = "primary",
      const handleChange = (value:string) => {
              if(value === "Delete") {
                 return onDelete !== undefined ? onDelete : console.log("Delete");
+             }if("Edit") {
+               return onUpdate;
              }
-             return onUpdate;
+             return onView;
      };
 
     return(
@@ -57,35 +61,41 @@ color = "primary",
           }}
         >
           <Box sx={{ padding: "10px" }}>
-            {menu.map((item:string) => (
+            {onView !== undefined && (
               <>
-                <MenuItem onClick={() => handleChange(item)}>
-                  {item === "View" && (
+                <MenuItem onClick={() => handleChange("View")}>
                   <RemoveRedEyeIcon
                     color="success"
                     sx={{ marginRight: "10px" }}
                   />
-                )}
-                  {item === "Delete" && (
-                  <DeleteIcon
-                    color="error"
-                    sx={{ marginRight: "10px" }}
-                  />
-                )}
-
-                  {item === "Edit" && (
+                  Lihat
+                </MenuItem>
+                <Divider />
+              </>
+               )}
+            {onUpdate !== undefined && (
+              <>
+                <MenuItem onClick={onUpdate}>
                   <EditIcon
                     color="primary"
                     sx={{ marginRight: "10px" }}
                   />
-                )}
-
-                  {' '}
-                  {item}
+                  Ubah
                 </MenuItem>
                 <Divider />
               </>
-            ))}
+                )}
+
+            {onDelete !== undefined && (
+              <MenuItem onClick={onDelete}>
+                <DeleteIcon
+                  color="error"
+                  sx={{ marginRight: "10px" }}
+                />
+                Hapus
+              </MenuItem>
+                )}
+
           </Box>
         </Menu>
       </Box>

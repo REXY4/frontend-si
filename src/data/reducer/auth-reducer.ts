@@ -21,11 +21,11 @@ const authReducer = (
     switch (action.type) {
         case AuthActionType.AUTH_LOGIN:
             if (action.payload.returnType === "S") {
-                setCookies("token", action.payload.returnObject.token);
+                setCookies("token", action.payload.returnData.token);
             }
             return {
                 ...state,
-                auth: action.payload.returnObject,
+                auth: action.payload.returnData,
             };
         case AuthActionType.LOGOUT:
             deleteCookie("token");

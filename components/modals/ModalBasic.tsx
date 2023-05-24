@@ -8,22 +8,23 @@ import { IconButton } from '@mui/material';
 interface Props {
     children : React.ReactNode
     open : boolean
-    onClose : () => void;
+    onClose :any;
 }
 
-const style = {
+export default function ModalBasic({ children, open, onClose }:Props) {
+  const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: "80%",
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  opacity: "0.3s",
+  // border: '2px solid #000',
+  borderRadius: "10px",
   boxShadow: 24,
   p: 4,
 };
-
-export default function ModalBasic({ children, open, onClose }:Props) {
   return (
     <div>
       <Modal

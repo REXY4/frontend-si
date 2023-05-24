@@ -31,7 +31,7 @@ export const BasicAlerts: FC<Props> = ({
     position="absolute"
     zIndex={10}
     top={0}
-    marginTop={5}
+    marginTop="100px"
   >
     <Stack sx={{ width: "100%" }} spacing={2}>
       <Alert severity={severity} onClose={onClose}>

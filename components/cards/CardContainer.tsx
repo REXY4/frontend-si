@@ -12,7 +12,7 @@ const CardContainer = ({
  children, height, customStyle, customStyleContent
 }:Props) => (
   <Card sx={{
-    height: `${height}`,
+    maxHeight: `${height}`,
     ...customStyle
   }}
   >

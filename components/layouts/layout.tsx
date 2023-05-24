@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-undef */
 import React, { ReactNode, useState } from 'react';
 import Head from 'next/head';
+import { Logo } from '@/assets/img';
 import Box from '@mui/material/Box';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import getConfig from 'next/config';
@@ -10,6 +11,7 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import Image from 'next/image';
 import Typography from '@mui/material/Typography';
 import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
@@ -169,7 +171,32 @@ export default function Layout({ children }: PropsLayout) {
       >
         <CssBaseline />
         <AppBar position="fixed" open={open}>
-          <Toolbar>
+          <Toolbar sx={{
+            display: "flex",
+            justifyContent: "space-between"
+          }}
+          >
+            <Box display="flex">
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+              // onClick={handleDrawerOpen}
+                edge="start"
+                sx={{ mr: 1, ...(open && { display: 'none' }) }}
+              >
+                <Image src={Logo} alt="logo" width={25} height={25} />
+              </IconButton>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{
+                marginTop: "5px"
+              }}
+              >
+                {applicationName}
+              </Typography>
+            </Box>
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -179,9 +206,6 @@ export default function Layout({ children }: PropsLayout) {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" noWrap component="div">
-              {applicationName}
-            </Typography>
           </Toolbar>
         </AppBar>
         <Drawer
