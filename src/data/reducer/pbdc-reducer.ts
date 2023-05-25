@@ -19,7 +19,8 @@ type PbdcStoreState = Omit<
  "deleteDetailItemPbdc" |
  "editDetailItemPbdc" |
  "getDetailItemPbdc" |
- "setSelectDc"
+ "setSelectDc"|
+ "deleteAllItemDraftPbdc"
  >;
 
 const INITIAL_STATE: PbdcStoreState = {
@@ -57,14 +58,9 @@ const pbdcReducer = (
 ) => {
     switch (action.type) {
         case PbdcActionType.GET_PER_STORE:
-            if(state.pbdcs[0] === undefined) {
                 return {
                 ...state,
                 pbdcs: action.payload.returnData ?? [],
-            };
-            }
-                return {
-                ...state,
                 };
         case PbdcActionType.GET_DETAIL:
             return {
@@ -117,6 +113,11 @@ const pbdcReducer = (
                     (fil:any) => fil.plu !== action.detailItemPbdc
                     )
             };
+         case PbdcActionType.SET_DELETE_ALL_ITEM:
+            return{
+                ...state,
+                detailItemPbdc: []
+            };
         case PbdcActionType.PBDC_VERIFY:
             return {
                 ...state,
@@ -124,42 +125,16 @@ const pbdcReducer = (
                 pbdcStatusVerify: action.pbdcStatusVerify
             };
         case PbdcActionType.PBDC_SAVE_DATA:
-            const update = [...state.pbdcs, action.pbdcs];
             return {
                 ...state,
-                isLoadingBtnPbdcSave: action.isLoadingBtnPbdcSave,
-                pbdcs: [...state.pbdcs, action.pbdcs]
+                pbdcStatusSave: true,
             };
         case PbdcActionType.SAVE:
             return {
                 ...state,
                 pbdc: action?.payload?.returnData,
             };
-        case PbdcActionType.SAVE_DRAFT_DETAIL:
-            let draft = state?.pbdcDraft;
-            if (draft === undefined) {
-                draft = {
-                    id: Math.floor(Math.random() * 10 + 1),
-                    cab: "",
-                    dc: "",
-                    nilai: 0,
-                    nopb: "XXXXXXXX",
-                    status: "",
-                    tgl: new Date().toDateString(),
-                    tipe: "1",
-                    details: [],
-                };
-            }
-            let details = draft?.details;
-            details.push(action.payload);
-            draft = {
-                ...draft,
-                details,
-            };
-            return {
-                ...state,
-                pbdcDraft: draft,
-            };
+
         case PbdcActionType.DELETE_DRAFT_DETAIL:
             let draftDelete = state?.pbdcDraft;
 

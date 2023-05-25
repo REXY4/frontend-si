@@ -17,7 +17,7 @@ const loginAction = (loginEntity: LoginEntity) => async (dispatch: any) => {
       });
     } else {
        dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
-      dispatch({ type: AuthActionType.AUTH_LOGIN, payload: response });
+       dispatch({ type: AuthActionType.AUTH_LOGIN, payload: response });
       return response;
     }
   } catch (err) {

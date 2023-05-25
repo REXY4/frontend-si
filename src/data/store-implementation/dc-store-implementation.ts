@@ -9,7 +9,7 @@ import { DcAction } from "../action/dc-action";
 const dcSelector = (state : AppRootState) => state.dc;
 
 const dcImplementation = ():DcStore => {
-    const { dc } = useSelector<
+    const { dc, selectDc, } = useSelector<
     AppRootState,
     DcStoreState
     >(dcSelector);
@@ -21,8 +21,15 @@ const dcImplementation = ():DcStore => {
         [dispatch]
     );
 
+    const setSelectDc = useCallback(
+        (dc:string) => DcAction.selectDcAction(dc)(dispatch),
+        [dispatch]
+    );
+
     return {
         dc,
+        selectDc,
+        setSelectDc,
         getAllDcStore
     };
 };

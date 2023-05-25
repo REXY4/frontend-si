@@ -8,6 +8,7 @@ import { PbdcActionType } from '../action-type/pbdc-action-type';
 import { SettingActionType } from '../action-type/settting-action-type';
 import { Dispatch } from 'redux';
 import { AlertActionType } from '../action-type/alert-action-type';
+import { DcActionType } from '../action-type/dc-action-type';
 
 const getPerStoreAction = (store_code: string) => async (dispatch: Dispatch) => {
   dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });
@@ -40,14 +41,13 @@ const getPbdcOverview = (
   try{
     const response = await PbdcRepository.getPbdcOverview(store_code, dc, noPb);
     if(response.returnType === "S") {
-        dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
         dispatch({
           type: PbdcActionType.GET_DETAIL,
           detailPbdc: data,
           overviewPbdc: response.returnData
         });
      }else{
-        dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });
+        dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
      }
   }catch(err) {
   dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
@@ -56,13 +56,10 @@ const getPbdcOverview = (
 
 const postPbdcCheckRosso = (store_code:string) => async (dispatch: Dispatch) => {
   try{
-      dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });
       const response = await PbdcRepository.checkPbdcRosso(store_code);
       if(response.returnType == "S") {
-         dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
          dispatch({ type: PbdcActionType.CHECK_ROSSO, checkRosso: response.returnData });
       }else{
-          dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
           dispatch({ type: PbdcActionType.CHECK_ROSSO, checkRosso: response.returnData });
       }
   }catch(err) {
@@ -85,10 +82,15 @@ const editDetailItemPbdc = (data:FormDetailItemPbdc) => async (dispatch:Dispatch
 };
 
 const deleteDetailItemPbdc = (plu:string) => async (dispatch:Dispatch) => {
-  console.log("delete action");
    dispatch({
     type: PbdcActionType.SET_DELETE_ITEM,
     detailItemPbdc: plu
+   });
+};
+
+const deleteAllItemDraftPbdc = () => async (dispatch:Dispatch) => {
+    dispatch({
+    type: PbdcActionType.SET_DELETE_ALL_ITEM,
    });
 };
 
@@ -100,9 +102,7 @@ const postPluValidation = (
    dispatch({ type: PbdcActionType.PLU_VALIDATION, isLoadingBtnPluValidation: true });
   try{
     const response = await PbdcRepository.postPluValidation(store, barcode, dc);
-    console.log(response.returnType);
     if(response.returnType === "S") {
-      console.log("tes check");
       dispatch({ type: AlertActionType.SET_ALERTS, isOpen: true, message: `Validasi PLU ${response.returnData.plu} Berhasil!` });
       dispatch({
         type: PbdcActionType.PLU_VALIDATION,
@@ -111,7 +111,6 @@ const postPluValidation = (
         pluValidation: response.returnData
       });
     }else{
-      console.log("tes check failed");
       dispatch({
         type: PbdcActionType.PLU_VALIDATION,
         isLoadingBtnPluValidation: false,
@@ -176,31 +175,18 @@ const postPbdcSaveData = (
   store_code : string,
   noPb : string,
   dc : string,
-  detailItemPbdc : FormDetailItemPbdc
+  detailItemPbdc : [FormDetailItemPbdc]
 ) => async (dispatch:Dispatch) => {
   try{
     const response = await PbdcRepository.postPbdcSaveData(store_code, noPb, dc, detailItemPbdc);
     if(response.returnType === "S") {
       dispatch({
-      type: PbdcActionType.PBDC_SAVE_DATA,
-      isLoadingBtnPbdcSave: true,
-      pbdcs: {
-          id: 0,
-          cab: store_code,
-          nopb: String(response.returnData.noPb),
-          tipe: "1",
-          dc: dc,
-          tgl: "2023-05-24T10:48:00",
-          nilai: 0,
-          status: "SBOS",
-          detailItemPbdc: detailItemPbdc
-       }
-    });
-    //  dispatch({
-    //     type: AlertActionType.SET_ALERTS,
-    //     isOpen: true,
-    //     message: response.returnData.messages
-    //   });
+        type: PbdcActionType.SET_DELETE_ALL_ITEM
+      });
+       dispatch({
+        type: DcActionType.SELECT_DC,
+        payload: ""
+      });
     }
   }catch(err) {
     dispatch({
@@ -260,6 +246,7 @@ export const PbdcAction = {
   getPerStoreAction,
   getPbdcOverview,
   postPbdcCheckRosso,
+  deleteAllItemDraftPbdc,
   getDetailPbdcAction,
   setSelectDc,
   postPluValidation,

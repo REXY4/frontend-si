@@ -39,7 +39,6 @@ export const BarcodeScanner: React.FC<ScannerProps> = ({ onDetected, onClose }) 
       config,
       (err:any) => {
         if (err) {
-          console.error('Failed to initialize Quagga:', err);
           return;
         }
         Quagga.start();
@@ -47,7 +46,6 @@ export const BarcodeScanner: React.FC<ScannerProps> = ({ onDetected, onClose }) 
     );
 
     Quagga.onDetected((result:any) => {
-      console.log("ini model result", result);
       onDetected(result.codeResult.code);
       Quagga.stop();
       onClose(false);
@@ -61,7 +59,7 @@ export const BarcodeScanner: React.FC<ScannerProps> = ({ onDetected, onClose }) 
   return (
     <div className={`${styles.barcode} ${styles.boxs}`}>
       <div id="video-container">
-        <video ref={videoRef} style={{ width: '100%' }} />
+        <video ref={videoRef} style={{ width: '100%', height: "250px" }} />
       </div>
     </div>
   );

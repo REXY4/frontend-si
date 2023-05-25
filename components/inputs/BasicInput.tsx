@@ -38,6 +38,7 @@ interface Props {
   error : boolean
   placeholder : string
   errorMessage : string
+  disabled : boolean
 }
 
 export default function BasicInput({
@@ -51,10 +52,12 @@ export default function BasicInput({
   onChange,
   error,
   errorMessage,
-  placeholder
+  placeholder,
+  disabled
 } : Props) {
   return (
     <CssTextField
+      disabled={disabled}
       error={error}
       name={name}
       label={label}

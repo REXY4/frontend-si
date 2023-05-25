@@ -8,16 +8,17 @@ import { ButtonList } from "../buttons";
 
 interface Props {
      plu : string,
-     nour : string,
+
      eq : string,
      order : string,
      onDelete : any,
      onUpdate : any,
      onView : any,
+     desc : string
 }
 
 const ListAddsPbdc = ({
- plu, eq, order, nour, onDelete, onUpdate, onView
+ plu, eq, order, onDelete, onUpdate, onView, desc
 }:Props) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -31,12 +32,11 @@ return (
           {' '}
           {plu}
         </h3>
+        <p className={`${styles.paragraf}`}>
+          {desc}
+        </p>
         <p className={styles.paragraf}>
-          No Urut :
-          {' '}
-          {nour}
-          {' '}
-          | Eq :
+          Eq :
           {' '}
           {eq}
           {' '}

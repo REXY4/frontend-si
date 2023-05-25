@@ -35,7 +35,6 @@ const LsiListItem: FC<LsiListItemProps> = ({
     };
 
     const handleDelete = (id: string | number) => {
-        console.log("id dari list item", id);
         onDelete(Number(id));
     };
 

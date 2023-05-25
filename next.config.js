@@ -6,7 +6,7 @@ const nextConfig = {
   devIndicators: {
         buildActivity: false
   },
-  swcMinify: true,
+  // swcMinify: true,
   reactStrictMode: true,
   publicRuntimeConfig: {
     applicationName: 'LSI PDT',

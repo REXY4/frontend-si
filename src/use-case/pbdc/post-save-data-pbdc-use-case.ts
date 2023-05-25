@@ -6,7 +6,7 @@ store: PbdcStore,
 store_code: string,
 noPb : string,
 dc : string,
-detailItemPbdc : FormDetailItemPbdc
+detailItemPbdc : [FormDetailItemPbdc]
 ) => {
     await store.postPbdcSaveData(store_code, noPb, dc, detailItemPbdc);
 };

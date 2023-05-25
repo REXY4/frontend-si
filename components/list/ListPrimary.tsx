@@ -3,45 +3,87 @@
 
 import React from "react";
 import {
- Box, Divider
+ Box, Chip, Divider
 } from "@mui/material";
 import styles from "@/styles/components/list/list.module.css";
 import { ButtonList } from "../buttons";
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 
 interface Props {
-    onClickMain:any
+    onView:void | any
     title : string
     type : string
     dc : string
     nilai : string
-    tanggal : string
+    tanggal : string,
+    status : string | undefined
 }
 
 const ListPrimary = ({
-  onClickMain,
- title, type, dc, nilai, tanggal
+  onView,
+ title, type, dc, nilai, tanggal, status
 }:Props) => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
-    const d = new Date(tanggal);
-    const date = d.getDate() < 10 ? `0${d.getDate()}` : d.getDate();
-    const month = d.getMonth() < 10 ? `0${d.getMonth()}` : d.getMonth();
-    const dateNow = `${date}/${month}/${d.getFullYear()}`;
-
 return (
   <>
     <Box display="flex" justifyContent="space-between" marginBottom={2}>
       <Box>
-
-        <h3
-          className={`${styles.title} 
+        <Box style={{ display: "flex" }}>
+          <h3
+            className={`${styles.title} 
           ${styles.buttonTitle}`}
-          onClick={onClickMain}
-        >
-          No Pb :
-          {' '}
-          {title}
-        </h3>
+            onClick={onView}
+            style={{
+            display: "flex"
+          }}
+          >
+            No Pb :
+            {' '}
+            {title}
+            {' '}
+          </h3>
+          <Box>
+            {status !== undefined && status === "Draft" && (
+              <Chip
+                label={status}
+                color="error"
+                sx={{
+                marginLeft: "5px",
+                position: "relative",
+                bottom: "5px",
+                fontSize: "12px",
+                height: "12px"
+            }}
+              />
+              )}
+            {status !== undefined && status !== "Draft" && (
+            <Box style={{
+                  position: "relative",
+                  display: "flex",
+                  bottom: "5px"
+                }}
+            >
+              <CheckCircleOutlineOutlinedIcon
+                color="success"
+                style={{
+                              width: "20px",
+                              marginLeft: "5px"
+                            }}
+              />
+              {' '}
+              <p style={{
+              fontSize: "12px",
+              color: "#009688",
+              position: "relative",
+                top: "4px",
+              marginLeft: "3px"
+              }}
+              >
+                Verify
+              </p>
+            </Box>
+              )}
+          </Box>
+        </Box>
         <p className={styles.paragraf}>
           Tipe :
           {' '}
@@ -54,7 +96,7 @@ return (
         <p className={styles.paragraf} style={{ marginTop: "5px" }}>
           Tanggal :
           {' '}
-          {dateNow}
+          {tanggal}
         </p>
         <p className={styles.paragraf} style={{ marginTop: "5px" }}>
           Nilai :
@@ -63,10 +105,10 @@ return (
         </p>
       </Box>
       <ButtonList
-        onView={onClickMain}
+        onView={onView}
         color={undefined}
-        onDelete={undefined}
-        onUpdate={undefined}
+        onDelete={status !== "Draft" ? undefined : () => console.log("hallo")}
+        onUpdate={status !== "Draft" ? undefined : () => console.log("hallo")}
       />
     </Box>
     <Divider />

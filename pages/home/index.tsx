@@ -13,36 +13,8 @@ import HomeViewModel from './home-view-model';
 import { useRouter } from 'next/router';
 import { Loading } from '@/components/Loading';
 import { useCallback } from 'react';
-
 import SummarizeIcon from '@mui/icons-material/Summarize';
-
-interface StateMenu {
-    icon : any
-    title : string
-    link : string
-}
-
-const StoreOrder:StateMenu[] = [
-    {
-      icon: <SummarizeIcon />,
-      title: "PB DC",
-      link: "/pbdc"
-    },
-    {
-      icon: <SummarizeIcon />,
-      title: "PB Supplier",
-      link: '/home'
-    },
-    {
-      icon: <SummarizeIcon />,
-      title: "PO Canvas",
-       link: "/home"
-    }
-  ];
-
-export {
-    StoreOrder
-  };
+import { StoreOrder } from '@/components/submenus';
 
 function Home() {
   const {

@@ -11,7 +11,6 @@ const saveDraftDetailUseCase = async (
     eq: number | undefined,
     qty_order: number | undefined
 ) => {
-    console.log("di use case save draft", id);
     await store.saveDraftDetail(
         createParams(id, pbdc_id, description, plu, convertion, eq, qty_order)
     );

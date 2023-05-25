@@ -147,7 +147,7 @@ export default function Layout({ children }: PropsLayout) {
   }));
 
   const handleRoute = (url:string) => {
-    console.log("url", url);
+   
     router.push(`/${url.toLowerCase()}`);
   };
 

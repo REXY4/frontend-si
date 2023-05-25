@@ -133,6 +133,7 @@ function LoginPage() {
             </Box>
             <Box marginBottom={3}>
               <BasicInput
+                disabled={false}
                 startIcon={undefined}
                 defaultValue={undefined}
                 {...form.userId}
@@ -144,6 +145,7 @@ function LoginPage() {
             </Box>
             <Box>
               <BasicInput
+                disabled={false}
                 startIcon={undefined}
                 defaultValue={undefined}
                 {...form.password}

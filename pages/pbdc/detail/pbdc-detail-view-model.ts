@@ -1,13 +1,16 @@
 import dcImplementation from '@/src/data/store-implementation/dc-store-implementation';
 import { pbdcStoreImplementation } from '@/src/data/store-implementation/pbdc-store-implementation';
+import { DcStore } from '@/src/domain/store/dc-store';
 
 const PbdcDetailViewModel = () => {
     const pbdcStore = pbdcStoreImplementation();
     const dcStore = dcImplementation();
     return{
-        data: pbdcStore?.detailPbdc,
+        dataPbdc: pbdcStore?.detailPbdc,
         overview: pbdcStore?.overviewPbdc,
-        dc: dcStore?.dc
+        dataDc: dcStore?.dc && dcStore?.dc.filter(
+            ({ fmkcab }:any) => fmkcab === pbdcStore?.detailPbdc.dc
+        )[0],
     };
 };
 

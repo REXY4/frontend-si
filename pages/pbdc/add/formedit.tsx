@@ -8,6 +8,10 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { ModalBasic } from "@/components/modals";
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Loading } from "@/components/Loading";
+import { ListOrder } from "@/components/list";
+import { CollapsePrimary } from "@/components/colapse";
+import { DatePrimary } from "@/src/utils/DateTime";
+import { FormDetailItemPbdc } from '../../../src/domain/entity/pbdc-entity';
 
 const FormEditPage = () => {
   const [loadingSave, setLoadingSave] = useState<boolean>(false);
@@ -15,15 +19,52 @@ const FormEditPage = () => {
     const {
     pluValidation,
     handleRoute,
-    disableButtonDetailItem,
     formEditDetailItem,
     onChangeEditDetailItem,
     onEditDetailItemPbdc,
+    disableBtnEditDetailItem
 } = PbdcAddViewModel();
+
     return (
       <Container>
-        <Box marginBottom={2}>
-          <h1 className="title-content">Form Pbdc</h1>
+        <Box marginBottom={3}>
+          <CollapsePrimary title="NO ORDER : XXXXXXX">
+            <ListOrder
+              label="Tipe"
+              value="1-Reguler"
+              setValue={undefined}
+              selectInput={false}
+              selectData={undefined}
+            />
+            <ListOrder
+              label="Tanggal"
+              value={DatePrimary(String(new Date()))}
+              setValue={undefined}
+              selectInput={false}
+              selectData={undefined}
+            />
+            <ListOrder
+              label="Dc"
+              value="0970"
+              setValue={undefined}
+              selectInput={false}
+              selectData={undefined}
+            />
+            <ListOrder
+              label="Nilai"
+              value="0"
+              setValue={undefined}
+              selectInput={false}
+              selectData={undefined}
+            />
+            <ListOrder
+              label="Vol"
+              value="0"
+              setValue={undefined}
+              selectInput={false}
+              selectData={undefined}
+            />
+          </CollapsePrimary>
         </Box>
         <Box marginBottom={4}>
           <Box marginBottom={2}>
@@ -35,10 +76,11 @@ const FormEditPage = () => {
               name="nour"
               value={formEditDetailItem.nour}
               defaultValue={undefined}
-              onChange={(e:React.ChangeEvent<HTMLInputElement>) => onChangeEditDetailItem(e)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeEditDetailItem(e)}
               error={false}
               placeholder=""
               errorMessage=""
+              disabled
             />
           </Box>
           <Box marginBottom={2}>
@@ -54,6 +96,23 @@ const FormEditPage = () => {
               error={false}
               placeholder=""
               errorMessage=""
+              disabled
+            />
+          </Box>
+          <Box marginBottom={2}>
+            <BasicInput
+              label="Deskripsi"
+              startIcon={undefined}
+              endIcon={undefined}
+              type=""
+              name="plu"
+              value={formEditDetailItem.desc}
+              defaultValue={undefined}
+              onChange={undefined}
+              error={false}
+              placeholder=""
+              errorMessage=""
+              disabled
             />
           </Box>
           <Box marginBottom={2}>
@@ -63,12 +122,13 @@ const FormEditPage = () => {
               endIcon={undefined}
               type=""
               name="eq"
-              value={formEditDetailItem.eq}
+              value={`${pluValidation?.konv}/${formEditDetailItem.eq}`}
               defaultValue={undefined}
-              onChange={(e:React.ChangeEvent<HTMLInputElement>) => onChangeEditDetailItem(e)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeEditDetailItem(e)}
               error={false}
               placeholder=""
               errorMessage=""
+              disabled
             />
           </Box>
           <Box marginBottom={2}>
@@ -80,10 +140,11 @@ const FormEditPage = () => {
               name="order"
               value={formEditDetailItem.order}
               defaultValue={undefined}
-              onChange={(e:React.ChangeEvent<HTMLInputElement>) => onChangeEditDetailItem(e)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeEditDetailItem(e)}
               error={false}
               placeholder=""
               errorMessage=""
+              disabled={false}
             />
           </Box>
         </Box>
@@ -94,10 +155,10 @@ const FormEditPage = () => {
             onClick={() => handleRoute("/pbdc/add")}
           >
             <ArrowBackIosNewIcon sx={{ marginRight: "5px", width: "15px" }} />
-            Kembali
+            back
           </Button>
           <Button
-            disabled={disableButtonDetailItem}
+            disabled={disableBtnEditDetailItem}
             variant="outlined"
             color="primary"
             onClick={() => setOpenModal(true)}
@@ -120,7 +181,7 @@ const FormEditPage = () => {
               <ErrorOutlineIcon color="success" />
               {' '}
               <span style={{ position: "relative", top: "2px" }}>
-                Silahkan klik Ya untuk melanjutkan !
+                Silahkan klik (Continue) untuk Save data !
               </span>
             </h1>
             <Box display="flex" justifyContent="space-between">
@@ -129,7 +190,7 @@ const FormEditPage = () => {
                 color="error"
                 onClick={() => setOpenModal(false)}
               >
-                batal
+                back
               </Button>
               <Button
                 variant="outlined"
@@ -140,7 +201,7 @@ const FormEditPage = () => {
                     setOpenModal(false);
                   }}
               >
-                Ya
+                Continue
               </Button>
             </Box>
           </Box>

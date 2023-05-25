@@ -4,4 +4,8 @@ const deleteDraftDetailUseCase = async (store: PbdcStore, id: number) => {
     await store.deleteDraftDetail(id);
 };
 
-export { deleteDraftDetailUseCase };
+const deleteAlllItemDraftUseCase = async (store:PbdcStore) => {
+    await store.deleteAllItemDraftPbdc();
+};
+
+export { deleteDraftDetailUseCase, deleteAlllItemDraftUseCase };

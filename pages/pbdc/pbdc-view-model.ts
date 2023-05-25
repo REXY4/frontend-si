@@ -3,15 +3,11 @@ import { settingStoreImplementation } from "@/src/data/store-implementation/sett
 import { getPbdcPerStoreUseCase } from "@/src/use-case/pbdc/get-per-store-use-case";
 import { useCallback, useState, useEffect } from "react";
 import {
- FormDetailItemPbdc, PbdcDetailEntity, PbdcEntity, ResponsePbdcRossoEntity
+  PbdcEntity
 } from "@/src/domain/entity/pbdc-entity";
-import { saveDraftDetailUseCase } from "@/src/use-case/pbdc/save-draft-detail-use-case";
-import { deleteDraftDetailUseCase } from "@/src/use-case/pbdc/delete-draft-detail-use-case";
-import { saveUseCase } from "@/src/use-case/pbdc/save-use-case";
 import { dcStoreUseCase } from "@/src/use-case/dc/dc-use-case";
 import { authStoreImplementation } from '@/src/data/store-implementation/auth-store-implementation';
 import dcImplementation from "@/src/data/store-implementation/dc-store-implementation";
-import { DcEntity } from "@/src/domain/entity/dc-entity";
 import { postPbdcCheckRosso } from "@/src/use-case/pbdc/check-rosso-use-case";
 import { alertStoreImplementation } from "@/src/data/store-implementation/alert-store-implementation";
 import { getPbdcOverview } from "@/src/use-case/pbdc/get-overview-pbdc-use-case";
@@ -24,11 +20,6 @@ const PbdcViewModel = () => {
     const alertStore = alertStoreImplementation();
     const settingStore = settingStoreImplementation();
     const [pbdcsFiltered, setPbdcsFiltered] = useState<PbdcEntity[]>([]);
-    const [dcFiltered, setDcFiltered] = useState<DcEntity[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [isOpenAlert, setIsOpenAlert] = useState<boolean>(false);
-    const [alertMessage, setAlertMessage] = useState<string>("");
-    const [checkRosso, setCheckRosso] = useState < ResponsePbdcRossoEntity>();
     let router = useRouter();
 
     const onLoadPbdc = useCallback(async () => {
@@ -40,13 +31,11 @@ const PbdcViewModel = () => {
     const onLoadAllDc = useCallback(async () => {
         const { store }:any = authStore.auth;
         await dcStoreUseCase(dcStore, store);
-        setDcFiltered(dcStore?.dc);
     }, [dcStore?.dc]);
 
     const checkPbdcRosso = useCallback(async () => {
          const { store }:any = authStore.auth;
          await postPbdcCheckRosso(pbdcStore, store);
-         setCheckRosso(pbdcStore?.checkRosso);
     }, [pbdcStore?.checkRosso]);
 
     const onLoadPbdcOverviews = useCallback(async (
@@ -55,19 +44,23 @@ const PbdcViewModel = () => {
             noPb : string
      ) => {
           const { store }:any = authStore.auth;
+        settingStore.setLoading(true);
          await getPbdcOverview(pbdcStore, data, store, dc, noPb);
-         await settingStore.setLoading(true);
+         await router.push("/pbdc/detail");
     }, [pbdcStore?.overviewPbdc]);
 
     const handleAddNewPbdc = async () => {
-         await settingStore.setLoading(true);
-         await checkPbdcRosso();
+        settingStore.setLoading(true);
          if(pbdcStore?.checkRosso?.statusRosso) {
-              router.push("/pbdc/add");
+             router.push("/pbdc/add");
+         }else{
+           settingStore?.setLoading(false);
+           alertStore?.setAlert(true, String(pbdcStore?.checkRosso?.message));
          }
-        };
+     };
 
     useEffect(() => {
+        settingStore?.setLoading(false);
         onLoadAllDc();
         onLoadPbdc();
         checkPbdcRosso();
@@ -79,19 +72,10 @@ const PbdcViewModel = () => {
             message: alertStore.message
         },
         handleAddNewPbdc,
-        checkRosso,
-        checkPbdcRosso,
-        onLoadPbdcOverviews,
         pbdcs: pbdcsFiltered,
-        dataDc: dcStore?.dc,
-        pbdcDraft: pbdcStore?.pbdcDraft,
-        onLoadPbdc,
-        onLoadAllDc,
-        setLoading: settingStore?.setLoading,
-        isLoading: isLoading,
-        isOpenAlert: alertStore?.isOpen,
-        alertMessage: alertStore?.message,
-        setAlert: alertStore?.setAlert,
+        handleOverviewPbdc: onLoadPbdcOverviews,
+        isLoading: settingStore?.isLoading,
+        setAlert: alertStore?.setAlert
     };
 };
 

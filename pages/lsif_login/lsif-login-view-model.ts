@@ -23,7 +23,7 @@ const LsifLoginViewModel = () => {
     );
 
     useEffect(() => {
-        console.log("authStore di view model", authStore);
+        
         if (
             authStore?.auth?.token !== null
             && authStore?.auth?.token?.length > 0

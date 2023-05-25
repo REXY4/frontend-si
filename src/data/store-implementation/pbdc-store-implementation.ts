@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-undef */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { PbdcStore } from "@/src/domain/store/pbdc-store";
@@ -82,7 +83,7 @@ store_code:string,
         store_code:string,
         noPb:string,
         dc:string,
-        detailItemPbdc : FormDetailItemPbdc
+        detailItemPbdc : [FormDetailItemPbdc]
 ) => PbdcAction.postPbdcSaveData(
     store_code,
     noPb,
@@ -137,6 +138,7 @@ store_code:string,
 ) => PbdcAction.postPluValidation(store, barcode, dc)(dispatch),
         [dispatch]
     );
+    const deleteAllItemDraftPbdc = useCallback(() => PbdcAction.deleteAllItemDraftPbdc()(dispatch), [dispatch]);
 
     return {
         pbdcs,
@@ -157,6 +159,7 @@ store_code:string,
         selectDc,
         // action
         getPerStore,
+        deleteAllItemDraftPbdc,
         setSelectDc,
         postPbdcSaveData,
         editDetailItemPbdc,

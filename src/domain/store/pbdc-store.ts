@@ -30,13 +30,12 @@ interface PbdcStore {
     // Action
     setSelectDc(dc : string):any
     getPerStore(store_code: string):Promise<void | ResponseEntity<[PbdcEntity]>>;
-
     getPbdcOverview(
         data: any,
         store_code:string,
         dc :string,
             noPb : string):Promise<void |ResponseEntity<[any]>>;
-
+    deleteAllItemDraftPbdc():Promise<void|any>
     postPluValidation(
         store:string,
         barcode:string,
@@ -54,8 +53,9 @@ interface PbdcStore {
         store_code:string,
         noPb:string,
         dc:string,
-        detailItemPbdc : FormDetailItemPbdc
+        detailItemPbdc : [FormDetailItemPbdc]
         ):Promise<any>;
+
     save(request: PbdcEntity): Promise<void | ResponseEntity<PbdcEntity>>;
 
     postPbdcCheckRosso(store_code:string):Promise<void | ResponseEntity<ResponsePbdcRossoEntity>>;

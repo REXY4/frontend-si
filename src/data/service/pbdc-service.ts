@@ -61,14 +61,24 @@ const postPbdcSaveData = async (
         store_code:string,
         noPb:string,
         dc:string,
-detailItemPbdc : FormDetailItemPbdc
+        detailItemPbdc : [FormDetailItemPbdc]
 ) => {
     const response = fetchWrapper.post(
         PbdcActionType.CHECK_ROSSO,
         `${baseUrl}/SaveDataPbdc?pToken=${pToken}`,
         {
-        store_code, noPb, dc, detailItemPbdc
-}
+        store_code,
+        noPb,
+        dc,
+        detailItemPbdc: detailItemPbdc.map((item:any) => {
+            return {
+                nour: item.nour,
+                plu: item.plu,
+                eq: item.eq,
+                order: item.order
+            };
+        })
+        }
     );
     return response;
 };

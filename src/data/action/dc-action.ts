@@ -18,6 +18,14 @@ const getAllDcStoreAction = (store_code:string) => async (dispatch:Dispatch) => 
     }
 };
 
+const selectDcAction = (dc:string) => async (dispatch:Dispatch) => {
+    dispatch({
+        type: DcActionType.SELECT_DC,
+        payload: dc
+    });
+};
+
 export const DcAction = {
-    getAllDcStoreAction
+    getAllDcStoreAction,
+    selectDcAction,
 };

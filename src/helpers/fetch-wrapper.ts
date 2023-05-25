@@ -223,12 +223,9 @@ const handleResponse = (response: any, isDownload?: boolean) => response.text().
             },
         };
         if ([ResponseStatus.Unauthorized].includes(response.status)) {
-            // Promise.reject(ResponseStatus.Unauthorized);
             return ResponseStatus.Unauthorized;
         }
         if (!response.ok) {
-            // alert(`error disini: ${appendData?.returnMessage}`);
-            // console.log("errornya", appendData?.returnMessage);
             const errorData = {
                 ...appendData,
                 status: {

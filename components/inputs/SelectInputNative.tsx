@@ -8,9 +8,12 @@ interface Props {
     data :any,
     detail : boolean
     setValue : any
+    value : string
 }
 
-export default function SelectInputNative({ setValue, detail, data = [{ title: "asd", value: "asd" }] }:Props) {
+export default function SelectInputNative({
+ value, setValue, detail, data = [{ title: "asd", value: "asd" }]
+}:Props) {
   const handleChange = (event: any) => {
     // setValue(event.target.value as string);
     setValue(event.target.value as string);
@@ -21,7 +24,7 @@ export default function SelectInputNative({ setValue, detail, data = [{ title: "
       <FormControl fullWidth>
         <NativeSelect
           onChange={handleChange}
-          value={data && data.value}
+          value={value}
           inputProps={{
             name: 'age',
             id: 'uncontrolled-native',

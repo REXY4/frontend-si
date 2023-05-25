@@ -12,8 +12,10 @@ import { postPbdcVerifyUseCase } from "@/src/use-case/pbdc/post-pbdc-verify-use-
 import { postPbdcSaveData } from "@/src/use-case/pbdc/post-save-data-pbdc-use-case";
 import { alertStoreImplementation } from '@/src/data/store-implementation/alert-store-implementation';
 import { FormDetailItemPbdc } from "@/src/domain/entity/pbdc-entity";
-import { validationJustNumber } from "@/src/helpers/validation";
+import { validationJustNumber, validationText } from "@/src/helpers/validation";
 import { PbdcStore } from '@/src/domain/store/pbdc-store';
+import { AlertStore } from '@/src/domain/store/alert-store';
+import { deleteAlllItemDraftUseCase } from "@/src/use-case/pbdc/delete-draft-detail-use-case";
 
 const PbdcAddViewModel = () => {
     const authStore = authStoreImplementation();
@@ -23,15 +25,16 @@ const PbdcAddViewModel = () => {
     const alertStore = alertStoreImplementation();
     let router = useRouter();
     const [plu, setPlu] = useState<string>("");
-    const [formDc, setFormDc] = useState<string>("");
     const [disableBtnAddPlu, setDisableBtnAddPlu] = useState<boolean>(true);
     const [disableBtnAddDetailItem, setDisableBtnAddPluDetailItem] = useState<boolean>(true);
-    const [alertSaveData, setAlertSaveData] = useState<boolean>(false);
-    const [sameValuePlu, setSameValuePlu] = useState<boolean>(false);
+    const [disableBtnEditDetailItem, setDisableBtnEditPluDetailItem] = useState<boolean>(true);
+    const [valuePluSame, setValuePluSame] = useState<boolean>(false);
+    const [openModalSave, setOpenModalSave] = useState<boolean>(false);
     const [formDetailItem, setFormDetailItem] = useState<FormDetailItemPbdc>({
         nour: "",
         plu: "",
         eq: "",
+        desc: "",
         order: ""
     });
 
@@ -39,51 +42,40 @@ const PbdcAddViewModel = () => {
         nour: "",
         plu: "",
         eq: "",
+        desc: "",
         order: ""
     });
 
-    const checkPbdcRosso = useCallback(async () => {
-         const { store }:any = authStore.auth;
-         await postPbdcCheckRosso(pbdcStore, store);
-    }, [pbdcStore?.checkRosso]);
-
-     const onLoadAllDc = useCallback(async () => {
-        const { store }:any = authStore.auth;
-        await dcStoreUseCase(dcStore, store);
-    }, [dcStore?.dc]);
-
     const onPostPluValidation = useCallback(async (plu : string, dc :string) => {
         const { store }:any = authStore.auth;
-        const sameValuePlu = pbdcStore?.detailItemPbdc !== undefined
+        const valuePluSame = pbdcStore?.detailItemPbdc !== undefined
         && pbdcStore?.detailItemPbdc.filter((fil:any) => fil.plu === plu)[0];
-        if(pbdcStore?.detailItemPbdc[0] !== undefined && sameValuePlu !== undefined) {
-            setSameValuePlu(true);
+        if(pbdcStore?.detailItemPbdc[0] !== undefined && valuePluSame !== undefined) {
+            setValuePluSame(true);
             await alertStore.setAlert(true, "PLU Sudah Ada!");
         }else{
-            setSameValuePlu(false);
+            setValuePluSame(false);
             await postPluValidationUseCase(pbdcStore, store, plu, dc);
         }
     }, [pbdcStore?.statusPluValidation]);
 
-    const onPostVerify = useCallback(async (dc:string) => {
+    const onPostSaveData = async () => {
         const { store }:any = authStore.auth;
-        await postPbdcVerifyUseCase(pbdcStore, store, "", dc);
-    }, [pbdcStore?.pbdcStatusVerify]);
-
-    const onPostSaveData = useCallback(async (dc:string) => {
-        const { store }:any = authStore.auth;
-        if(pbdcStore?.selectDc === "") {
-            setAlertSaveData(true);
-        }else{
-            await postPbdcSaveData(pbdcStore, store, "", pbdcStore?.selectDc, pbdcStore?.detailItemPbdc);
+            settingStore?.setLoading(true);
+            await postPbdcSaveData(pbdcStore, store, "", dcStore?.selectDc, pbdcStore?.detailItemPbdc);
             await router.push("/pbdc");
-            await settingStore?.setLoading(true);
-        }
-    }, [pbdcStore?.pbdcStatusSave]);
+};
 
     const handleBack = async () => {
-        await settingStore.setLoading(true);
+        settingStore.setLoading(true);
+        await deleteAlllItemDraftUseCase(pbdcStore);
+        await dcStore?.setSelectDc("");
         router.push("/pbdc");
+    };
+
+    const handleBackForm = async () => {
+        settingStore.setLoading(true);
+        router.push("/pbdc/add");
     };
 
     const handleDetected = (result:any) => {
@@ -99,7 +91,9 @@ const PbdcAddViewModel = () => {
         await router.push("/pbdc/add");
     };
 
-    const handleDetailItemPbdc = async () => {
+    const handleSaveDetailItemPbdc = async () => {
+        settingStore?.setLoading(true);
+        alertStore?.setAlert(false, "");
         await pbdcStore.addDetailItemPbdc(formDetailItem);
         await router.push("/pbdc/add");
     };
@@ -107,46 +101,50 @@ const PbdcAddViewModel = () => {
     const onChangeDetailItem = (e:React.ChangeEvent<HTMLInputElement>) => {
         setFormDetailItem({
             ...formDetailItem,
-            [e.target.name]: validationJustNumber(e.target.value),
-            plu: pbdcStore?.pluValidation?.plu
+            order: validationJustNumber(e.target.value),
         });
     };
 
     const onChangeEditDetailItem = (e:React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
         setFormEditDetailItem({
             ...formEditDetailItem,
-            [e.target.name]: validationJustNumber(e.target.value),
+            order: validationJustNumber(e.target.value),
         });
     };
 
      const onGetDetailItemPbdc = async (data:FormDetailItemPbdc) => {
-        console.log("action dong");
+        settingStore?.setLoading(true);
         await pbdcStore?.getDetailItemPbdc(data);
         await router.push("/pbdc/add/formedit");
     };
 
-    useEffect(() => {
-        alertStore.setAlert(false, "");
-        settingStore.setLoading(false);
-        checkPbdcRosso();
-        onLoadAllDc();
-    }, []);
+    const handleNext = (link:string) => {
+        settingStore?.setLoading(true);
+        router.push(link);
+    };
 
     useEffect(() => {
-        // if(!pbdcStore?.checkRosso) {
-        //     setDisableBtnAddPlu(true);
-        // }else{
-        if(plu === "" || formDc === "") {
+        if(plu === "" || dcStore?.selectDc === "") {
             setDisableBtnAddPlu(true);
         }else{
             setDisableBtnAddPlu(false);
         }
-        // }
-   }, [plu, formDc, pbdcStore?.checkRosso]);
-   // handledisable button form detail
-   console.log("check dc", formDc);
-   const handleDisableAddPbdc = () => {
-    if(formDetailItem.eq === ""
+   }, [plu, dcStore?.selectDc]);
+
+   // disable button form add
+    useEffect(() => {
+     if(formEditDetailItem.order === ""
+    ) {
+        setDisableBtnEditPluDetailItem(true);
+    }else{
+        setDisableBtnEditPluDetailItem(false);
+    }
+   }, [formEditDetailItem]);
+
+   // handledisable button form edit
+   useEffect(() => {
+     if(formDetailItem.eq === ""
     || formDetailItem.nour === ""
     || formDetailItem.order == ""
     ) {
@@ -154,68 +152,64 @@ const PbdcAddViewModel = () => {
     }else{
         setDisableBtnAddPluDetailItem(false);
     }
-   };
-    const handleDisableEditPbdc = () => {
-    if(formEditDetailItem.eq === ""
-    || formEditDetailItem.nour === ""
-    || formEditDetailItem.order == ""
-    ) {
-        setDisableBtnAddPluDetailItem(true);
-    }else{
-        setDisableBtnAddPluDetailItem(false);
-    }
-   };
-   useEffect(() => {
-        handleDisableAddPbdc();
-        handleDisableEditPbdc();
-   }, [formDetailItem, formEditDetailItem]);
+}, [formDetailItem]);
 
    useEffect(() => {
+    alertStore?.setAlert(false, "");
+    settingStore?.setLoading(false);
+     setFormDetailItem({
+        ...formDetailItem,
+         nour: String(parseInt(pbdcStore?.detailItemPbdc.length) + 1),
+         plu: pbdcStore?.pluValidation?.plu,
+         eq: pbdcStore?.pluValidation?.fmisis,
+         desc: pbdcStore?.pluValidation?.fmsing,
+    });
         if(pbdcStore?.fieldEditItem !== undefined) {
             setFormEditDetailItem({
                 ...formEditDetailItem,
-                ...pbdcStore?.fieldEditItem,
+                ...pbdcStore?.fieldEditItem
             });
         }
    }, []);
 
-   useEffect(() => {
-    pbdcStore?.setSelectDc(formDc);
-   }, [formDc]);
-
     return{
+        setAlert: alertStore?.setAlert,
+        valuePluSame,
+        statusPlu: pbdcStore?.statusPluValidation,
+        alerts: {
+            open: alertStore?.isOpen,
+            message: alertStore?.message,
+        },
         checkRosso: pbdcStore?.checkRosso,
         dc: dcStore?.dc,
         plu,
+        formDetailItem,
         pluValidation: pbdcStore?.pluValidation,
-        isLoadingBtnPlu: pbdcStore?.isLoadingBtnPluValidation,
         isLoading: settingStore?.isLoading,
-        isOpenAlert: alertStore?.isOpen,
-        messageAlert: alertStore?.message,
-        statusCheckPlu: pbdcStore.statusPluValidation,
         detailItemPbdc: pbdcStore?.detailItemPbdc,
         fieldEdit: pbdcStore?.fieldEditItem,
+        handleNext,
         // action'
+        disableBtnEditDetailItem,
         formEditDetailItem,
-        setAlert: alertStore?.setAlert,
         setPlu,
-        setFormDc,
-        formDc: pbdcStore?.selectDc,
+        setFormDc: dcStore?.setSelectDc,
+        formDc: dcStore?.selectDc,
         disableButtonDetailItem: disableBtnAddDetailItem,
-        handleDetailItemPbdc,
+         handleSaveDetailItemPbdc,
         disableBtnAddPlu,
-        sameValuePlu,
-        setAlertSaveData,
-        alertSaveData,
         onEditDetailItemPbdc,
         onGetDetailItemPbdc,
         onPostPluValidation,
         onChangeDetailItem,
         handleBack,
+        handleBackForm,
         onChangeEditDetailItem,
         onPostSaveData,
         handleDetected,
         handleRoute,
+        openModalSave,
+        setOpenModalSave,
         deleteItemPbdc: pbdcStore?.deleteDetailItemPbdc
     };
 };

@@ -68,7 +68,6 @@ const LsifLoginPage = () => {
     });
 
     const onUsernameEntered = (usernameParameter: string) => {
-        console.log(usernameParameter);
         const uName = {
             name: "username",
             error: false,
@@ -104,7 +103,6 @@ const LsifLoginPage = () => {
         if (event.key === "Enter") {
             onUsernameEntered(username);
             onGetDomainClicked(username);
-            console.log("auth di index", auth);
         }
     };
 

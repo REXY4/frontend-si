@@ -36,7 +36,7 @@ color = "primary",
 
      const handleChange = (value:string) => {
              if(value === "Delete") {
-                return onDelete !== undefined ? onDelete : console.log("Delete");
+                return onDelete !== undefined ? onDelete : "";
              }if("Edit") {
                return onUpdate;
              }

@@ -1,9 +1,9 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable max-len */
 /* eslint-disable no-multi-spaces */
-import React, {  useCallback, useEffect, useState } from "react";
+import React, {   useState } from "react";
 import {
- Box,  Container,  ThemeProvider, Typography
+ Box,  Container,  ThemeProvider
 } from "@mui/material";
 import styles from "../../styles/pages/pbdc.module.css";
 import { themeBasic } from '@/styles/theme';
@@ -11,24 +11,14 @@ import { BasicInput } from "@/components/inputs";
 import SearchIcon from '@mui/icons-material/Search';
 import { CardContainer } from "@/components/cards";
 import { ListPrimary } from "@/components/list";
-import PbdcViewModel from "./pbdc-view-model";
-import { ButtonAdd, ButtonFilter } from "@/components/buttons";
-import { useRouter } from "next/router";
-import { withAuth } from "@/src/helpers/PrivateRoute";
-import { Loading } from "@/components/Loading";
+import {  ButtonAdd, ButtonFilter } from "@/components/buttons";
+import PbsupllierViewModel from './pbsupplier-view-model';
 import { DatePrimary } from "@/src/utils/DateTime";
 import { colorBasic, colorOpacity } from "@/styles/color";
-import { ModalAlertError } from "@/components/modals";
+import { Loading } from "@/components/Loading";
 
-const PbdcPages = () => {
-const {
-  alert,
-  pbdcs,
-  isLoading,
-  handleAddNewPbdc,
-  handleOverviewPbdc,
-  setAlert
-} = PbdcViewModel();
+const PbdcSupplierPages = () => {
+const { dataPbSupplier, handleAddPbSupplier, isLoading } = PbsupllierViewModel();
 const [search, setSearch] = useState<string>("");
 const [valueFilter, setValueFilter] = useState<string>("All");
 const vh = (547 / window.innerHeight) * 100;
@@ -38,7 +28,7 @@ return (
   <ThemeProvider theme={themeBasic}>
     <Container>
       <Box>
-        <p className="title-content">List peneriman barang DC (PBDC)</p>
+        <p className="title-content">List PB Supplier</p>
       </Box>
       <Box marginTop={2}>
         <BasicInput
@@ -65,16 +55,16 @@ return (
       <Box marginTop={1}>
         <CardContainer
           title="List Item"
+          backgroundColorHeader={String(colorOpacity?.error)}
+          colorTitle={String(colorBasic.white)}
           customStyle={{
             overflow: "scroll"
           }}
           customStyleContent={undefined}
           height={`${vh}vh`}
-          backgroundColorHeader={colorOpacity.error}
-          colorTitle={colorBasic.white}
         >
-          {pbdcs && pbdcs[0] === undefined && <p className={styles["alert-card-text"]}>Data Belum Ada !</p> }
-          {pbdcs && pbdcs.filter((fil) => {
+          {dataPbSupplier && dataPbSupplier[0] === undefined && <p className={styles["alert-card-text"]}>Data Belum Ada !</p> }
+          {dataPbSupplier && dataPbSupplier.filter((fil) => {
                 if(valueFilter === "No Pb") {
                    return fil.nopb.toLowerCase().includes(search.toLowerCase());
                 }if(valueFilter === "Tipe") {
@@ -90,7 +80,7 @@ return (
                 || String(fil.nilai).includes(search.toLowerCase());
           }).map((item:any, index:number) => (
             <Box marginTop={2} key={`${index}`}>
-              <ListPrimary onView={() => handleOverviewPbdc(item, item.dc, item.nopb)} title={item.nopb} tanggal={DatePrimary(String(item.tgl))} type={item.tipe} dc={item.dc} status={item.status} nilai={item.nilai} />
+              <ListPrimary onView={undefined} title={item.nopb} tanggal={DatePrimary(String(item.tgl))} type={item.tipe} dc={item.dc} status={undefined} nilai={item.nilai} />
             </Box>
             ))}
         </CardContainer>
@@ -105,21 +95,15 @@ return (
       >
         <ButtonAdd
           onClick={() => {
-          handleAddNewPbdc();
-        }}
-          color="success"
+            handleAddPbSupplier();
+           }}
+          color="primary"
         />
       </Box>
-      <ModalAlertError
-        open={alert?.isOpen}
-        onClose={undefined}
-        onClickOk={() => setAlert(false, "")}
-        messageAlert={String(alert?.message)}
-      />
       <Loading isLoading={isLoading} />
     </Container>
   </ThemeProvider>
     );
  };
 
-export default withAuth(PbdcPages);
+export default PbdcSupplierPages;

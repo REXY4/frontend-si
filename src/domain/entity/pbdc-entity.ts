@@ -58,6 +58,7 @@ export interface PluEntity {
 export interface FormDetailItemPbdc {
       nour: string,
       plu: string,
+      desc : string,
       eq: number | string,
       order: number | string
 }
