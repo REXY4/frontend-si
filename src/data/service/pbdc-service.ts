@@ -20,7 +20,7 @@ const getPerStore = async (store_code: string) => {
 
 const getOverviewPbdc = async (store_code:string, dc :string, noPb : string) => {
     const response = fetchWrapper.get(
-        PbdcActionType.CHECK_ROSSO,
+        PbdcActionType.GET_DETAIL,
         `${baseUrl}/GetOverview?store_code=${store_code}&NoPb=${noPb}&dc=${dc}&pToken=${pToken}`,
     );
     return response;
@@ -37,7 +37,7 @@ const postCheckPbdcRosso = async (store_code:string) => {
 
 const postPluValidation = async (store:string, barcode:string, dc:string) => {
     const response = fetchWrapper.post(
-        PbdcActionType.CHECK_ROSSO,
+        PbdcActionType.PLU_VALIDATION,
         `${baseUrl}/PostPluValidation?pToken=${pToken}`,
         { store, barcode, dc }
     );
@@ -47,13 +47,27 @@ const postPluValidation = async (store:string, barcode:string, dc:string) => {
 const postPbdcVerify = async (
         store_code:string,
         noPb:string,
-        dc:string
+        dc:string,
+        detailItemPbdc : any
 ) => {
     const response = fetchWrapper.post(
-        PbdcActionType.CHECK_ROSSO,
+        PbdcActionType.PBDC_VERIFY,
         `${baseUrl}/PostVerify?pToken=${pToken}`,
-        { store_code, noPb, dc }
+        {
+             store_code,
+             noPb,
+              dc,
+            detailItemPbdc: detailItemPbdc.map((item:any) => {
+            return {
+                nour: item.fdnour,
+                plu: item.plu,
+                eq: item.eq,
+                order: item.order
+            };
+        })
+        }
     );
+
     return response;
 };
 
@@ -64,7 +78,7 @@ const postPbdcSaveData = async (
         detailItemPbdc : [FormDetailItemPbdc]
 ) => {
     const response = fetchWrapper.post(
-        PbdcActionType.CHECK_ROSSO,
+        PbdcActionType.PBDC_SAVE_DATA,
         `${baseUrl}/SaveDataPbdc?pToken=${pToken}`,
         {
         store_code,

@@ -33,8 +33,8 @@ const LsiModal: FC<LsiModalProps> = ({ isOpen, onClose }) => (
       <DialogActions>
         <Button
           onClick={() => {
-                            onClose();
-                        }}
+                onClose();
+          }}
         >
           Close
         </Button>

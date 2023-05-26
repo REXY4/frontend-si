@@ -2,5 +2,6 @@ export const Endpoint = {
     user: "/users/",
     login: "/login/",
     pbdc: "pbdc",
-    dc: "Dc"
+    dc: "dc",
+    pbsupl: 'pbsuplier'
 };

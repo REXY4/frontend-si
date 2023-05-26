@@ -51,7 +51,7 @@ const PbdcViewModel = () => {
 
     const handleAddNewPbdc = async () => {
         settingStore.setLoading(true);
-         if(pbdcStore?.checkRosso?.statusRosso) {
+         if(!pbdcStore?.checkRosso?.statusRosso) {
              router.push("/pbdc/add");
          }else{
            settingStore?.setLoading(false);

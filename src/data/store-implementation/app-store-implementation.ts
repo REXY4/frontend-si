@@ -16,14 +16,16 @@ import { userReducer } from "../reducer/user-reducer";
 import { pbdcReducer } from "../reducer/pbdc-reducer";
 import { alertReducer } from "../reducer/alert-reducer";
 import { dcReducer } from "../reducer/dc-reducer";
+import { pbSuplReducer } from "../reducer/pbsupl-reducer";
 
 const rootReducer = combineReducers({
     setting: settingReducer,
     user: userReducer,
     auth: authReducer,
     init: initReducer,
-    pbdc: pbdcReducer,
     dc: dcReducer,
+    pbdc: pbdcReducer,
+    pbsupl: pbSuplReducer,
     alert: alertReducer,
 });
 

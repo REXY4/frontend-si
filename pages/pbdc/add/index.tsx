@@ -7,7 +7,6 @@ import {
  Box, Button, Container, Divider, ThemeProvider, Typography
 } from "@mui/material";
 import PbdcAddViewModel from "./pbdc-add-view-model";
-import { useRouter } from "next/router";
 import { Loading } from "@/components/Loading";
 import styles from "../../../styles/pages/pbdc.module.css";
 // import { ModalBasic } from "@/components/modals";
@@ -108,6 +107,11 @@ const vh = (547 / window.innerHeight) * 100;
               <ListOrder
                 label="Vol"
                 value="0"
+                setValue={undefined}
+              />
+              <ListOrder
+                label="Jumlah Item"
+                value={String(parseInt(detailItemPbdc.length))}
                 setValue={undefined}
               />
             </Box>

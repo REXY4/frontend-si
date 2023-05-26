@@ -142,13 +142,14 @@ const addDetailItemPbdc = (data:FormDetailItemPbdc) => async (dispatch:Dispatch)
 };
 
 const postPbdcVerify = (
-  store_code : string,
-  noPb : string,
-  dc : string
+store_code: string,
+noPb : string,
+dc : string,
+detailItemPbdc : any
 ) => async (dispatch:Dispatch) => {
   try{
     dispatch({ type: PbdcActionType.PBDC_VERIFY, isLoadingBtnPbdcVerify: true, });
-    const response = await PbdcRepository.postPbdcVerify(store_code, noPb, dc);
+    const response = await PbdcRepository.postPbdcVerify(store_code, noPb, dc, detailItemPbdc);
     if(response.returnType === "S") {
     dispatch({
       type: PbdcActionType.PBDC_VERIFY,

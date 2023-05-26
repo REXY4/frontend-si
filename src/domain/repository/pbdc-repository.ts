@@ -27,14 +27,15 @@ const postPluValidation = async (
 const postPbdcVerify = async (
  store_code:string,
         noPb:string,
-    dc:string
-) : Promise<ResponseEntity<Boolean>> => mapResponse(await PbdcService.postPbdcVerify(store_code, noPb, dc));
+    dc:string,
+    detailItemPbdc:any
+) : Promise<ResponseEntity<Boolean>> => mapResponse(await PbdcService.postPbdcVerify(store_code, noPb, dc, detailItemPbdc));
 
 const postPbdcSaveData = async (
  store_code:string,
         noPb:string,
     dc:string,
-      detailItemPbdc : [FormDetailItemPbdc]
+      detailItemPbdc : any
 ) : Promise<ResponseEntity<any>> => mapResponse(await PbdcService.postPbdcSaveData(store_code, noPb, dc, detailItemPbdc));
 
 const save = async (

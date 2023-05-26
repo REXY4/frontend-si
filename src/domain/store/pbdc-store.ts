@@ -45,9 +45,12 @@ interface PbdcStore {
     // editDetailItemPbdc(plu:string):Promise<any>
     editDetailItemPbdc(data:FormDetailItemPbdc):Promise<FormDetailItemPbdc|any>
     getDetailItemPbdc(data:FormDetailItemPbdc):Promise<FormDetailItemPbdc|any>
-    postPbdcVerify(store_code:string,
+    postPbdcVerify(
+        store_code:string,
         noPb:string,
-        dc:string):Promise<void | ResponseEntity<Boolean>>;
+        dc:string,
+        detailItemPbdc : any
+        ):Promise<void | ResponseEntity<void|any>>;
 
     postPbdcSaveData(
         store_code:string,

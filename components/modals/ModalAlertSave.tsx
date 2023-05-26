@@ -51,7 +51,7 @@ const ModalAlertSave = ({
               color="success"
               onClick={onClickNext}
             >
-              continue
+              Yes
             </Button>
           </Box>
         </Box>

@@ -51,13 +51,13 @@ const [openModalSave, setOpenModalSave] = useState<boolean>(false);
                 selectInput={false}
                 selectData={undefined}
               />
-              <ListOrder
+              {/* <ListOrder
                 label="Dc"
                 value={dcSelected}
                 setValue={setSelectDc}
                 selectInput
                 selectData={dataDc}
-              />
+              /> */}
               <ListOrder
                 label="Tipe"
                 value="1-Reguler"
@@ -79,13 +79,7 @@ const [openModalSave, setOpenModalSave] = useState<boolean>(false);
                 selectInput={false}
                 selectData={undefined}
               />
-              <ListOrder
-                label="Vol"
-                value="0"
-                setValue={undefined}
-                selectInput={false}
-                selectData={undefined}
-              />
+
             </Box>
           </Box>
           <Divider />

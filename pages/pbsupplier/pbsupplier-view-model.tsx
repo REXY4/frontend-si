@@ -3,24 +3,21 @@ import { settingStoreImplementation } from '@/src/data/store-implementation/sett
 import { dcStoreUseCase } from "@/src/use-case/dc/dc-use-case";
 import dcImplementation from "@/src/data/store-implementation/dc-store-implementation";
 import { useCallback, useEffect } from "react";
+import { PbSuplGetAllUseCase } from "@/src/use-case/pbsupl/pbsupl-get-use-case";
+import { authStoreImplementation } from '@/src/data/store-implementation/auth-store-implementation';
+import { PbSuplImplementation } from "@/src/data/store-implementation/pbsupl-store-implementation";
 
 const PbsupllierViewModel = () => {
     let router = useRouter();
     const settingStore = settingStoreImplementation();
     const dcStore = dcImplementation();
+    const authStore = authStoreImplementation();
+    const pbsuplStore = PbSuplImplementation();
+    const { store }:any = authStore.auth;
 
-    const dataPbSupplier = [
-           {
-                        id: 0,
-                        cab: "0001",
-                        nopb: "PB0E25001",
-                        tipe: "1",
-                        dc: "0970",
-                        tgl: "2020-05-25T10:48:00",
-                        nilai: 1276503166.91,
-                        status: "SBOS"
-            },
-    ];
+    const onloadAllData = useCallback(async () => {
+      await PbSuplGetAllUseCase(pbsuplStore, store);
+    }, [pbsuplStore?.pbsupl]);
 
     const onloadDc = useCallback(async () => {
         await dcStoreUseCase(dcStore, "0001");
@@ -33,10 +30,11 @@ const PbsupllierViewModel = () => {
 
     useEffect(() => {
         onloadDc();
+        onloadAllData();
     }, []);
 
     return {
-        dataPbSupplier,
+        dataPbSupplier: pbsuplStore?.pbsupl,
         isLoading: settingStore?.isLoading,
         handleAddPbSupplier
     };
