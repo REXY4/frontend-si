@@ -262,7 +262,7 @@ const saveDraftDetailAction = (request: RequestPbdcDetailEntity) => async (dispa
   return response;
 };
 
-const deleteDraftDetailAction = () => async (dispatch: Dispatch) => {
+const deleteDraftDetailAction = (id:number) => async (dispatch: Dispatch) => {
   dispatch({
         type: PbdcActionType.PBDC_SAVE_DATA,
         payload: undefined

@@ -1,8 +1,10 @@
+/* eslint-disable func-names */
 /* eslint-disable no-case-declarations */
 /* eslint-disable default-param-last */
 import type { AnyAction } from "redux";
 import { PbdcStore } from "@/src/domain/store/pbdc-store";
 import { PbdcActionType } from "../action-type/pbdc-action-type";
+import { FormDetailItemPbdc } from "@/src/domain/entity/pbdc-entity";
 
 type PbdcStoreState = Omit<
  PbdcStore,
@@ -21,7 +23,8 @@ type PbdcStoreState = Omit<
  "getDetailItemPbdc" |
  "setSelectDc"|
  "deleteAllItemDraftPbdc" |
- "setPbdcSaveStatus"
+ "setPbdcSaveStatus" |
+ "getAllDetailItemPbdc"
  >;
 
 const INITIAL_STATE: PbdcStoreState = {
