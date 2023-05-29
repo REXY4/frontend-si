@@ -17,11 +17,12 @@ interface Props {
     nilai : string
     tanggal : string,
     status : string | undefined
+    onUpdate : void | any
 }
 
 const ListPrimary = ({
   onView,
- title, type, dc, nilai, tanggal, status
+ title, type, dc, nilai, tanggal, status, onUpdate
 }:Props) => {
 return (
   <>
@@ -107,8 +108,8 @@ return (
       <ButtonList
         onView={onView}
         color={undefined}
-        onDelete={status !== "Draft" ? undefined : () => console.log("hallo")}
-        onUpdate={status !== "Draft" ? undefined : () => console.log("hallo")}
+        onDelete={undefined}
+        onUpdate={onUpdate}
       />
     </Box>
     <Divider />

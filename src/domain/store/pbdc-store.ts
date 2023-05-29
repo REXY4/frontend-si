@@ -26,10 +26,13 @@ interface PbdcStore {
     isLoadingBtnPbdcSave : Boolean;
     fieldEditItem : FormDetailItemPbdc | any;
     detailItemPbdc : [FormDetailItemPbdc] | any;
+    pbdcSaveData : any;
     selectDc : string,
     // Action
+    setPbdcSaveStatus(condition:boolean):Promise<void>;
     setSelectDc(dc : string):any
     getPerStore(store_code: string):Promise<void | ResponseEntity<[PbdcEntity]>>;
+    getAllDetailItemPbdc(data:[FormDetailItemPbdc]):Promise<void>;
     getPbdcOverview(
         data: any,
         store_code:string,
@@ -67,7 +70,7 @@ interface PbdcStore {
         request: RequestPbdcDetailEntity
     ): Promise<void | PbdcDetailEntity>;
 
-    deleteDraftDetail(id: number): Promise<null>;
+    deleteDraftDetail(id: number): Promise<void>;
 }
 
 export type { PbdcStore };

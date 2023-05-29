@@ -11,4 +11,10 @@ detailItemPbdc : [FormDetailItemPbdc]
     await store.postPbdcSaveData(store_code, noPb, dc, detailItemPbdc);
 };
 
-export { postPbdcSaveData };
+const setPbdcSaveStatusUseCASE = async (
+store :PbdcStore,
+condition :boolean
+) => {
+    await store.setPbdcSaveStatus(condition);
+};
+export { postPbdcSaveData, setPbdcSaveStatusUseCASE };

@@ -13,10 +13,9 @@ const PbsupllierViewModel = () => {
     const dcStore = dcImplementation();
     const authStore = authStoreImplementation();
     const pbsuplStore = PbSuplImplementation();
-    const { store }:any = authStore.auth;
 
     const onloadAllData = useCallback(async () => {
-      await PbSuplGetAllUseCase(pbsuplStore, store);
+      await PbSuplGetAllUseCase(pbsuplStore, "0001");
     }, [pbsuplStore?.pbsupl]);
 
     const onloadDc = useCallback(async () => {

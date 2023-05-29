@@ -64,13 +64,11 @@ return (
           height={`${vh}vh`}
         >
           {dataPbSupplier && dataPbSupplier[0] === undefined && <p className={styles["alert-card-text"]}>Data Belum Ada !</p> }
-          {dataPbSupplier && dataPbSupplier.filter((fil) => {
+          {dataPbSupplier && dataPbSupplier.filter((fil:any) => {
                 if(valueFilter === "No Pb") {
                    return fil.nopb.toLowerCase().includes(search.toLowerCase());
                 }if(valueFilter === "Tipe") {
                   return fil.tipe.toLowerCase().includes(search.toLowerCase());
-                }if(valueFilter === "Dc") {
-                  return fil.dc.toLowerCase().includes(search.toLowerCase());
                 }if(valueFilter === "Nilai") {
                   return String(fil.nilai).toLowerCase().includes(search.toLowerCase());
                 }
@@ -80,7 +78,16 @@ return (
                 || String(fil.nilai).includes(search.toLowerCase());
           }).map((item:any, index:number) => (
             <Box marginTop={2} key={`${index}`}>
-              <ListPrimary onView={undefined} title={item.nopb} tanggal={DatePrimary(String(item.tgl))} type={item.tipe} dc={item.dc} status={undefined} nilai={item.nilai} />
+              <ListPrimary
+                onView={() => console.log("view")}
+                title={item.nopb}
+                tanggal={DatePrimary(String(item.tgl))}
+                type={item.tipe}
+                dc={item.dc}
+                status={item.status}
+                nilai={item.nilai}
+                onUpdate={undefined}
+              />
             </Box>
             ))}
         </CardContainer>

@@ -63,7 +63,7 @@ color = "primary",
           <Box sx={{ padding: "10px" }}>
             {onView !== undefined && (
               <>
-                <MenuItem onClick={() => handleChange("View")}>
+                <MenuItem onClick={onView}>
                   <RemoveRedEyeIcon
                     color="success"
                     sx={{ marginRight: "10px" }}

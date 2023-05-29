@@ -1,8 +1,6 @@
 import {
   Box,
-   Card,
-   CardContent,
-   Container, Grid, Typography,
+   Container, Grid
 } from '@mui/material';
 import styles from "@/styles/pages/home.module.css";
 import CollapsePrimary from '@/components/colapse/CollapsePrimary';

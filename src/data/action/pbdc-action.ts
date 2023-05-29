@@ -90,7 +90,7 @@ const deleteDetailItemPbdc = (plu:string) => async (dispatch:Dispatch) => {
 
 const deleteAllItemDraftPbdc = () => async (dispatch:Dispatch) => {
     dispatch({
-    type: PbdcActionType.SET_DELETE_ALL_ITEM,
+     type: PbdcActionType.SET_DELETE_ALL_ITEM,
    });
 };
 
@@ -181,12 +181,34 @@ const postPbdcSaveData = (
   try{
     const response = await PbdcRepository.postPbdcSaveData(store_code, noPb, dc, detailItemPbdc);
     if(response.returnType === "S") {
+        dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
       dispatch({
-        type: PbdcActionType.SET_DELETE_ALL_ITEM
+        type: AlertActionType.SET_ALERTS,
+        isOpen: true,
+        message: response.returnMessage,
+      });
+      dispatch({
+        type: PbdcActionType.PBDC_SAVE_DATA,
+        payload: response.returnData
+      });
+      dispatch({
+        type: PbdcActionType.SET_STATUS_SAVE_PBDC,
+        payload: true
+      });
+    }else {
+      dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
+      dispatch({
+         type: AlertActionType.SET_ALERTS,
+         isOpen: true,
+         message: response.returnMessage,
       });
        dispatch({
-        type: DcActionType.SELECT_DC,
-        payload: ""
+        type: PbdcActionType.PBDC_SAVE_DATA,
+        payload: response.returnData
+      });
+       dispatch({
+        type: PbdcActionType.SET_STATUS_SAVE_PBDC,
+        payload: false
       });
     }
   }catch(err) {
@@ -195,6 +217,13 @@ const postPbdcSaveData = (
       isLoadingBtnPbdcSave: false,
     });
   }
+};
+
+const setPbdcSaveStatusAction = (condition:boolean) => async (dispatch:Dispatch) => {
+    dispatch({
+      type: PbdcActionType.SET_STATUS_SAVE_PBDC,
+      payload: condition
+    });
 };
 
 const getDetailPbdcAction = (data:any) => async (dispatch:any) => {
@@ -233,14 +262,26 @@ const saveDraftDetailAction = (request: RequestPbdcDetailEntity) => async (dispa
   return response;
 };
 
-const deleteDraftDetailAction = (id: number) => async (dispatch: any) => {
-  dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });
+const deleteDraftDetailAction = () => async (dispatch: Dispatch) => {
   dispatch({
-    type: PbdcActionType.DELETE_DRAFT_DETAIL,
-    payload: id,
+        type: PbdcActionType.PBDC_SAVE_DATA,
+        payload: undefined
+      });
+  dispatch({
+        type: PbdcActionType.SET_STATUS_SAVE_PBDC,
+        payload: true
   });
-  dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
-  return null;
+  dispatch({
+    type: DcActionType.SELECT_DC,
+    payload: ""
+  });
+};
+
+const getAllDetailDataForEdit = (data:any) => async (dispatch:Dispatch) => {
+    dispatch({
+      type: PbdcActionType.GET_DETAIL_ALL_EDIT_ITEM,
+      payload: data
+    });
 };
 
 export const PbdcAction = {
@@ -250,7 +291,9 @@ export const PbdcAction = {
   deleteAllItemDraftPbdc,
   getDetailPbdcAction,
   setSelectDc,
+  getAllDetailDataForEdit,
   postPluValidation,
+  setPbdcSaveStatusAction,
   editDetailItemPbdc,
   addDetailItemPbdc,
   getDetailItemPbdc,

@@ -15,7 +15,7 @@ interface Props {
 const ButtonFilter = ({
 setValue,
 color = "primary",
-menu = ["Test"]
+menu,
 } : Props) => {
     const [check, setChekc] = useState<string>("All");
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

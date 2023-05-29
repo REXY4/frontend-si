@@ -147,7 +147,6 @@ export default function Layout({ children }: PropsLayout) {
   }));
 
   const handleRoute = (url:string) => {
-   
     router.push(`/${url.toLowerCase()}`);
   };
 
@@ -180,7 +179,6 @@ export default function Layout({ children }: PropsLayout) {
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
-              // onClick={handleDrawerOpen}
                 edge="start"
                 sx={{ mr: 1, ...(open && { display: 'none' }) }}
               >

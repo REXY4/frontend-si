@@ -17,7 +17,7 @@ import { PbdcStore } from '@/src/domain/store/pbdc-store';
 import { AlertStore } from '@/src/domain/store/alert-store';
 import { deleteAlllItemDraftUseCase } from "@/src/use-case/pbdc/delete-draft-detail-use-case";
 
-const PbdcAddViewModel = () => {
+const PbdcEditViewModel = () => {
     const authStore = authStoreImplementation();
     const dcStore = dcImplementation();
     const pbdcStore = pbdcStoreImplementation();
@@ -63,9 +63,14 @@ const PbdcAddViewModel = () => {
         const { store }:any = authStore.auth;
             settingStore?.setLoading(true);
             setOpenModalSave(false);
-            await postPbdcSaveData(pbdcStore, store, "", dcStore?.selectDc, pbdcStore?.detailItemPbdc);
-            // await router.push("/pbdc");
-};
+            await postPbdcSaveData(
+                pbdcStore,
+                store,
+                pbdcStore?.detailPbdc?.nopb,
+                dcStore?.selectDc,
+                pbdcStore?.detailItemPbdc
+                );
+            };
 
     const handleBack = async () => {
         settingStore.setLoading(true);
@@ -76,7 +81,7 @@ const PbdcAddViewModel = () => {
 
     const handleBackForm = async () => {
         settingStore.setLoading(true);
-        router.push("/pbdc/add");
+        router.push("/pbdc/edit");
     };
 
     const handleDetected = (result:any) => {
@@ -89,14 +94,14 @@ const PbdcAddViewModel = () => {
 
     const onEditDetailItemPbdc = async () => {
         await pbdcStore?.editDetailItemPbdc(formEditDetailItem);
-        await router.push("/pbdc/add");
+        await router.push("/pbdc/edit");
     };
 
     const handleSaveDetailItemPbdc = async () => {
         settingStore?.setLoading(true);
         alertStore?.setAlert(false, "");
         await pbdcStore.addDetailItemPbdc(formDetailItem);
-        await router.push("/pbdc/add");
+        await router.push("/pbdc/edit");
     };
 
     const onChangeDetailItem = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -117,7 +122,7 @@ const PbdcAddViewModel = () => {
      const onGetDetailItemPbdc = async (data:FormDetailItemPbdc) => {
         settingStore?.setLoading(true);
         await pbdcStore?.getDetailItemPbdc(data);
-        await router.push("/pbdc/add/formedit");
+        await router.push("/pbdc/edit/formedit");
     };
 
     const handleCloseModalSaveSuccess = async () => {
@@ -163,6 +168,16 @@ const PbdcAddViewModel = () => {
    useEffect(() => {
     alertStore?.setAlert(false, "");
     settingStore?.setLoading(false);
+    const dataStore = pbdcStore?.overviewPbdc.map((item:any, i:number) => {
+        return {
+            nour: i + 1,
+            ...item,
+        };
+    });
+    pbdcStore?.getAllDetailItemPbdc(dataStore);
+
+        //  pbdcStore.addDetailItemPbdc();
+    dcStore?.setSelectDc(pbdcStore?.detailPbdc?.dc);
      setFormDetailItem({
         ...formDetailItem,
          nour: String(parseInt(pbdcStore?.detailItemPbdc.length) + 1),
@@ -177,8 +192,12 @@ const PbdcAddViewModel = () => {
             });
         }
    }, []);
-   console.log("ini adalah select dc", dcStore?.selectDc);
+
+   console.log("ini adalah", pbdcStore?.detailItemPbdc);
+
     return{
+        dataPbdc: pbdcStore?.detailPbdc,
+        overview: pbdcStore?.overviewPbdc,
         setAlert: alertStore?.setAlert,
         valuePluSame,
         statusPlu: pbdcStore?.statusPluValidation,
@@ -225,4 +244,4 @@ const PbdcAddViewModel = () => {
     };
 };
 
-export default PbdcAddViewModel;
+export default PbdcEditViewModel;

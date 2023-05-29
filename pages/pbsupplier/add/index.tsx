@@ -80,6 +80,14 @@ const [openModalSave, setOpenModalSave] = useState<boolean>(false);
                 selectData={undefined}
               />
 
+              <ListOrder
+                label="Total Item"
+                value="0"
+                setValue={undefined}
+                selectInput={false}
+                selectData={undefined}
+              />
+
             </Box>
           </Box>
           <Divider />

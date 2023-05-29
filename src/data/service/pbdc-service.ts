@@ -81,7 +81,7 @@ const postPbdcSaveData = async (
         PbdcActionType.PBDC_SAVE_DATA,
         `${baseUrl}/SaveDataPbdc?pToken=${pToken}`,
         {
-        store_code,
+        store: store_code,
         noPb,
         dc,
         detailItemPbdc: detailItemPbdc.map((item:any) => {

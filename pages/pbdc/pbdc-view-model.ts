@@ -26,7 +26,7 @@ const PbdcViewModel = () => {
             const { store }:any = authStore.auth;
             await getPbdcPerStoreUseCase(pbdcStore, store);
             setPbdcsFiltered(pbdcStore.pbdcs);
-     }, [pbdcStore?.pbdc]);
+     }, []);
 
     const onLoadAllDc = useCallback(async () => {
         const { store }:any = authStore.auth;
@@ -47,6 +47,17 @@ const PbdcViewModel = () => {
         settingStore.setLoading(true);
          await getPbdcOverview(pbdcStore, data, store, dc, noPb);
          await router.push("/pbdc/detail");
+    }, [pbdcStore?.overviewPbdc]);
+
+      const onLoadPbdcEdit = useCallback(async (
+            data: any,
+            dc :string,
+            noPb : string
+     ) => {
+          const { store }:any = authStore.auth;
+        settingStore.setLoading(true);
+         await getPbdcOverview(pbdcStore, data, store, dc, noPb);
+         await router.push("/pbdc/edit");
     }, [pbdcStore?.overviewPbdc]);
 
     const handleAddNewPbdc = async () => {
@@ -74,6 +85,7 @@ const PbdcViewModel = () => {
         handleAddNewPbdc,
         pbdcs: pbdcsFiltered,
         handleOverviewPbdc: onLoadPbdcOverviews,
+        handelPbdcEdit: onLoadPbdcEdit,
         isLoading: settingStore?.isLoading,
         setAlert: alertStore?.setAlert
     };

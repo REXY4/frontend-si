@@ -24,7 +24,8 @@ backgroundColorHeader, colorTitle
     {title !== undefined
     && (
     <CardContent style={{
-      background: backgroundColorHeader
+      background: backgroundColorHeader,
+      overflow: "scroll"
     }}
     >
       <h1

@@ -27,7 +27,8 @@ const {
   isLoading,
   handleAddNewPbdc,
   handleOverviewPbdc,
-  setAlert
+  setAlert,
+  handelPbdcEdit
 } = PbdcViewModel();
 const [search, setSearch] = useState<string>("");
 const [valueFilter, setValueFilter] = useState<string>("All");
@@ -66,9 +67,11 @@ return (
         <CardContainer
           title="List Item"
           customStyle={{
+            // overflow: "hidden"
+          }}
+          customStyleContent={{
             overflow: "scroll"
           }}
-          customStyleContent={undefined}
           height={`${vh}vh`}
           backgroundColorHeader={colorOpacity.error}
           colorTitle={colorBasic.white}
@@ -90,7 +93,16 @@ return (
                 || String(fil.nilai).includes(search.toLowerCase());
           }).map((item:any, index:number) => (
             <Box marginTop={2} key={`${index}`}>
-              <ListPrimary onView={() => handleOverviewPbdc(item, item.dc, item.nopb)} title={item.nopb} tanggal={DatePrimary(String(item.tgl))} type={item.tipe} dc={item.dc} status={item.status} nilai={item.nilai} />
+              <ListPrimary
+                onUpdate={item.status === "Draft" ? async () =>  handelPbdcEdit(item, item.dc, item.nopb) : undefined}
+                onView={() => handleOverviewPbdc(item, item.dc, item.nopb)}
+                title={item.nopb}
+                tanggal={DatePrimary(String(item.tgl))}
+                type={item.tipe === "1" ? "1-REGULER" : ""}
+                dc={item.dc}
+                status={item.status}
+                nilai={item.nilai}
+              />
             </Box>
             ))}
         </CardContainer>

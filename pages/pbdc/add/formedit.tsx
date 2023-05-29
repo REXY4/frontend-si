@@ -12,6 +12,7 @@ import { ListOrder } from "@/components/list";
 import { CollapsePrimary } from "@/components/colapse";
 import { DatePrimary } from "@/src/utils/DateTime";
 import { FormDetailItemPbdc } from '../../../src/domain/entity/pbdc-entity';
+import { withAuth } from "@/src/helpers/PrivateRoute";
 
 const FormEditPage = () => {
   const [loadingSave, setLoadingSave] = useState<boolean>(false);
@@ -165,7 +166,7 @@ const FormEditPage = () => {
           >
             <SaveIcon sx={{ marginRight: "5px", width: "15px" }} />
             {/* {loadingSave ? <CircularProgress color="success" /> : "Simpan"} */}
-            Edit
+            Save
           </Button>
         </Box>
         <ModalBasic open={openModal} onClose={undefined}>
@@ -201,7 +202,7 @@ const FormEditPage = () => {
                     setOpenModal(false);
                   }}
               >
-                Continue
+                Ya
               </Button>
             </Box>
           </Box>
@@ -211,4 +212,4 @@ const FormEditPage = () => {
     );
 };
 
-export default FormEditPage;
+export default withAuth(FormEditPage);

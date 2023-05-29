@@ -6,14 +6,18 @@ import { validationJustNumber } from "@/src/helpers/validation";
 import { FormDetailItemPbdc } from "@/src/domain/entity/pbdc-entity";
 import { postPbdcVerifyUseCase } from '@/src/use-case/pbdc/post-pbdc-verify-use-case';
 import { authStoreImplementation } from '@/src/data/store-implementation/auth-store-implementation';
+import { useRouter } from "next/router";
+import { settingStoreImplementation } from "@/src/data/store-implementation/setting-store-implementation";
+import { SettingStore } from '@/src/domain/store/setting-store';
 
 const PbdcDetailViewModel = () => {
     const authStore = authStoreImplementation();
     const pbdcStore = pbdcStoreImplementation();
+    const settingStore = settingStoreImplementation();
     const dcStore = dcImplementation();
+    const router = useRouter();
     const [plu, setPlu] = useState<string>("");
     const [openModalVerify, setOpenModalVerify] = useState<boolean>(false);
-
      const handleDetected = (result:any) => {
         setPlu(result);
     };
@@ -24,20 +28,23 @@ const PbdcDetailViewModel = () => {
          const { store }:any = authStore.auth;
         const { nopb, dc }:any = pbdcStore.detailPbdc;
         const detail:any = pbdcStore?.overviewPbdc;
+
         console.log("click");
        await postPbdcVerifyUseCase(pbdcStore, store, nopb, dc, detail);
     };
 
-    console.log("ini adalah daa dc", dcStore?.dc);
+    const handleBack = () => {
+        router.push("/pbdc");
+    };
 
     return{
         dataPbdc: pbdcStore?.detailPbdc,
         overview: pbdcStore?.overviewPbdc,
-        dataDc: dcStore?.dc && dcStore?.dc.filter(
-            ({ fmkcab }:any) => fmkcab === pbdcStore?.detailPbdc.dc
-        )[0],
+        dataDc: undefined,
         plu,
+        totalItem: String(pbdcStore?.overviewPbdc?.length),
         setPlu,
+        handleBack,
         handleDetected,
         openModalVerify,
         setOpenModalVerify,

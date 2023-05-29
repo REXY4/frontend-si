@@ -8,7 +8,7 @@ import { ButtonList } from "../buttons";
 
 interface Props {
      plu : string,
-
+     sideButton : boolean,
      eq : string,
      order : string,
      onDelete : any,
@@ -18,7 +18,7 @@ interface Props {
 }
 
 const ListAddsPbdc = ({
- plu, eq, order, onDelete, onUpdate, onView, desc
+ plu, eq, order, onDelete, onUpdate, onView, desc, sideButton
 }:Props) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -46,12 +46,15 @@ return (
         </p>
 
       </Box>
+      {sideButton === true
+      && (
       <ButtonList
         onView={undefined}
         color={undefined}
         onDelete={onDelete}
         onUpdate={onUpdate}
       />
+)}
     </Box>
     <Divider sx={{ marginBottom: "5px" }} />
   </>

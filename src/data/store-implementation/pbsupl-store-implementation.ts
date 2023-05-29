@@ -22,8 +22,8 @@ const PbSuplImplementation = (): PbSuplStore => {
     const {
     pbsupl
 } = useSelector<
-        AppRootState,
-        pbSuplStoreState
+    AppRootState,
+    pbSuplStoreState
     >(pbSuplSelector);
     const dispatch = useDispatch();
 

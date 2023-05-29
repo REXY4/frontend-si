@@ -6,7 +6,6 @@ import {
   Alert,
  Box, Button, Container, Divider, ThemeProvider, Typography
 } from "@mui/material";
-import PbdcAddViewModel from "./pbdc-add-view-model";
 import { Loading } from "@/components/Loading";
 import styles from "../../../styles/pages/pbdc.module.css";
 // import { ModalBasic } from "@/components/modals";
@@ -22,14 +21,9 @@ import { DatePrimary } from "@/src/utils/DateTime";
 import { colorBasic } from "@/styles/color";
 import { TitlePrimary } from "@/styles/text/title";
 import { withAuth } from "@/src/helpers/PrivateRoute";
+import PbdcEditViewModel from "./pbdc-edit-view-model";
 
-interface PropsList {
-    label : string,
-    value : string,
-    setValue :any
-}
-
-const AddPbdc = () => {
+const EditPbdc = () => {
   const {
   setAlert,
   alerts,
@@ -56,24 +50,24 @@ const AddPbdc = () => {
   openModalSave,
   statusSavePbdc,
   totalItem,
-  handleCloseModalSaveSuccess
-} = PbdcAddViewModel();
-console.log("daa in save");
-
+  handleCloseModalSaveSuccess,
+  dataPbdc,
+  overview
+} = PbdcEditViewModel();
 const vh = (547 / window.innerHeight) * 100;
 
     return(
       <ThemeProvider theme={themeBasic}>
         <Container>
           <Box marginBottom={1}>
-            <TitlePrimary>Tambah  PBDC</TitlePrimary>
+            <TitlePrimary>Edit PBDC</TitlePrimary>
           </Box>
           <Divider />
           <Box display="flex" justifyContent="center" color="#151515" marginTop={2}>
             <Box>
               <ListOrder
                 label="Nomor Order"
-                value={!dataSaveOnly ? "XXXXXXX" : dataSaveOnly?.noPb}
+                value={!dataPbdc ? "XXXXXXX" : dataPbdc?.nopb}
                 setValue={undefined}
                 selectInput={false}
                 selectData={undefined}
@@ -87,21 +81,21 @@ const vh = (547 / window.innerHeight) * 100;
               />
               <ListOrder
                 label="Tipe"
-                value="1-Reguler"
+                value={String(dataPbdc?.tipe === "1" ? "1-REGULER" : "")}
                 setValue={undefined}
                 selectInput={false}
                 selectData={undefined}
               />
               <ListOrder
                 label="Tanggal"
-                value={DatePrimary(String(new Date()))}
+                value={DatePrimary(String(dataPbdc?.tgl))}
                 setValue={undefined}
                 selectInput={false}
                 selectData={undefined}
               />
               <ListOrder
                 label="Nilai"
-                value="0"
+                value={String(dataPbdc?.nilai)}
                 setValue={undefined}
                 selectInput={false}
                 selectData={undefined}
@@ -159,10 +153,10 @@ const vh = (547 / window.innerHeight) * 100;
             <CardContainer
               title="List Item"
               height={`${vh}vh`}
-              customStyle={undefined}
-              customStyleContent={{
+              customStyle={{
                 overflow: "scroll"
               }}
+              customStyleContent={undefined}
               backgroundColorHeader={colorBasic?.error}
               colorTitle={colorBasic?.white}
             >
@@ -170,7 +164,7 @@ const vh = (547 / window.innerHeight) * 100;
               return(
                 <Box>
                   <ListAddsPbdc
-                    sideButton={!dataSaveOnly}
+                    sideButton
                     plu={item.plu}
                     eq={item.eq}
                     desc={item.desc}
@@ -231,7 +225,7 @@ const vh = (547 / window.innerHeight) * 100;
           <ModalAlertSave
             open={openModalSave}
             onClose={undefined}
-            messageAlert="Silahkan klik tombol (Continue) untuk Save data!"
+            messageAlert="Silahkan klik tombol (Yes) untuk Save data!"
             onClickNext={() => onPostSaveData()}
             onClickCancel={() => setOpenModalSave(false)}
           />
@@ -250,4 +244,4 @@ const vh = (547 / window.innerHeight) * 100;
     );
 };
 
-export default withAuth(AddPbdc);
+export default withAuth(EditPbdc);

@@ -20,7 +20,8 @@ type PbdcStoreState = Omit<
  "editDetailItemPbdc" |
  "getDetailItemPbdc" |
  "setSelectDc"|
- "deleteAllItemDraftPbdc"
+ "deleteAllItemDraftPbdc" |
+ "setPbdcSaveStatus"
  >;
 
 const INITIAL_STATE: PbdcStoreState = {
@@ -37,6 +38,7 @@ const INITIAL_STATE: PbdcStoreState = {
     isLoadingBtnPbdcSave: false,
     pbdcStatusSave: undefined,
     fieldEditItem: undefined,
+    pbdcSaveData: undefined,
     detailItemPbdc: [],
     selectDc: "",
     pbdcDraft: {
@@ -85,7 +87,16 @@ const pbdcReducer = (
                 ...state,
                 detailItemPbdc: [...state.detailItemPbdc, action.detailItemPbdc]
                 };
-
+         case PbdcActionType.GET_DETAIL_ALL_EDIT_ITEM:
+            if(state.detailItemPbdc[0] === undefined) {
+                return{
+                ...state,
+                detailItemPbdc: action.payload
+                };
+            }
+                return {
+                    ...state,
+                };
           case PbdcActionType.SET_FIELD_ITEM:
                    return{
                 ...state,
@@ -116,7 +127,9 @@ const pbdcReducer = (
          case PbdcActionType.SET_DELETE_ALL_ITEM:
             return{
                 ...state,
-                detailItemPbdc: []
+                detailItemPbdc: [],
+                pbdcStatusSave: false,
+                pbdcSaveData: undefined,
             };
         case PbdcActionType.PBDC_VERIFY:
             return {
@@ -127,7 +140,12 @@ const pbdcReducer = (
         case PbdcActionType.PBDC_SAVE_DATA:
             return {
                 ...state,
-                pbdcStatusSave: true,
+                pbdcSaveData: action.payload,
+            };
+        case PbdcActionType.SET_STATUS_SAVE_PBDC:
+            return {
+                ...state,
+                pbdcStatusSave: action.payload,
             };
         case PbdcActionType.SAVE:
             return {

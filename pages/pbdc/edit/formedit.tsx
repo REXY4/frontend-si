@@ -1,48 +1,34 @@
 import React, { useState } from "react";
 import { BasicInput } from "@/components/inputs";
-import {
- Container, Box, Button, Divider
-} from "@mui/material";
-import PbdcAddViewModel from "./pbdc-add-view-model";
+import { Container, Box, Button } from "@mui/material";
 import SaveIcon from '@mui/icons-material/Save';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import CircularProgress from '@mui/material/CircularProgress';
-import { ModalAlertSave, ModalBasic } from "@/components/modals";
+import { ModalBasic } from "@/components/modals";
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Loading } from "@/components/Loading";
+import { ListOrder } from "@/components/list";
 import { CollapsePrimary } from "@/components/colapse";
 import { DatePrimary } from "@/src/utils/DateTime";
-import { ListOrder } from "@/components/list";
+import { FormDetailItemPbdc } from '../../../src/domain/entity/pbdc-entity';
 import { withAuth } from "@/src/helpers/PrivateRoute";
+import PbdcEditViewModel from "./pbdc-edit-view-model";
 
-interface PropsList {
-    label : string,
-    value : string,
-    setValue :any
-}
-
-const FormPage = () => {
+const FormEditPage = () => {
   const [loadingSave, setLoadingSave] = useState<boolean>(false);
-  const [openModal, setOpenModalSave] = useState<boolean>(false);
-  const {
- pluValidation,
- alerts,
-  handleBackForm,
-  disableButtonDetailItem,
-  formDetailItem,
-  handleSaveDetailItemPbdc,
-  isLoading,
-  onChangeDetailItem,
-  setAlert
-} = PbdcAddViewModel();
+  const [openModal, setOpenModal] = useState<boolean>(false);
+    const {
+    pluValidation,
+    handleRoute,
+    formEditDetailItem,
+    onChangeEditDetailItem,
+    onEditDetailItemPbdc,
+    disableBtnEditDetailItem
+} = PbdcEditViewModel();
 
     return (
       <Container>
-        {/* <Box marginBottom={1}>
-          <h1 className="title-content">Form Pbdc</h1>
-        </Box> */}
-        <Divider />
-        <Box>
+        <Box marginBottom={3}>
           <CollapsePrimary title="NO ORDER : XXXXXXX">
             <ListOrder
               label="Tipe"
@@ -81,69 +67,85 @@ const FormPage = () => {
             />
           </CollapsePrimary>
         </Box>
-        <Box marginBottom={4} marginTop={3}>
+        <Box marginBottom={4}>
           <Box marginBottom={2}>
             <BasicInput
+              label="No Urut"
+              startIcon={undefined}
+              endIcon={undefined}
+              type=""
+              name="nour"
+              value={formEditDetailItem.nour}
+              defaultValue={undefined}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeEditDetailItem(e)}
+              error={false}
+              placeholder=""
+              errorMessage=""
               disabled
+            />
+          </Box>
+          <Box marginBottom={2}>
+            <BasicInput
               label="PLU"
               startIcon={undefined}
               endIcon={undefined}
               type=""
-              name="order"
-              value={formDetailItem?.plu}
+              name="plu"
+              value={pluValidation?.plu}
               defaultValue={undefined}
-              onChange={(e:React.ChangeEvent<HTMLInputElement>) => onChangeDetailItem(e)}
+              onChange={undefined}
               error={false}
               placeholder=""
               errorMessage=""
+              disabled
             />
           </Box>
           <Box marginBottom={2}>
             <BasicInput
-              disabled
               label="Deskripsi"
               startIcon={undefined}
               endIcon={undefined}
               type=""
-              name="order"
-              value={`${formDetailItem?.desc}`}
+              name="plu"
+              value={formEditDetailItem.desc}
               defaultValue={undefined}
-              onChange={(e:React.ChangeEvent<HTMLInputElement>) => onChangeDetailItem(e)}
+              onChange={undefined}
               error={false}
               placeholder=""
               errorMessage=""
+              disabled
             />
           </Box>
           <Box marginBottom={2}>
             <BasicInput
-              disabled
               label="Eq"
               startIcon={undefined}
               endIcon={undefined}
               type=""
-              name="order"
-              value={`${pluValidation?.konv}/${formDetailItem?.eq}`}
+              name="eq"
+              value={`${pluValidation?.konv}/${formEditDetailItem.eq}`}
               defaultValue={undefined}
-              onChange={(e:React.ChangeEvent<HTMLInputElement>) => onChangeDetailItem(e)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeEditDetailItem(e)}
               error={false}
               placeholder=""
               errorMessage=""
+              disabled
             />
           </Box>
           <Box marginBottom={2}>
             <BasicInput
-              disabled={false}
               label="Order"
               startIcon={undefined}
               endIcon={undefined}
               type=""
               name="order"
-              value={undefined}
+              value={formEditDetailItem.order}
               defaultValue={undefined}
-              onChange={(e:React.ChangeEvent<HTMLInputElement>) => onChangeDetailItem(e)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeEditDetailItem(e)}
               error={false}
               placeholder=""
               errorMessage=""
+              disabled={false}
             />
           </Box>
         </Box>
@@ -151,31 +153,63 @@ const FormPage = () => {
           <Button
             variant="contained"
             color="error"
-            onClick={() => handleBackForm()}
+            onClick={() => handleRoute("/pbdc/edit")}
           >
             <ArrowBackIosNewIcon sx={{ marginRight: "5px", width: "15px" }} />
-            Back
+            back
           </Button>
           <Button
-            disabled={disableButtonDetailItem}
+            disabled={disableBtnEditDetailItem}
             variant="outlined"
             color="primary"
-            onClick={() => setAlert(true, "Silahkan klik tombol (continue) untuk menyimpan data!")}
+            onClick={() => setOpenModal(true)}
           >
             <SaveIcon sx={{ marginRight: "5px", width: "15px" }} />
+            {/* {loadingSave ? <CircularProgress color="success" /> : "Simpan"} */}
             Save
           </Button>
         </Box>
-        <ModalAlertSave
-          open={alerts?.open}
-          onClose={() => undefined}
-          messageAlert={String(alerts?.message)}
-          onClickNext={() => handleSaveDetailItemPbdc()}
-          onClickCancel={() => setAlert(false, "")}
-        />
-        <Loading isLoading={isLoading} />
+        <ModalBasic open={openModal} onClose={undefined}>
+          <Box>
+            <h1 style={{
+              color: "#009688",
+              textAlign: "center",
+              fontSize: "16px",
+              letterSpacing: "1px",
+              marginBottom: "20px",
+            }}
+            >
+              <ErrorOutlineIcon color="success" />
+              {' '}
+              <span style={{ position: "relative", top: "2px" }}>
+                Silahkan klik (Continue) untuk Save data !
+              </span>
+            </h1>
+            <Box display="flex" justifyContent="space-between">
+              <Button
+                variant="outlined"
+                color="error"
+                onClick={() => setOpenModal(false)}
+              >
+                back
+              </Button>
+              <Button
+                variant="outlined"
+                color="success"
+                onClick={() => {
+                    onEditDetailItemPbdc();
+                    setLoadingSave(true);
+                    setOpenModal(false);
+                  }}
+              >
+                Ya
+              </Button>
+            </Box>
+          </Box>
+        </ModalBasic>
+        <Loading isLoading={loadingSave} />
       </Container>
     );
 };
 
-export default withAuth(FormPage);
+export default withAuth(FormEditPage);

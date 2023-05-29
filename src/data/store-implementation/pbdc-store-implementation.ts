@@ -28,7 +28,8 @@ const pbdcStoreImplementation = (): PbdcStore => {
     isLoadingBtnPbdcSave,
     detailItemPbdc,
     fieldEditItem,
-    selectDc
+    selectDc,
+    pbdcSaveData,
 } = useSelector<
         AppRootState,
         PbdcStoreState
@@ -73,7 +74,8 @@ store_code:string,
 ) => PbdcAction.postPbdcVerify(
     store_code,
     noPb,
-    dc
+    dc,
+    detailItemPbdc,
 )(dispatch),
         [dispatch]
     );
@@ -118,6 +120,12 @@ store_code:string,
             [dispatch]
     );
 
+    const getAllDetailItemPbdc = useCallback(
+        (data
+        : [FormDetailItemPbdc]) => PbdcAction.getAllDetailDataForEdit(data)(dispatch),
+         [dispatch]
+);
+
 //
 
     const deleteDetailItemPbdc = useCallback(
@@ -140,6 +148,8 @@ store_code:string,
     );
     const deleteAllItemDraftPbdc = useCallback(() => PbdcAction.deleteAllItemDraftPbdc()(dispatch), [dispatch]);
 
+    const setPbdcSaveStatus = useCallback((condition:boolean) => PbdcAction.setPbdcSaveStatusAction(condition)(dispatch), [dispatch]);
+
     return {
         pbdcs,
         pbdc,
@@ -157,8 +167,11 @@ store_code:string,
         detailItemPbdc,
         fieldEditItem,
         selectDc,
+        pbdcSaveData,
         // action
         getPerStore,
+        getAllDetailItemPbdc,
+        setPbdcSaveStatus,
         deleteAllItemDraftPbdc,
         setSelectDc,
         postPbdcSaveData,

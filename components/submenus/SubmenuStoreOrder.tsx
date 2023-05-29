@@ -20,7 +20,7 @@ const StoreOrder:StateMenu[] = [
     {
       icon: <SummarizeIcon />,
       title: "PO Canvas",
-       link: "/home"
+       link: "/pocanvas"
     }
   ];
 
