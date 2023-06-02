@@ -9,12 +9,13 @@ interface Props {
     title : string
     backgroundColorHeader : string
     colorTitle : string
+    total : string
 }
 
 const CardContainer = ({
 children, height, customStyle,
 customStyleContent, title,
-backgroundColorHeader, colorTitle
+backgroundColorHeader, colorTitle, total
 }:Props) => (
   <Card sx={{
     maxHeight: `${height}`,
@@ -25,18 +26,22 @@ backgroundColorHeader, colorTitle
     && (
     <CardContent style={{
       background: backgroundColorHeader,
-      overflow: "scroll"
     }}
     >
       <h1
         style={{ color: colorTitle }}
       >
         {title}
+        {' '}
+        (
+        {total === undefined ? 0 : total}
+        )
       </h1>
     </CardContent>
     )}
     <CardContent sx={{
-      ...customStyleContent
+      overflow: "scroll",
+      maxHeight: height
     }}
     >
       {children}

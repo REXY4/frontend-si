@@ -7,7 +7,7 @@ import Menu from '@mui/material/Menu';
 import CheckIcon from '@mui/icons-material/Check';
 
 interface Props {
-    color : any
+    color : "primary" | "inherit" | "default" | "secondary" | "error" | "info" | "success" | "warning";
     menu : any
     setValue : any
 }

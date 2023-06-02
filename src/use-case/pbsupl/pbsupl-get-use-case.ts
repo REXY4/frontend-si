@@ -4,7 +4,7 @@ const PbSuplGetAllUseCase = async (
             pbStore: PbSuplStore,
             store : string
 ) => {
-    await pbStore.getAllDataPbSupl(store);
+    await pbStore.getAllDataPbSuplStore(store);
 };
 
 export { PbSuplGetAllUseCase };

@@ -4,8 +4,8 @@ import Quagga from 'quagga';
 import styles from '@/styles/components/scanner/barcode.module.css';
 
 interface ScannerProps {
-  onDetected: any
-  onClose : any
+  onDetected:any
+  onClose:any
 }
 
 export const config = {
@@ -32,7 +32,7 @@ export function clearScanner() {
   });
 }
 
-export const BarcodeScanner: React.FC<ScannerProps> = ({ onDetected, onClose }) => {
+export const BarcodeScanner = ({ onDetected, onClose }:ScannerProps) => {
   const videoRef = useRef < HTMLVideoElement >(null);
   useEffect(() => {
     Quagga.init(

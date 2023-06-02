@@ -15,7 +15,7 @@ interface Props {
     severity: AlertColor;
     message: string | null;
     isOpen: boolean;
-    onClose: any;
+    onClose: void | any;
 }
 
 export const BasicAlerts: FC<Props> = ({

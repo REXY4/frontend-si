@@ -18,7 +18,13 @@ import { colorBasic, colorOpacity } from "@/styles/color";
 import { Loading } from "@/components/Loading";
 
 const PbdcSupplierPages = () => {
-const { dataPbSupplier, handleAddPbSupplier, isLoading } = PbsupllierViewModel();
+const {
+ dataPbSupplier,
+  handleAddPbSupplier,
+handleEdit,
+ isLoading,
+  handleShowDetail
+} = PbsupllierViewModel();
 const [search, setSearch] = useState<string>("");
 const [valueFilter, setValueFilter] = useState<string>("All");
 const vh = (547 / window.innerHeight) * 100;
@@ -54,12 +60,11 @@ return (
       </Box>
       <Box marginTop={1}>
         <CardContainer
-          title="List Item"
+          total={String(dataPbSupplier && dataPbSupplier.length)}
+          title="List Pb"
           backgroundColorHeader={String(colorOpacity?.error)}
           colorTitle={String(colorBasic.white)}
-          customStyle={{
-            overflow: "scroll"
-          }}
+          customStyle={undefined}
           customStyleContent={undefined}
           height={`${vh}vh`}
         >
@@ -74,19 +79,18 @@ return (
                 }
                  return fil.nopb.toLowerCase().includes(search.toLowerCase())
                 || fil.tipe.toLowerCase().includes(search.toLowerCase())
-                || fil.dc.toLowerCase().includes(search.toLowerCase())
                 || String(fil.nilai).includes(search.toLowerCase());
           }).map((item:any, index:number) => (
             <Box marginTop={2} key={`${index}`}>
               <ListPrimary
-                onView={() => console.log("view")}
+                onView={() => handleShowDetail(item, item.nopb)}
                 title={item.nopb}
                 tanggal={DatePrimary(String(item.tgl))}
                 type={item.tipe}
                 dc={item.dc}
                 status={item.status}
                 nilai={item.nilai}
-                onUpdate={undefined}
+                onUpdate={item.status === "Draft" ? () => handleEdit(item, item.nopb) : undefined}
               />
             </Box>
             ))}
@@ -104,7 +108,7 @@ return (
           onClick={() => {
             handleAddPbSupplier();
            }}
-          color="primary"
+          color="success"
         />
       </Box>
       <Loading isLoading={isLoading} />

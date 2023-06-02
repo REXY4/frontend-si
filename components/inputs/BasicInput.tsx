@@ -32,9 +32,9 @@ interface Props {
   endIcon : any
   type : string
   name : string
-  value : any
-  defaultValue :any
-  onChange : any
+  value : string | undefined
+  defaultValue :string | undefined
+  onChange :any
   error : boolean
   placeholder : string
   errorMessage : string

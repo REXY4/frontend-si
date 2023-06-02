@@ -88,8 +88,8 @@ const postPbdcSaveData = async (
             return {
                 nour: item.nour,
                 plu: item.plu,
-                eq: item.eq,
-                order: item.order
+                eq: item.eq === "" ? 0 : item.eq,
+                order: item.order === "" ? 0 : item.order
             };
         })
         }

@@ -16,6 +16,7 @@ import { validationJustNumber, validationText } from "@/src/helpers/validation";
 import { PbdcStore } from '@/src/domain/store/pbdc-store';
 import { AlertStore } from '@/src/domain/store/alert-store';
 import { deleteAlllItemDraftUseCase } from "@/src/use-case/pbdc/delete-draft-detail-use-case";
+import { getPbdcPerStoreUseCase } from "@/src/use-case/pbdc/get-per-store-use-case";
 
 const PbdcAddViewModel = () => {
     const authStore = authStoreImplementation();
@@ -59,6 +60,11 @@ const PbdcAddViewModel = () => {
         }
     }, [pbdcStore?.statusPluValidation]);
 
+    const onLoadPbdc = useCallback(async () => {
+            const { store }:any = authStore.auth;
+            await getPbdcPerStoreUseCase(pbdcStore, store);
+     }, []);
+
     const onPostSaveData = async () => {
         const { store }:any = authStore.auth;
             settingStore?.setLoading(true);
@@ -71,6 +77,7 @@ const PbdcAddViewModel = () => {
         settingStore.setLoading(true);
         await deleteAlllItemDraftUseCase(pbdcStore);
         await dcStore?.setSelectDc("");
+        await onLoadPbdc();
         router.push("/pbdc");
     };
 

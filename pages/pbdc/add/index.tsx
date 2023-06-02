@@ -113,13 +113,7 @@ const vh = (547 / window.innerHeight) * 100;
                 selectInput={false}
                 selectData={undefined}
               />
-              <ListOrder
-                label="Jumlah Item"
-                value={totalItem}
-                setValue={undefined}
-                selectInput={false}
-                selectData={undefined}
-              />
+
             </Box>
           </Box>
           <Divider />
@@ -157,6 +151,7 @@ const vh = (547 / window.innerHeight) * 100;
             {detailItemPbdc !== undefined && detailItemPbdc[0] !== undefined
             && (
             <CardContainer
+              total={String(detailItemPbdc && detailItemPbdc.length)}
               title="List Item"
               height={`${vh}vh`}
               customStyle={undefined}

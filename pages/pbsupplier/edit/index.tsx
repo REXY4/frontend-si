@@ -1,107 +1,89 @@
+/* eslint-disable max-len */
 import React, { useEffect, useState } from "react";
 import { CardContainer } from "@/components/cards";
 import { BasicInput, SelectInputNative } from "@/components/inputs";
 import { themeBasic } from "@/styles/theme";
 import {
-  Alert,
- Box, Button, Container, Divider, ThemeProvider, Typography
+ Box, Button, Container, Divider, ThemeProvider,
 } from "@mui/material";
 import { Loading } from "@/components/Loading";
 import styles from "../../../styles/pages/pbdc.module.css";
-// import { ModalBasic } from "@/components/modals";
 import ModalScanner from "@/components/scanners/ModalScanner";
-import { ListAddsPbdc, ListOrder, ListOverViewPbdc } from "@/components/list";
+import CircularProgress from '@mui/material/CircularProgress';
+import {
+ ListAddPbSupplier, ListAddsPbdc, ListOrder, ListOverViewPbdc
+} from "@/components/list";
 import {
  ModalAlertError, ModalAlertInfo, ModalAlertSave, ModalAlertSuccess, ModalBasic
 } from "@/components/modals";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import SaveIcon from '@mui/icons-material/Save';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { validationJustNumber } from "@/src/helpers/validation";
 import { DatePrimary } from "@/src/utils/DateTime";
-import { colorBasic } from "@/styles/color";
-import { TitlePrimary } from "@/styles/text/title";
-import { withAuth } from "@/src/helpers/PrivateRoute";
-import PbdcEditViewModel from "./pbdc-edit-view-model";
 
-const EditPbdc = () => {
+import { colorBasic, colorOpacity } from "@/styles/color";
+import PbSupplierEditModel from "./pbsupplier-edit-model";
+
+const EditPbSupplier = () => {
   const {
-  setAlert,
   alerts,
-  statusPlu,
+  dataPb,
+  disableBtnValidasiPlu,
   isLoading,
   handleBack,
-  valuePluSame,
   handleDetected,
-  setFormDc,
-  plu,
-  formDc,
-  dataDc,
   setPlu,
-  disableBtnAddPlu,
-  onPostPluValidation,
-  handleRoute,
-  dataSaveOnly,
-  detailItemPbdc,
-  deleteItemPbdc,
-  onGetDetailItemPbdc,
-  onPostSaveData,
+  nopb,
+  handlePluValidation,
   handleNext,
-  setOpenModalSave,
-  openModalSave,
-  statusSavePbdc,
-  totalItem,
-  handleCloseModalSaveSuccess,
-  dataPbdc,
-  overview
-} = PbdcEditViewModel();
+  overview,
+  handleDeleteItem,
+  handleSaveData
+} = PbSupplierEditModel();
 const vh = (547 / window.innerHeight) * 100;
+const [openModalInfo, setOpenModalInfo] = useState<boolean>(false);
+const [openModalSave, setOpenModalSave] = useState<boolean>(false);
 
     return(
       <ThemeProvider theme={themeBasic}>
         <Container>
           <Box marginBottom={1}>
-            <TitlePrimary>Edit PBDC</TitlePrimary>
+            <p className="title-content">Edit PB Supplier</p>
           </Box>
           <Divider />
           <Box display="flex" justifyContent="center" color="#151515" marginTop={2}>
             <Box>
               <ListOrder
                 label="Nomor Order"
-                value={!dataPbdc ? "XXXXXXX" : dataPbdc?.nopb}
+                value={dataPb && dataPb?.nopb}
                 setValue={undefined}
                 selectInput={false}
                 selectData={undefined}
               />
-              <ListOrder
+              {/* <ListOrder
                 label="Dc"
-                value={formDc}
-                setValue={setFormDc}
-                selectInput={!dataSaveOnly}
+                value={dcSelected}
+                setValue={setSelectDc}
+                selectInput
                 selectData={dataDc}
-              />
+              /> */}
               <ListOrder
                 label="Tipe"
-                value={String(dataPbdc?.tipe === "1" ? "1-REGULER" : "")}
+                value={dataPb?.tipe === "1" ? "1-REGULER" : ""}
                 setValue={undefined}
                 selectInput={false}
                 selectData={undefined}
               />
               <ListOrder
                 label="Tanggal"
-                value={DatePrimary(String(dataPbdc?.tgl))}
+                value={DatePrimary(String(dataPb?.tgl))}
                 setValue={undefined}
                 selectInput={false}
                 selectData={undefined}
               />
               <ListOrder
                 label="Nilai"
-                value={String(dataPbdc?.nilai)}
-                setValue={undefined}
-                selectInput={false}
-                selectData={undefined}
-              />
-              <ListOrder
-                label="Vol"
                 value="0"
                 setValue={undefined}
                 selectInput={false}
@@ -110,7 +92,7 @@ const vh = (547 / window.innerHeight) * 100;
             </Box>
           </Box>
           <Divider />
-          {!dataSaveOnly
+          {nopb === ''
           && (
           <Box marginTop={2} display="flex" justifyContent="flex-end">
             <Box marginRight={3}>
@@ -121,51 +103,49 @@ const vh = (547 / window.innerHeight) * 100;
                 endIcon={<ModalScanner onDetected={handleDetected} />}
                 type=""
                 name=""
-                value={plu === "" ? "" : plu}
+                value={undefined}
                 defaultValue={undefined}
                 onChange={(
                   e:React.ChangeEvent<HTMLInputElement>
-                ) => setPlu(validationJustNumber(e.target.value))}
+                ) => setPlu(e.target.value)}
                 error={false}
                 placeholder=""
                 errorMessage=""
               />
             </Box>
             <button
-              id={disableBtnAddPlu ? styles["button-non-background-disabled"] : styles["button-non-backround"]}
-              disabled={disableBtnAddPlu}
-              onClick={() => onPostPluValidation(plu, formDc)}
+              id={disableBtnValidasiPlu ? styles["button-non-background-disabled"] : styles["button-non-backround"]}
+              disabled={disableBtnValidasiPlu}
+              onClick={() => handlePluValidation()}
             >
               Validasi
             </button>
           </Box>
-)}
+          )}
           <Box marginTop={4} marginBottom={5}>
-            {detailItemPbdc !== undefined && detailItemPbdc[0] !== undefined
+            {overview !== undefined && overview[0] !== undefined
             && (
             <CardContainer
-              total={String(detailItemPbdc && detailItemPbdc.length)}
               title="List Item"
               height={`${vh}vh`}
-              customStyle={{
-                overflow: "scroll"
-              }}
+              customStyle={undefined}
               customStyleContent={undefined}
-              backgroundColorHeader={colorBasic?.error}
+              backgroundColorHeader={colorOpacity.error}
               colorTitle={colorBasic?.white}
+              total={String(overview && overview?.length)}
             >
-              {detailItemPbdc.map((item:any) => {
+              {overview.map((item:any) => {
               return(
                 <Box>
-                  <ListAddsPbdc
-                    sideButton
+                  <ListAddPbSupplier
                     plu={item.plu}
-                    eq={item.eq}
+                    qty={item.qty}
                     desc={item.desc}
-                    order={item.order}
-                    onDelete={() => deleteItemPbdc(String(item.plu))}
-                    onUpdate={() => onGetDetailItemPbdc(item)}
+                    fr={item.fr}
+                    onDelete={() => handleDeleteItem(item.plu)}
+                    onUpdate={undefined}
                     onView={undefined}
+                    sideButton
                   />
                 </Box>
               );
@@ -173,63 +153,62 @@ const vh = (547 / window.innerHeight) * 100;
             </CardContainer>
         )}
           </Box>
-          <Box
-            marginTop={5}
-            display="flex"
-            justifyContent={!dataSaveOnly ? "space-between" : "center"}
-            marginBottom={3}
-          >
+
+          <Box marginTop={5} display="flex" justifyContent={nopb !== "" ? "center" : "space-between"} marginBottom={3}>
             <Button
               variant="contained"
               color="error"
-              onClick={() => handleBack()}
+              onClick={handleBack}
             >
               <ArrowBackIosNewIcon sx={{ marginRight: "5px", width: "15px" }} />
               Back
             </Button>
-            {!dataSaveOnly
+            {nopb === ""
             && (
             <Button
-              disabled={parseInt(totalItem) === 0}
               variant="outlined"
               color="primary"
-              onClick={() => setOpenModalSave(true)}
+              onClick={() => {
+                  setOpenModalSave(true);
+              }}
             >
               <SaveIcon sx={{ marginRight: "5px", width: "15px" }} />
               Save
             </Button>
-)}
-          </Box>
-          {!statusSavePbdc
-          && (
-          <ModalAlertError
-            open={!statusPlu || valuePluSame ? alerts?.open : false}
-            onClose={undefined}
-            onClickOk={() => setAlert(false, "")}
-            messageAlert={String(alerts?.message)}
-          />
           )}
+          </Box>
           <ModalAlertInfo
-            open={statusPlu && !valuePluSame ? alerts?.open : false}
+            open={alerts?.isOpen}
             onClose={undefined}
             messageAlert={String(alerts?.message)}
-            onClickNext={() => handleNext("/pbdc/edit/form")}
-            onClickCancel={() => setAlert(false, "")}
+            onClickNext={() => handleNext("/pbsupplier/edit/form")}
+            onClickCancel={() => alerts.setAlert(false, "")}
           />
-          <ModalAlertSave
+          <ModalAlertInfo
             open={openModalSave}
             onClose={undefined}
-            messageAlert="Silahkan klik tombol (Yes) untuk Save data!"
-            onClickNext={() => onPostSaveData()}
+            messageAlert="Silahkan Klick Tombol Yes untuk Menyimpan Data!..."
+            onClickNext={() => {
+              handleSaveData();
+              setOpenModalSave(false);
+            }}
             onClickCancel={() => setOpenModalSave(false)}
           />
-          {statusSavePbdc
+          {alerts.statusData === 0
           && (
           <ModalAlertSuccess
-            open={alerts?.open}
+            open={alerts.isOpen}
             onClose={undefined}
-            onClickOk={() => handleCloseModalSaveSuccess()}
-            messageAlert={String(alerts?.message)}
+            onClickOk={() => alerts.setAlert(false, '')}
+            messageAlert={String(alerts.message)}
+          />
+          )}
+          {alerts.statusData === 2 && (
+          <ModalAlertError
+            open={alerts.isOpen}
+            onClose={undefined}
+            onClickOk={() => alerts.setAlert(false, "")}
+            messageAlert={String(alerts.message)}
           />
         )}
           <Loading isLoading={isLoading} />
@@ -238,4 +217,4 @@ const vh = (547 / window.innerHeight) * 100;
     );
 };
 
-export default withAuth(EditPbdc);
+export default EditPbSupplier;

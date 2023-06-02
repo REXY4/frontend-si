@@ -139,7 +139,7 @@ const FormEditPage = () => {
               endIcon={undefined}
               type=""
               name="order"
-              value={formEditDetailItem.order}
+              value={String(formEditDetailItem.order)}
               defaultValue={undefined}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChangeEditDetailItem(e)}
               error={false}

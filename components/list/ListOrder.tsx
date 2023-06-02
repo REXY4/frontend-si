@@ -2,7 +2,7 @@ import { SelectInputNative } from "../inputs";
 
 interface PropsList {
     label : string,
-    value : string,
+    value : string|any,
     setValue :any,
     selectInput :boolean,
     selectData : any

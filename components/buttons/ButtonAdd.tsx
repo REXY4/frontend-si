@@ -2,8 +2,8 @@ import { Button } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 
 interface Props {
-    color :any
-    onClick : any
+  color: "inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning";
+  onClick: () => void;
 }
 
 const ButtonAdd = ({ color, onClick } : Props) => {

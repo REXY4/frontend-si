@@ -7,7 +7,7 @@ import { MouseEventHandler } from "react";
 interface Props {
     open : boolean
     onClose : void
-    onClickOk : MouseEventHandler<HTMLSpanElement> | undefined
+    onClickOk : MouseEventHandler<HTMLSpanElement> | undefined | any
     messageAlert : string
 }
 

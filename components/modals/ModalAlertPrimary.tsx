@@ -7,7 +7,7 @@ import Typography from '@mui/joy/Typography';
 
 interface Props {
     open : boolean
-    onClose : any
+    onClose :() => void | undefined
     title : string
     desc : string
 }

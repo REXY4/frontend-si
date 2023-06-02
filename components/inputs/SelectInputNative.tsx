@@ -1,18 +1,21 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 
+interface DetailItem {
+  fmkcab : string,
+  store_name : string
+}
 interface Props {
-    data :any,
+    data :[DetailItem],
     detail : boolean
     setValue : any
     value : string
 }
 
 export default function SelectInputNative({
- value, setValue, detail, data = [{ title: "asd", value: "asd" }]
+ value, setValue, detail, data
 }:Props) {
   const handleChange = (event: any) => {
     // setValue(event.target.value as string);

@@ -39,7 +39,7 @@ return (
   <ThemeProvider theme={themeBasic}>
     <Container>
       <Box>
-        <p className="title-content">List peneriman barang DC (PBDC)</p>
+        <p className="title-content">List PBDC</p>
       </Box>
       <Box marginTop={2}>
         <BasicInput
@@ -65,10 +65,9 @@ return (
       </Box>
       <Box marginTop={1}>
         <CardContainer
-          title="List Item"
-          customStyle={{
-            // overflow: "hidden"
-          }}
+          total={String(pbdcs && pbdcs.length)}
+          title="List Pbdc"
+          customStyle={undefined}
           customStyleContent={{
             overflow: "scroll"
           }}

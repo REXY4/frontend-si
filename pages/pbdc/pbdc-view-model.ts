@@ -26,7 +26,7 @@ const PbdcViewModel = () => {
             const { store }:any = authStore.auth;
             await getPbdcPerStoreUseCase(pbdcStore, store);
             setPbdcsFiltered(pbdcStore.pbdcs);
-     }, []);
+     }, [pbdcStore.pbdcs]);
 
     const onLoadAllDc = useCallback(async () => {
         const { store }:any = authStore.auth;
@@ -39,14 +39,14 @@ const PbdcViewModel = () => {
     }, [pbdcStore?.checkRosso]);
 
     const onLoadPbdcOverviews = useCallback(async (
-            data: any,
-            dc :string,
-            noPb : string
+      data: any,
+      dc :string,
+      noPb : string
      ) => {
-          const { store }:any = authStore.auth;
+        const { store }:any = authStore.auth;
         settingStore.setLoading(true);
-         await getPbdcOverview(pbdcStore, data, store, dc, noPb);
-         await router.push("/pbdc/detail");
+        await getPbdcOverview(pbdcStore, data, store, dc, noPb);
+        await router.push("/pbdc/detail");
     }, [pbdcStore?.overviewPbdc]);
 
       const onLoadPbdcEdit = useCallback(async (

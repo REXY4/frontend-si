@@ -10,10 +10,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 interface Props {
-  onView:any
-    color : any
-    onDelete : any
-    onUpdate : any
+  onView:void |undefined
+  color: "inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning" | undefined
+    onDelete : void | undefined
+    onUpdate : void |undefined
 }
 
 const ButtonList = ({
@@ -22,7 +22,6 @@ onDelete,
 onUpdate,
 color = "primary",
 } : Props) => {
-    const [check, setChekc] = useState<string>("All");
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {

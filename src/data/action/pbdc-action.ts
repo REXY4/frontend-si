@@ -11,17 +11,13 @@ import { AlertActionType } from '../action-type/alert-action-type';
 import { DcActionType } from '../action-type/dc-action-type';
 
 const getPerStoreAction = (store_code: string) => async (dispatch: Dispatch) => {
-  dispatch({ type: SettingActionType.SET_LOADING, isLoading: true });
-  try{
   const response = await PbdcRepository.getPerStore(store_code);
   if(response.returnType === "S") {
     dispatch({ type: PbdcActionType.GET_PER_STORE, payload: response });
-    dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
     return response;
   }
-  }catch(err) {
-      dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
-  }
+    dispatch({ type: PbdcActionType.GET_PER_STORE, payload: response });
+    return response;
 };
 
 const setSelectDc = (dc : string) => (dispatch:Dispatch) => {
@@ -47,6 +43,11 @@ const getPbdcOverview = (
           overviewPbdc: response.returnData
         });
      }else{
+      dispatch({
+          type: PbdcActionType.GET_DETAIL,
+          detailPbdc: data,
+          overviewPbdc: response.returnData
+        });
         dispatch({ type: SettingActionType.SET_LOADING, isLoading: false });
      }
   }catch(err) {
@@ -120,11 +121,11 @@ const postPluValidation = (
         dispatch({
           type: AlertActionType.SET_ALERTS,
           isOpen: true,
-          message: String(response.returnMessage)
+          message: "Plu Tidak Di temukan !..."
       });
     }
   }catch(err) {
-        dispatch({ type: AlertActionType.SET_ALERTS, isOpen: true, message: "Plu tidak Di temukan !" });
+        dispatch({ type: AlertActionType.SET_ALERTS, isOpen: true, message: "Plu tidak Di temukan !.." });
       dispatch({
         type: PbdcActionType.PLU_VALIDATION,
         statusPluValidation: false,

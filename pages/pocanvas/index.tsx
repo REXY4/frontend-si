@@ -52,12 +52,13 @@ const PoCanvasPages = () => {
           <CardContainer
             title="List Item"
             customStyle={{
-            overflow: "scroll"
-          }}
+              overflow: "scroll"
+            }}
             customStyleContent={undefined}
             height={`${vh}vh`}
             backgroundColorHeader={colorOpacity.error}
             colorTitle={colorBasic.white}
+            total={String(poCanvas.length)}
           >
             {poCanvas
              && poCanvas[0] === undefined

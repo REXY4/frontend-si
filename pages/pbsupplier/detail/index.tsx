@@ -1,80 +1,51 @@
-/* eslint-disable max-len */
 import React, { useEffect, useState } from "react";
 import { CardContainer } from "@/components/cards";
 
 import { themeBasic } from "@/styles/theme";
 import {
- Box, Button, Chip, Container, Divider, ThemeProvider,
+ Box, Button, Chip, Container,
+ Divider, ThemeProvider,
 } from "@mui/material";
-import PbdcAddViewModel from "../add/pbdc-add-view-model";
-import PbdcDetailViewModel from "./pbdc-detail-view-model";
+
 import { DatePrimary } from "@/src/utils/DateTime";
-import { ListAddsPbdc } from "@/components/list";
+import { ListAddsPbdc, ListOrder } from "@/components/list";
 import { colorBasic } from "@/styles/color";
 import { BasicInput } from "@/components/inputs";
 import { validationJustNumber } from "@/src/helpers/validation";
 import ModalScanner from "@/components/scanners/ModalScanner";
 import styles from "../../../styles/pages/pbdc.module.css";
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import { ModalAlertSave } from "@/components/modals";
+import { ModalAlertInfo, ModalAlertSave, ModalAlertSuccess } from "@/components/modals";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { Router } from "next/router";
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import PbSupEditViewModel from "./pbsup-detail-view-model";
+import { Loading } from "@/components/Loading";
 
-interface PropsList {
-    label : string,
-    value : string,
-    setValue :any
-    view : boolean
-}
+const DetailPbSupp = () => {
+  const {
+    dataPb,
+    overview,
+    handelVerify,
+    openVerify,
+    alerts,
+    statusAlert,
+    handleBack,
+    setOpenVerify,
+    isLoading,
+    handleCloseAlertSuccess
+  } = PbSupEditViewModel();
 
-const ListOrder = ({
- label, value, setValue, view
-}:PropsList) => {
-  const { dc } = PbdcAddViewModel();
-    return(
-      <div style={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "255px",
-                marginBottom: "10px"
-              }}
-      >
-        <p style={{ fontWeight: "bold", fontSize: "12px" }}>
-          {label}
-          {' '}
-          :
-        </p>
-        <p>{value}</p>
-      </div>
-    );
-};
-
-const DetailPagePbdc = () => {
-const {
-dataPbdc,
-dataDc,
-overview,
- onPostVerifyPbdc,
- setPlu,
- handleDetected,
- totalItem,
- openModalVerify,
- setOpenModalVerify,
- plu,
- handleBack
-} = PbdcDetailViewModel();
-
-const vh = (547 / window.innerHeight) * 100;
+  const vh = (547 / window.innerHeight) * 100;
 
     return(
       <ThemeProvider theme={themeBasic}>
         <Container>
           <Box marginBottom={1} display="flex" justifyContent="start">
-            <p className="title-content">Detail  PBDC</p>
-            {dataPbdc !== undefined && dataPbdc.status === "Draft" && (
+            <p className="title-content">Detail  PB Supplier</p>
+            {dataPb !== undefined && dataPb.status === "Draft" && (
             <Chip
-              label={dataPbdc?.status}
+              label={dataPb?.status}
               color="error"
               sx={{
                 marginLeft: "5px",
@@ -85,7 +56,7 @@ const vh = (547 / window.innerHeight) * 100;
             }}
             />
               )}
-            {dataPbdc !== undefined && dataPbdc.status !== "Draft" && (
+            {dataPb !== undefined && dataPb.status !== "Draft" && (
             <Box style={{
                   position: "relative",
                   display: "flex",
@@ -118,41 +89,32 @@ const vh = (547 / window.innerHeight) * 100;
             <Box>
               <ListOrder
                 label="Nomor Order"
-                value={dataPbdc && dataPbdc.nopb}
+                value={String(dataPb && dataPb.nopb)}
                 setValue={undefined}
-                view
+                selectInput={false}
+                selectData={undefined}
               />
-              {/* <ListOrder
-                label="Dc"
-                value={dataDc && `${dataDc?.fmkcab}-${dataDc?.store_name}`}
-                setValue={undefined}
-                view
-              /> */}
               <ListOrder
                 label="Tipe"
-                value="1-Reguler"
+                value={String(dataPb && dataPb.tipe === "1" ? "1-REGULER" : "-")}
                 setValue={undefined}
-                view
+                selectInput={false}
+                selectData={undefined}
               />
               <ListOrder
                 label="Tanggal"
-                value={`${dataPbdc && dataPbdc?.tgl !== "" ? DatePrimary(dataPbdc.tgl) : undefined}`}
+                value={`${dataPb && dataPb?.tgl !== "" ? DatePrimary(dataPb.tgl) : undefined}`}
                 setValue={undefined}
-                view
+                selectInput={false}
+                selectData={undefined}
               />
               <ListOrder
                 label="Nilai"
-                value={String(dataPbdc && dataPbdc?.nilai).toLocaleString()}
+                value={dataPb && String(dataPb?.nilai).toLocaleString()}
                 setValue={undefined}
-                view
+                selectInput={false}
+                selectData={undefined}
               />
-              <ListOrder
-                label="Vol"
-                value={dataPbdc && dataPbdc?.vol === undefined ? 0 : dataPbdc?.vol}
-                setValue={undefined}
-                view
-              />
-
             </Box>
           </Box>
           <Divider />
@@ -171,9 +133,7 @@ const vh = (547 / window.innerHeight) * 100;
               backgroundColorHeader={colorBasic.error}
               colorTitle={colorBasic?.white}
             >
-              {overview && overview.filter((
-                fil:any
-) => fil.plu.toLowerCase().includes(plu.toLowerCase())).map((item:any) => {
+              {overview && overview.map((item:any) => {
               return(
                 <Box>
                   <ListAddsPbdc
@@ -196,7 +156,7 @@ const vh = (547 / window.innerHeight) * 100;
           </Box>
           <Box
             display="flex"
-            justifyContent={dataPbdc?.status === "Draft" ? "space-between" : "center"}
+            justifyContent={dataPb?.status === "Draft" ? "space-between" : "center"}
           >
             <Button
               variant="contained"
@@ -206,12 +166,12 @@ const vh = (547 / window.innerHeight) * 100;
               <ArrowBackIosNewIcon sx={{ marginRight: "5px", width: "15px" }} />
               Back
             </Button>
-            {dataPbdc?.status === "Draft"
+            {dataPb?.status === "Draft"
             && (
             <Button
               variant="contained"
               color="info"
-              onClick={() => setOpenModalVerify(true)}
+              onClick={() => setOpenVerify(true)}
             >
               <AssignmentTurnedInIcon style={{
                 marginRight: "5px",
@@ -223,17 +183,23 @@ const vh = (547 / window.innerHeight) * 100;
             </Button>
             )}
           </Box>
-          <ModalAlertSave
-            open={openModalVerify}
+          <ModalAlertInfo
+            open={openVerify}
             onClose={undefined}
-            messageAlert="Silahkan klik (Next) untuk Verifikasi data!"
-            onClickNext={() => onPostVerifyPbdc()}
-            onClickCancel={() => setOpenModalVerify(false)}
+            messageAlert="Silahkan klick Lanjut untuk Verifikasi No Pb!"
+            onClickNext={() => handelVerify()}
+            onClickCancel={() => setOpenVerify(false)}
           />
-          {/* <Loading isLoading={isLoading} /> */}
+          <ModalAlertSuccess
+            open={alerts.isOpen}
+            onClose={undefined}
+            onClickOk={handleCloseAlertSuccess}
+            messageAlert={String(alerts.message)}
+          />
+          <Loading isLoading={isLoading} />
         </Container>
       </ThemeProvider>
     );
 };
 
-export default DetailPagePbdc;
+export default DetailPbSupp;

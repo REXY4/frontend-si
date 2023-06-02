@@ -59,7 +59,8 @@
      "react/button-has-type" : 0,
      "no-constant-condition":0,
      "@next/next/no-img-element" : 0,
-     "jsx-a11y/alt-text" : 0
+     "jsx-a11y/alt-text" : 0,
+     "max-len" : 0
   }
 }
 

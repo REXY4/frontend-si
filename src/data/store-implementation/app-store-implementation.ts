@@ -41,7 +41,7 @@ const rootActionReducers = (state: any, action: AnyAction) => {
 const persistConfig = {
     key: "root",
     storage: storage,
-    whitelist: ["setting", "auth", "init", "user", "pbdc", "dc"],
+    whitelist: ["setting", "auth", "init", "user", "pbdc", "dc", "pbsupl"],
     blacklist: ["alert"]
 };
 

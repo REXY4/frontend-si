@@ -193,8 +193,6 @@ const PbdcEditViewModel = () => {
         }
    }, []);
 
-   console.log("ini adalah", pbdcStore?.detailItemPbdc);
-
     return{
         dataPbdc: pbdcStore?.detailPbdc,
         overview: pbdcStore?.overviewPbdc,
