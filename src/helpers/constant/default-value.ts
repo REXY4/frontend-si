@@ -9,10 +9,10 @@ const EmptyResponseStatus: ResponseStatusEntity = {
     message: "",
 };
 
-const EmptyResponse: any = {
+const EmptyResponse: ResponseEntityListValidation = {
     validation: [],
     status: EmptyResponseStatus,
-    data: undefined,
+    data: [],
 };
 
 export const DefaultValue = {

@@ -25,10 +25,10 @@ export function clearScanner() {
   // Re-initialize Quagga with new configurations
   Quagga.init(config, (err) => {
     if (err) {
-      console.log(err);
+      //
     }
     // Start the video stream and barcode recognition
-    // Quagga.start();
+    Quagga.start();
   });
 }
 

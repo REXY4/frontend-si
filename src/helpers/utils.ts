@@ -18,15 +18,6 @@ const getAuthState = () => {
     return authState;
 };
 
-// const authorizePage = async (currentUrl: string) => {
-//   const initState = appStoreImplementation.getState().init;
-//   // const menuAllowed = initState?.menus?.map((menu) => menu.url);
-
-//   if (menuAllowed?.indexOf(currentUrl) === -1) {
-//     Router.push("/unauthorized");
-//   }
-// };
-
 export const Utils = {
     getIdFromApiUrl,
     isLoggedIn,

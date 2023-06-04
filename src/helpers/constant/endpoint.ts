@@ -3,5 +3,6 @@ export const Endpoint = {
     login: "/login/",
     pbdc: "pbdc",
     dc: "dc",
-    pbsupl: 'pbSupplier'
+    pbsupl: 'pbsupplier',
+    PbPoCanvas: "pbpocanvas"
 };

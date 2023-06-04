@@ -16,8 +16,8 @@ import {
 } from "@/components/modals";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import SaveIcon from '@mui/icons-material/Save';
-import { validationJustNumber } from "@/src/helpers/validation";
-import { DatePrimary } from "@/src/utils/DateTime";
+import { onlyValidationNumber } from "@/src/helpers/validation";
+import { DateFormattedPrimary } from "@/src/utils/DateTime";
 import { colorBasic } from "@/styles/color";
 import { TitlePrimary } from "@/styles/text/title";
 import { withAuth } from "@/src/helpers/PrivateRoute";
@@ -88,7 +88,7 @@ const vh = (547 / window.innerHeight) * 100;
               />
               <ListOrder
                 label="Tanggal"
-                value={DatePrimary(String(dataPbdc?.tgl))}
+                value={DateFormattedPrimary(String(dataPbdc?.tgl))}
                 setValue={undefined}
                 selectInput={false}
                 selectData={undefined}
@@ -125,7 +125,7 @@ const vh = (547 / window.innerHeight) * 100;
                 defaultValue={undefined}
                 onChange={(
                   e:React.ChangeEvent<HTMLInputElement>
-                ) => setPlu(validationJustNumber(e.target.value))}
+                ) => setPlu(onlyValidationNumber(e.target.value))}
                 error={false}
                 placeholder=""
                 errorMessage=""

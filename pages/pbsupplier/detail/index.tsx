@@ -7,11 +7,11 @@ import {
  Divider, ThemeProvider,
 } from "@mui/material";
 
-import { DatePrimary } from "@/src/utils/DateTime";
+import { DateFormattedPrimary } from "@/src/utils/DateTime";
 import { ListAddsPbdc, ListOrder } from "@/components/list";
 import { colorBasic } from "@/styles/color";
 import { BasicInput } from "@/components/inputs";
-import { validationJustNumber } from "@/src/helpers/validation";
+import { onlyValidationNumber } from "@/src/helpers/validation";
 import ModalScanner from "@/components/scanners/ModalScanner";
 import styles from "../../../styles/pages/pbdc.module.css";
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
@@ -103,7 +103,7 @@ const DetailPbSupp = () => {
               />
               <ListOrder
                 label="Tanggal"
-                value={`${dataPb && dataPb?.tgl !== "" ? DatePrimary(dataPb.tgl) : undefined}`}
+                value={`${dataPb && dataPb?.tgl !== "" ? DateFormattedPrimary(dataPb.tgl) : undefined}`}
                 setValue={undefined}
                 selectInput={false}
                 selectData={undefined}

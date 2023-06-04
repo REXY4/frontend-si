@@ -13,7 +13,7 @@ import { CardContainer } from "@/components/cards";
 import { ListPrimary } from "@/components/list";
 import {  ButtonAdd, ButtonFilter } from "@/components/buttons";
 import PbsupllierViewModel from './pbsupplier-view-model';
-import { DatePrimary } from "@/src/utils/DateTime";
+import { DateFormattedPrimary } from "@/src/utils/DateTime";
 import { colorBasic, colorOpacity } from "@/styles/color";
 import { Loading } from "@/components/Loading";
 
@@ -85,7 +85,7 @@ return (
               <ListPrimary
                 onView={() => handleShowDetail(item, item.nopb)}
                 title={item.nopb}
-                tanggal={DatePrimary(String(item.tgl))}
+                tanggal={DateFormattedPrimary(String(item.tgl))}
                 type={item.tipe}
                 dc={item.dc}
                 status={item.status}

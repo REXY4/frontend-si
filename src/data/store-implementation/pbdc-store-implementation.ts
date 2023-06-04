@@ -17,7 +17,7 @@ const pbdcSelector = (state: AppRootState) => state.pbdc;
 
 const pbdcStoreImplementation = (): PbdcStore => {
     const {
- pbdcs, pbdc, pbdcDraft,
+ pbdcs, pbdc,
   checkRosso, detailPbdc,
    overviewPbdc, pluValidation,
    statusPluValidation,
@@ -48,7 +48,7 @@ const pbdcStoreImplementation = (): PbdcStore => {
 
      const getPbdcOverview = useCallback(
         (
-            data: any,
+            data: PbdcEntity,
             store_code:string,
             dc :string,
             noPb : string
@@ -153,7 +153,6 @@ store_code:string,
     return {
         pbdcs,
         pbdc,
-        pbdcDraft,
         checkRosso,
         detailPbdc,
         overviewPbdc,

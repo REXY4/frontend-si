@@ -4,10 +4,10 @@
 //   data: T;
 // }
 
-export interface ResponseEntityListValidation<T> {
-  validation: [any];
+export interface ResponseEntityListValidation {
+  validation: [];
   status: ResponseStatusEntity;
-  data: [T];
+  data: [];
 }
 
 export interface ResponseStatusEntity {

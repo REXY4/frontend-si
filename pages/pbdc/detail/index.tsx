@@ -8,11 +8,11 @@ import {
 } from "@mui/material";
 import PbdcAddViewModel from "../add/pbdc-add-view-model";
 import PbdcDetailViewModel from "./pbdc-detail-view-model";
-import { DatePrimary } from "@/src/utils/DateTime";
+import { DateFormattedPrimary } from "@/src/utils/DateTime";
 import { ListAddsPbdc } from "@/components/list";
 import { colorBasic } from "@/styles/color";
 import { BasicInput } from "@/components/inputs";
-import { validationJustNumber } from "@/src/helpers/validation";
+import { onlyValidationNumber } from "@/src/helpers/validation";
 import ModalScanner from "@/components/scanners/ModalScanner";
 import styles from "../../../styles/pages/pbdc.module.css";
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
@@ -136,7 +136,7 @@ const vh = (547 / window.innerHeight) * 100;
               />
               <ListOrder
                 label="Tanggal"
-                value={`${dataPbdc && dataPbdc?.tgl !== "" ? DatePrimary(dataPbdc.tgl) : undefined}`}
+                value={`${dataPbdc && dataPbdc?.tgl !== "" ? DateFormattedPrimary(dataPbdc.tgl) : undefined}`}
                 setValue={undefined}
                 view
               />

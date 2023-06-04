@@ -3,8 +3,8 @@ import { ResponseEntity } from "../entity/response-entity";
 import { BaseStore } from "./base-store";
 
 interface UserStore extends BaseStore {
-    users: [UserEntity];
-    userById: UserEntity;
+    users: [UserEntity] | any;
+    userById: UserEntity | any;
     getUsers(name?: string): Promise<ResponseEntity<[UserEntity]>>;
     submit(
         isEdit: boolean,

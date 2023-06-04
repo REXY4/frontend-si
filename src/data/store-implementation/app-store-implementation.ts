@@ -17,6 +17,7 @@ import { pbdcReducer } from "../reducer/pbdc-reducer";
 import { alertReducer } from "../reducer/alert-reducer";
 import { dcReducer } from "../reducer/dc-reducer";
 import { pbSuplReducer } from "../reducer/pbsupl-reducer";
+import { PbPoCanvasReducer } from "../reducer/pb-pocanvas-reducer";
 
 const rootReducer = combineReducers({
     setting: settingReducer,
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
     pbdc: pbdcReducer,
     pbsupl: pbSuplReducer,
     alert: alertReducer,
+    poCanvas: PbPoCanvasReducer
 });
 
 const rootActionReducers = (state: any, action: AnyAction) => {
@@ -41,7 +43,12 @@ const rootActionReducers = (state: any, action: AnyAction) => {
 const persistConfig = {
     key: "root",
     storage: storage,
-    whitelist: ["setting", "auth", "init", "user", "pbdc", "dc", "pbsupl"],
+    whitelist: [
+    "setting", "auth",
+    "init", "user",
+    "pbdc", "dc",
+    "pbsupl", "poCanvas"
+],
     blacklist: ["alert"]
 };
 

@@ -2,8 +2,8 @@ import React from "react";
 import { BasicInput } from "@/components/inputs";
 import { ListOrder } from "@/components/list";
 import ModalScanner from "@/components/scanners/ModalScanner";
-import { validationJustNumber } from "@/src/helpers/validation";
-import { DatePrimary } from "@/src/utils/DateTime";
+import { onlyValidationNumber } from "@/src/helpers/validation";
+import { DateFormattedPrimary } from "@/src/utils/DateTime";
 import { TitlePrimary } from "@/styles/text/title";
 import {
  Box, Button, Container, Divider
@@ -53,7 +53,7 @@ const PoCanvasAddData = () => {
             />
             <ListOrder
               label="Tanggal"
-              value={DatePrimary(String(new Date()))}
+              value={DateFormattedPrimary(String(new Date()))}
               setValue={undefined}
               selectInput={false}
               selectData={undefined}
@@ -88,7 +88,7 @@ const PoCanvasAddData = () => {
               defaultValue={undefined}
               onChange={(
                   e:React.ChangeEvent<HTMLInputElement>
-                ) => setPlu(validationJustNumber(e.target.value))}
+                ) => setPlu(onlyValidationNumber(e.target.value))}
               error={false}
               placeholder=""
               errorMessage=""

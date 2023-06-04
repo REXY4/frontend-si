@@ -28,7 +28,7 @@ const setSelectDc = (dc : string) => (dispatch:Dispatch) => {
 };
 
 const getPbdcOverview = (
-  data: any,
+  data: PbdcEntity,
   store_code:string,
   dc :string,
   noPb : string
@@ -146,7 +146,7 @@ const postPbdcVerify = (
 store_code: string,
 noPb : string,
 dc : string,
-detailItemPbdc : any
+detailItemPbdc : FormDetailItemPbdc
 ) => async (dispatch:Dispatch) => {
   try{
     dispatch({ type: PbdcActionType.PBDC_VERIFY, isLoadingBtnPbdcVerify: true, });

@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import { BasicInput } from '@/components/inputs';
 import { ButtonBasic } from '@/components/buttons';
-import { validationText } from '@/src/helpers/validation';
+import { onlyValidationText } from '@/src/helpers/validation';
 import ModalScanner from '@/components/scanners/ModalScanner';
 import styles from '../../styles/pages/login.module.css';
 import LoginViewModel from './login-view-model';
@@ -69,7 +69,7 @@ function LoginPage() {
       [name]: {
         ...form[name],
         error: false,
-        value: name === "password" ? e.target.value : validationText(e.target.value),
+        value: name === "password" ? e.target.value : onlyValidationText(e.target.value),
         errorMessage: ""
       },
     });

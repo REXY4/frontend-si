@@ -17,7 +17,7 @@ import {
 } from "@/components/modals";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import SaveIcon from '@mui/icons-material/Save';
-import { DatePrimary } from "@/src/utils/DateTime";
+import { DateFormattedPrimary } from "@/src/utils/DateTime";
 import PbSupplierAddModel from "./pbsupplier-add-model";
 import { colorBasic, colorOpacity } from "@/styles/color";
 
@@ -72,7 +72,7 @@ const [openModalSave, setOpenModalSave] = useState<boolean>(false);
               />
               <ListOrder
                 label="Tanggal"
-                value={DatePrimary(String(new Date()))}
+                value={DateFormattedPrimary(String(new Date()))}
                 setValue={undefined}
                 selectInput={false}
                 selectData={undefined}

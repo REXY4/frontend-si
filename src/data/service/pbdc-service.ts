@@ -48,15 +48,15 @@ const postPbdcVerify = async (
         store_code:string,
         noPb:string,
         dc:string,
-        detailItemPbdc : any
+        detailItemPbdc : [FormDetailItemPbdc]
 ) => {
     const response = fetchWrapper.post(
         PbdcActionType.PBDC_VERIFY,
         `${baseUrl}/PostVerify?pToken=${pToken}`,
         {
-             store_code,
-             noPb,
-              dc,
+            store_code,
+            noPb,
+            dc,
             detailItemPbdc: detailItemPbdc.map((item:any) => {
             return {
                 nour: item.fdnour,
@@ -104,7 +104,6 @@ const save = async (request: PbdcEntity) => fetchWrapper.post(
             id: request?.id,
             dc: request?.dc,
             cab: request?.cab,
-            details: request?.details,
             nopb: request?.nopb,
             pToken: pToken,
             status: request?.status,

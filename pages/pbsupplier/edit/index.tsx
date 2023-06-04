@@ -19,8 +19,8 @@ import {
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import SaveIcon from '@mui/icons-material/Save';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import { validationJustNumber } from "@/src/helpers/validation";
-import { DatePrimary } from "@/src/utils/DateTime";
+import { onlyValidationNumber } from "@/src/helpers/validation";
+import { DateFormattedPrimary } from "@/src/utils/DateTime";
 
 import { colorBasic, colorOpacity } from "@/styles/color";
 import PbSupplierEditModel from "./pbsupplier-edit-model";
@@ -77,7 +77,7 @@ const [openModalSave, setOpenModalSave] = useState<boolean>(false);
               />
               <ListOrder
                 label="Tanggal"
-                value={DatePrimary(String(dataPb?.tgl))}
+                value={DateFormattedPrimary(String(dataPb?.tgl))}
                 setValue={undefined}
                 selectInput={false}
                 selectData={undefined}

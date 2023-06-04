@@ -16,7 +16,7 @@ import { ButtonAdd, ButtonFilter } from "@/components/buttons";
 import { useRouter } from "next/router";
 import { withAuth } from "@/src/helpers/PrivateRoute";
 import { Loading } from "@/components/Loading";
-import { DatePrimary } from "@/src/utils/DateTime";
+import { DateFormattedPrimary } from "@/src/utils/DateTime";
 import { colorBasic, colorOpacity } from "@/styles/color";
 import { ModalAlertError } from "@/components/modals";
 
@@ -96,7 +96,7 @@ return (
                 onUpdate={item.status === "Draft" ? async () =>  handelPbdcEdit(item, item.dc, item.nopb) : undefined}
                 onView={() => handleOverviewPbdc(item, item.dc, item.nopb)}
                 title={item.nopb}
-                tanggal={DatePrimary(String(item.tgl))}
+                tanggal={DateFormattedPrimary(String(item.tgl))}
                 type={item.tipe === "1" ? "1-REGULER" : ""}
                 dc={item.dc}
                 status={item.status}

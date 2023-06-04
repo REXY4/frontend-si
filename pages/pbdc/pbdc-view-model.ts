@@ -39,7 +39,7 @@ const PbdcViewModel = () => {
     }, [pbdcStore?.checkRosso]);
 
     const onLoadPbdcOverviews = useCallback(async (
-      data: any,
+      data: PbdcEntity,
       dc :string,
       noPb : string
      ) => {
@@ -50,7 +50,7 @@ const PbdcViewModel = () => {
     }, [pbdcStore?.overviewPbdc]);
 
       const onLoadPbdcEdit = useCallback(async (
-            data: any,
+            data: PbdcEntity,
             dc :string,
             noPb : string
      ) => {

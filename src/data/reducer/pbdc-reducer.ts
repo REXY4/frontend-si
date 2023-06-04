@@ -4,7 +4,6 @@
 import type { AnyAction } from "redux";
 import { PbdcStore } from "@/src/domain/store/pbdc-store";
 import { PbdcActionType } from "../action-type/pbdc-action-type";
-import { FormDetailItemPbdc } from "@/src/domain/entity/pbdc-entity";
 
 type PbdcStoreState = Omit<
  PbdcStore,
@@ -44,17 +43,7 @@ const INITIAL_STATE: PbdcStoreState = {
     pbdcSaveData: undefined,
     detailItemPbdc: [],
     selectDc: "",
-    pbdcDraft: {
-        id: Math.floor(Math.random() * 100000 + 1),
-        nopb: "",
-        cab: "",
-        dc: "",
-        tipe: "",
-        tgl: "",
-        nilai: 3,
-        status: "",
-        details: [],
-    },
+
 };
 
 const pbdcReducer = (
@@ -154,23 +143,6 @@ const pbdcReducer = (
             return {
                 ...state,
                 pbdc: action?.payload?.returnData,
-            };
-
-        case PbdcActionType.DELETE_DRAFT_DETAIL:
-            let draftDelete = state?.pbdcDraft;
-
-            let detailsDelete = draftDelete?.details;
-            // eslint-disable-next-line no-var
-            let filteredArray = detailsDelete.filter((e) => {
-                return e.id?.toString() !== action?.payload?.toString();
-            });
-            draftDelete = {
-                ...draftDelete,
-                details: filteredArray,
-            };
-            return {
-                ...state,
-                pbdcDraft: draftDelete,
             };
          case PbdcActionType.CHECK_ROSSO:
             return{

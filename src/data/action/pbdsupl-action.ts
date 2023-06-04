@@ -142,7 +142,6 @@ const editOverviewDraft = (data:PbSuppOverviewEntity) => (dispatch:Dispatch) => 
 };
 
 const deleteOverviewDraft = (plu:string) => (dispatch:Dispatch) => {
-    console.log("ini action delete draft");
      dispatch({
         type: PbSuplActionType.PB_SUP_DELETE_OVERVIEW_DRAFT,
         payload: plu

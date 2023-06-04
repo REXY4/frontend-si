@@ -5,10 +5,12 @@ import { InitActionType } from "../action-type/init-action-type";
 
 type InitStoreState = Omit<InitStore, "initUser">;
 
-const INITIAL_STATE: any = {
+const INITIAL_STATE: InitStoreState = {
     user: undefined,
     validation: undefined,
+    menus: undefined,
     status: undefined,
+    auth: undefined
 };
 
 const initReducer = (

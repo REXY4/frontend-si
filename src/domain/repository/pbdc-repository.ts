@@ -35,7 +35,7 @@ const postPbdcSaveData = async (
  store_code:string,
         noPb:string,
     dc:string,
-      detailItemPbdc : any
+      detailItemPbdc : [FormDetailItemPbdc]
 ) : Promise<ResponseEntity<any>> => mapResponse(await PbdcService.postPbdcSaveData(store_code, noPb, dc, detailItemPbdc));
 
 const save = async (

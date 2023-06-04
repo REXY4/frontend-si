@@ -9,7 +9,7 @@ import { colorBasic, colorOpacity } from "@/styles/color";
 import { AlertTextGray } from "@/styles/text/alert";
 import PoCanvasViewModel from "./pocanvas-view-model";
 import { ListPrimary } from "@/components/list";
-import { DatePrimary } from "@/src/utils/DateTime";
+import { DateFormattedPrimary } from "@/src/utils/DateTime";
 
 const PoCanvasPages = () => {
     const [search, setSearch] = useState<string>("");
@@ -83,7 +83,7 @@ const PoCanvasPages = () => {
                 onView={undefined}
                   // () => handleOverviewPbdc(item, item.dc, item.nopb)
                 title={item.nopb}
-                tanggal={DatePrimary(String(item.tgl))}
+                tanggal={DateFormattedPrimary(String(item.tgl))}
                 type={item.tipe}
                 dc={item.dc}
                 status={item.status}

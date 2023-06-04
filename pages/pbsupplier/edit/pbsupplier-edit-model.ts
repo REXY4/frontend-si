@@ -12,7 +12,7 @@ import {
 import { authStoreImplementation } from "@/src/data/store-implementation/auth-store-implementation";
 import { settingStoreImplementation } from "@/src/data/store-implementation/setting-store-implementation";
 import { alertStoreImplementation } from '@/src/data/store-implementation/alert-store-implementation';
-import { validationJustNumber } from "@/src/helpers/validation";
+import { onlyValidationNumber } from "@/src/helpers/validation";
 
 const PbSupplierEditModel = () => {
  const pbStore = PbSuplImplementation();
@@ -77,7 +77,7 @@ const [formAddDetailOrder, setAddFormDetailOrder] = useState<PbSuppDetailSaveDat
        nour: pbStore?.overview?.length,
        plu: String(pbStore?.pluData?.plu),
        conv: parseInt(String(pbStore?.pluData?.fmisis)),
-       [e.target.name]: validationJustNumber(e.target.value)
+       [e.target.name]: onlyValidationNumber(e.target.value)
    });
  };
 

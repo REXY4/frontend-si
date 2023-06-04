@@ -9,10 +9,10 @@ import { useRouter } from "next/router";
 import { dcStoreUseCase } from "@/src/use-case/dc/dc-use-case";
 import { postPluValidationUseCase } from "@/src/use-case/pbdc/post-plu-validation-use-case";
 import { postPbdcVerifyUseCase } from "@/src/use-case/pbdc/post-pbdc-verify-use-case";
-import { postPbdcSaveData, setPbdcSaveStatusUseCASE } from "@/src/use-case/pbdc/post-save-data-pbdc-use-case";
+import { postPbdcSaveData, setPbdcSaveStatusUseCase } from "@/src/use-case/pbdc/post-save-data-pbdc-use-case";
 import { alertStoreImplementation } from '@/src/data/store-implementation/alert-store-implementation';
 import { FormDetailItemPbdc } from "@/src/domain/entity/pbdc-entity";
-import { validationJustNumber, validationText } from "@/src/helpers/validation";
+import { onlyValidationNumber, onlyValidationText } from "@/src/helpers/validation";
 import { PbdcStore } from '@/src/domain/store/pbdc-store';
 import { AlertStore } from '@/src/domain/store/alert-store';
 import { deleteAlllItemDraftUseCase } from "@/src/use-case/pbdc/delete-draft-detail-use-case";
@@ -107,7 +107,7 @@ const PbdcEditViewModel = () => {
     const onChangeDetailItem = (e:React.ChangeEvent<HTMLInputElement>) => {
         setFormDetailItem({
             ...formDetailItem,
-            order: validationJustNumber(e.target.value),
+            order: onlyValidationNumber(e.target.value),
         });
     };
 
@@ -115,7 +115,7 @@ const PbdcEditViewModel = () => {
         e.preventDefault();
         setFormEditDetailItem({
             ...formEditDetailItem,
-            order: validationJustNumber(e.target.value),
+            order: onlyValidationNumber(e.target.value),
         });
     };
 
@@ -127,7 +127,7 @@ const PbdcEditViewModel = () => {
 
     const handleCloseModalSaveSuccess = async () => {
         alertStore?.setAlert(false, "");
-        await setPbdcSaveStatusUseCASE(pbdcStore, false);
+        await setPbdcSaveStatusUseCase(pbdcStore, false);
     };
 
     const handleNext = (link:string) => {

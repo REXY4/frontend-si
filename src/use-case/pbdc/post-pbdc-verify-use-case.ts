@@ -6,7 +6,7 @@ store: PbdcStore,
 store_code: string,
 noPb : string,
 dc : string,
-detailItemPbdc : any
+detailItemPbdc : FormDetailItemPbdc
 ) => {
     await store.postPbdcVerify(store_code, noPb, dc, detailItemPbdc);
 };

@@ -1,19 +1,15 @@
 import {
     PbdcDetailEntity,
     PbdcEntity,
-    PluEntity,
     FormDetailItemPbdc,
     RequestPbdcDetailEntity,
     ResponsePbdcRossoEntity,
 } from "../entity/pbdc-entity";
 import { ResponseEntity } from "../entity/response-entity";
-import { UserEntity } from "../entity/user-entity";
-import { BaseStore } from "./base-store";
 
 interface PbdcStore {
-    pbdc: any;
-    pbdcs: any;
-    pbdcDraft: PbdcEntity;
+    pbdc: PbdcEntity | undefined;
+    pbdcs: [PbdcEntity] | undefined;
     detailPbdc : any;
     pluValidation : any;
     statusPluValidation : boolean;
@@ -34,38 +30,33 @@ interface PbdcStore {
     getPerStore(store_code: string):Promise<void | ResponseEntity<[PbdcEntity]>>;
     getAllDetailItemPbdc(data:[FormDetailItemPbdc]):Promise<void>;
     getPbdcOverview(
-        data: any,
+        data: PbdcEntity,
         store_code:string,
         dc :string,
-            noPb : string):Promise<void |ResponseEntity<[any]>>;
+        noPb : string):Promise<void |ResponseEntity<[any]>>;
     deleteAllItemDraftPbdc():Promise<void|any>
     postPluValidation(
         store:string,
         barcode:string,
         dc:string):Promise<void | ResponseEntity<any>>;
-    addDetailItemPbdc(data:FormDetailItemPbdc):Promise<FormDetailItemPbdc|any>;
+    addDetailItemPbdc(data:FormDetailItemPbdc):Promise<FormDetailItemPbdc|void>;
     deleteDetailItemPbdc(plu:string):Promise<any>
-    // editDetailItemPbdc(plu:string):Promise<any>
-    editDetailItemPbdc(data:FormDetailItemPbdc):Promise<FormDetailItemPbdc|any>
-    getDetailItemPbdc(data:FormDetailItemPbdc):Promise<FormDetailItemPbdc|any>
+    editDetailItemPbdc(data:FormDetailItemPbdc):Promise<FormDetailItemPbdc|void>
+    getDetailItemPbdc(data:FormDetailItemPbdc):Promise<FormDetailItemPbdc|void>
     postPbdcVerify(
         store_code:string,
         noPb:string,
         dc:string,
-        detailItemPbdc : any
+        detailItemPbdc : FormDetailItemPbdc
         ):Promise<void | ResponseEntity<void|any>>;
-
     postPbdcSaveData(
         store_code:string,
         noPb:string,
         dc:string,
         detailItemPbdc : [FormDetailItemPbdc]
         ):Promise<any>;
-
     save(request: PbdcEntity): Promise<void | ResponseEntity<PbdcEntity>>;
-
     postPbdcCheckRosso(store_code:string):Promise<void | ResponseEntity<ResponsePbdcRossoEntity>>;
-
     saveDraftDetail(
         request: RequestPbdcDetailEntity
     ): Promise<void | PbdcDetailEntity>;

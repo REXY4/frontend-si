@@ -10,7 +10,7 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Loading } from "@/components/Loading";
 import { ListOrder } from "@/components/list";
 import { CollapsePrimary } from "@/components/colapse";
-import { DatePrimary } from "@/src/utils/DateTime";
+import { DateFormattedPrimary } from "@/src/utils/DateTime";
 import { FormDetailItemPbdc } from '../../../src/domain/entity/pbdc-entity';
 import { withAuth } from "@/src/helpers/PrivateRoute";
 
@@ -39,7 +39,7 @@ const FormEditPage = () => {
             />
             <ListOrder
               label="Tanggal"
-              value={DatePrimary(String(new Date()))}
+              value={DateFormattedPrimary(String(new Date()))}
               setValue={undefined}
               selectInput={false}
               selectData={undefined}

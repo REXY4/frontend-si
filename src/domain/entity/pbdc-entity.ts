@@ -7,7 +7,6 @@ export interface PbdcEntity {
     tgl: string;
     nilai: number;
     status: string;
-    details: PbdcDetailEntity[];
 }
 
 export interface PbdcDetailEntity {

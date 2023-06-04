@@ -10,7 +10,7 @@ import { ModalAlertSave, ModalBasic } from "@/components/modals";
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Loading } from "@/components/Loading";
 import { CollapsePrimary } from "@/components/colapse";
-import { DatePrimary } from "@/src/utils/DateTime";
+import { DateFormattedPrimary } from "@/src/utils/DateTime";
 import { ListOrder } from "@/components/list";
 import { withAuth } from "@/src/helpers/PrivateRoute";
 import PbdcEditViewModel from "./pbdc-edit-view-model";
@@ -53,7 +53,7 @@ const FormPage = () => {
             />
             <ListOrder
               label="Tanggal"
-              value={DatePrimary(String(new Date()))}
+              value={DateFormattedPrimary(String(new Date()))}
               setValue={undefined}
               selectInput={false}
               selectData={undefined}

@@ -20,10 +20,6 @@ const refreshLogin = async (refreshToken: string) => {
 };
 
 const getDomain = async (username: string) => {
-    // const response = fetchWrapper.auth(
-    //   `${lsifBaseUrl}LoginApi/GetDomainByUsername?pParam=${username}`,
-    //   null
-    // );
     const response = fetchWrapper.auth(
         `${lsifBaseUrl}login/getdomain?username=${username}`,
         {}
